@@ -19,5 +19,13 @@ class SIRController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/exp", name="exp")
+     */
+
+    public function exp() 
+    {
+        return $this->render('sir/exp.html.twig');
+    }
   
 }
