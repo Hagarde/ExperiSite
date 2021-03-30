@@ -27,5 +27,13 @@ class SIRController extends AbstractController
     {
         return $this->render('sir/exp.html.twig');
     }
-  
+    
+    /**
+     * @Route("/result", name="resultat")
+     */
+
+    public function result() 
+    {
+        return $this->render('sir/result.html.twig');
+    }
 }
