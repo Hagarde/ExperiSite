@@ -29,7 +29,7 @@ class UneExpFixtures extends Fixture
                     -> setproportioninitiale(rand());
 
 
-            // $manager->persist($product);
+            $manager->persist($result);
         }
             $manager->flush();
         
