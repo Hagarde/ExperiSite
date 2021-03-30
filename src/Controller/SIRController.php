@@ -29,11 +29,21 @@ class SIRController extends AbstractController
     }
     
     /**
-     * @Route("/result", name="resultat")
+     * @Route("/resultat", name="resultat")
      */
 
     public function result() 
     {
         return $this->render('sir/result.html.twig');
     }
+
+    /**
+     * @Route("/about", name="about_us")
+     */
+
+    public function about() 
+    {
+        return $this->render('sir/about.html.twig');
+    }
+
 }
