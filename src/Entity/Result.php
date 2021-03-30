@@ -60,7 +60,7 @@ class Result
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $Repartititon1;
+    private $Repartition1;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -193,12 +193,12 @@ class Result
         return $this;
     }
 
-    public function getRepartititon1(): ?float
+    public function getRepartition1(): ?float
     {
         return $this->Repartititon1;
     }
 
-    public function setRepartititon1(?float $Repartititon1): self
+    public function setRepartition1(?float $Repartititon1): self
     {
         $this->Repartititon1 = $Repartititon1;
 
