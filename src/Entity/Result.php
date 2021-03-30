@@ -58,11 +58,6 @@ class Result
     private $RP;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $Id;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $Repartititon1;
@@ -194,13 +189,6 @@ class Result
     public function setRP(?float $RP): self
     {
         $this->RP = $RP;
-
-        return $this;
-    }
-
-    public function setId(?int $Id): self
-    {
-        $this->Id = $Id;
 
         return $this;
     }
