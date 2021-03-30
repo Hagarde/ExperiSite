@@ -14,19 +14,19 @@ class UneExpFixtures extends Fixture
             $result = new result();
             $result-> setbeta(rand(0,4))
                     -> setpi(rand(0,2))
-                    -> setmu(rand(0,15))
                     -> setS(rand())
                     -> setP(rand())
                     -> setU(rand())
                     -> setRU(rand())
                     -> setRP(rand())
+                    -> setRepartition1(100)
                     -> setRepartition2(rand())
                     -> setRepartition3(rand())
                     -> setRepartition4(rand())
                     -> setTemps(rand())
+                    -> setmu(rand(0,15))
                     -> setidutilisateur($i)
                     -> setproportioninitiale(rand());
-
 
             $manager->persist($result);
         }
