@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Result;
 
 class SIRController extends AbstractController
 {
@@ -34,6 +35,8 @@ class SIRController extends AbstractController
 
     public function result() 
     {
+        $repo = $this->getDoctrine()->getRepository(ExpResume::class) ;
+        
         return $this->render('sir/result.html.twig');
     }
 

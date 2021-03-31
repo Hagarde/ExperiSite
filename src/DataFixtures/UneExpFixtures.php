@@ -19,7 +19,7 @@ class UneExpFixtures extends Fixture
                     -> setU(rand())
                     -> setRU(rand())
                     -> setRP(rand())
-                    -> setRepartition1(100)
+                    -> setRepartition1('100')
                     -> setRepartition2(rand())
                     -> setRepartition3(rand())
                     -> setRepartition4(rand())
