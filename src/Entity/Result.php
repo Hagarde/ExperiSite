@@ -195,12 +195,12 @@ class Result
 
     public function getRepartition1(): ?float
     {
-        return $this->Repartititon1;
+        return $this->Repartition1;
     }
 
-    public function setRepartition1(?float $Repartititon1): self
+    public function setRepartition1(?float $Repartition1): self
     {
-        $this->Repartititon1 = $Repartititon1;
+        $this->Repartition1 = $Repartition1;
 
         return $this;
     }
