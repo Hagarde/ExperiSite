@@ -63,7 +63,7 @@ class Result
     private $Repartition1;
 
     /**
-     * @ORM\Column(type="float", nullable=false)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $Repartition2;
 
