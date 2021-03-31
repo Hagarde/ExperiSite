@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SIRController!{% endblock %}
+{% block title %}Résultat des expériences {% endblock %}
 
 {% block body %}
 <style>
@@ -8,6 +8,13 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 <h1>
-Voilà les informations qu'on a pu rassembler 
+Voilà les expériences qui ont été faites et leur résultat  : 
 </h1>
+    {% for exp in resume %}
+        <h2>Expérience n°{{exp.id}}</h2>
+
+        <h3> Beta : {{exp.beta}} , Pi : {{exp.pi}} , Mu : {{exp.mu}} , proportion initiale : {{exp.proportioninitiale}}
+        
+        <button href="">Plus de détails ...</button>
+    {% endfor %}
 {% endblock %}
