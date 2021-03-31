@@ -8,13 +8,14 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 <h1>
-Voilà les expériences qui ont été faites et leur résultat  : 
+Voilà les expériences qui ont été faites et leur résumé : 
 </h1>
     {% for exp in resume %}
         <h2>Expérience n°{{exp.id}}</h2>
 
-        <h3> Beta : {{exp.beta}} , Pi : {{exp.pi}} , Mu : {{exp.mu}} , proportion initiale : {{exp.proportioninitiale}}
-        
-        <button href="">Plus de détails ...</button>
+        <p> &Beta; = {{exp.beta}} , &Pi; = {{exp.pi}} , &Mu; = {{exp.mu}} , %0 d'infecté : {{exp.Propotioninitiale}} </p>
+        <a href='/result/{{exp.id}}'>
+        <button >Plus de détails ...</button>
+        </a>
     {% endfor %}
 {% endblock %}
