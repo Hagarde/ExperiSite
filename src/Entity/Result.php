@@ -90,7 +90,7 @@ class Result
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $idutilisateur;
+    private $idexp;
 
     public function getId(): ?int
     {
@@ -265,14 +265,14 @@ class Result
         return $this;
     }
 
-    public function getIdutilisateur(): ?int
+    public function getIdexp(): ?int
     {
-        return $this->idutilisateur;
+        return $this->idexp;
     }
 
-    public function setIdutilisateur(?int $idutilisateur): self
+    public function setIdexp(?int $idexp): self
     {
-        $this->idutilisateur = $idutilisateur;
+        $this->idexp = $idexp;
 
         return $this;
     }
