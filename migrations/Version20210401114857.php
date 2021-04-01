@@ -22,9 +22,9 @@ final class Version20210401114857 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE result ADD idexpã©rience_id INT NOT NULL');
-        $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC1135671884D FOREIGN KEY (idexpã©rience_id) REFERENCES exp_resume (id)');
-        $this->addSql('CREATE INDEX IDX_136AC1135671884D ON result (idexpã©rience_id)');
+        $this->addSql('ALTER TABLE result ADD idexperience_id INT NOT NULL');
+        $this->addSql('ALTER TABLE result ADD CONSTRAINT FK_136AC1135671884D FOREIGN KEY (idexperience_id) REFERENCES exp_resume (id)');
+        $this->addSql('CREATE INDEX IDX_136AC1135671884D ON result (idexperience_id)');
     }
 
     public function down(Schema $schema) : void
@@ -34,6 +34,6 @@ final class Version20210401114857 extends AbstractMigration
 
         $this->addSql('ALTER TABLE result DROP FOREIGN KEY FK_136AC1135671884D');
         $this->addSql('DROP INDEX IDX_136AC1135671884D ON result');
-        $this->addSql('ALTER TABLE result DROP idexpã©rience_id');
+        $this->addSql('ALTER TABLE result DROP idexperience_id');
     }
 }
