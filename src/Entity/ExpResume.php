@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ExpResumeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class ExpResume
      * @ORM\Column(type="integer")
      */
     private $idexp;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Result::class, mappedBy="idexpérience", orphanRemoval=true)
+     */
+    private $ExpDetail;
+
+    public function __construct()
+    {
+        $this->ExpDetail = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class ExpResume
     public function setIdexp(int $idexp): self
     {
         $this->idexp = $idexp;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Result[]
+     */
+    public function getExpDetail(): Collection
+    {
+        return $this->ExpDetail;
+    }
+
+    public function addExpDetail(Result $expDetail): self
+    {
+        if (!$this->ExpDetail->contains($expDetail)) {
+            $this->ExpDetail[] = $expDetail;
+            $expDetail->setIdexpérience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpDetail(Result $expDetail): self
+    {
+        if ($this->ExpDetail->removeElement($expDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($expDetail->getIdexpérience() === $this) {
+                $expDetail->setIdexpérience(null);
+            }
+        }
 
         return $this;
     }

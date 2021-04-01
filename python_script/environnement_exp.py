@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint 
 
+
 class maladie :
     def __init__(self,R,pi,mu) :
         self.R = R

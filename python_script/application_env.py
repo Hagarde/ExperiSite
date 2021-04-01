@@ -2,6 +2,7 @@ import environnement_exp as env
 import  numpy as np 
 import pandas as pd
 import time 
+
 # Test pour voir de beaux graphes de base et cool 
 """
 NN = (10**5) 

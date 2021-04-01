@@ -92,6 +92,12 @@ class Result
      */
     private $idexp;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ExpResume::class, inversedBy="ExpDetail")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idexpérience;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -273,6 +279,18 @@ class Result
     public function setIdexp(?int $idexp): self
     {
         $this->idexp = $idexp;
+
+        return $this;
+    }
+
+    public function getIdexpérience(): ?ExpResume
+    {
+        return $this->idexpérience;
+    }
+
+    public function setIdexpérience(?ExpResume $idexpérience): self
+    {
+        $this->idexpérience = $idexpérience;
 
         return $this;
     }
