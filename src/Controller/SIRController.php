@@ -65,4 +65,13 @@ class SIRController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/exp/python", name="about_us")
+     */
+
+    public function jeu() 
+    {
+        return $this->render('sir/exp_python.html.twig');
+    }
+
 }

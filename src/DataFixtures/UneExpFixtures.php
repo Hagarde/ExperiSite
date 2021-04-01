@@ -10,6 +10,7 @@ class UneExpFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        $idexp = rand(1,9);
         for ($i=1 ; $i<10 ; $i++) {
             $result = new result();
             $result-> setbeta(rand(0,4))
@@ -25,7 +26,7 @@ class UneExpFixtures extends Fixture
                     -> setRepartition4(rand())
                     -> setTemps(rand())
                     -> setmu(rand(0,15))
-                    -> setidutilisateur($i)
+                    -> setidexp($idexp)
                     -> setproportioninitiale(rand());
 
             $manager->persist($result);
