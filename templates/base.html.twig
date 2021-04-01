@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet"
-        href="https://bootswatch.com/4/litera/bootstrap.min.css">
+        href="https://bootswatch.com/4/flatly/bootstrap.min.css">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
@@ -17,7 +17,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="/">EpxériSite</a>
+            <a class="navbar-brand" href="{{path('home')}}">EpxériSite</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,17 +25,17 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Acceuil
+                    <a class="nav-link" href="{{path('home')}}">Acceuil
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/exp">Expérience / Jeu </a>
+                    <a class="nav-link" href="{{path('exp_presentation')}}">Expérience / Jeu </a>
                 </li>
                 <li class="nav-item">
-                 <a class="nav-link" href="/resultat">Résultats</a>
+                 <a class="nav-link" href="{{path('resultat')}}">Résultats</a>
                 </li>
                 <li class="nav-item">
-        <a class="nav-link" href="/about">A propos de nous et de l'expérience ! </a>
+        <a class="nav-link" href="{{path('about_us')}}">A propos de nous et de l'expérience ! </a>
       </li>
   </div>
 </nav>

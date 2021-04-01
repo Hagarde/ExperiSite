@@ -8,6 +8,7 @@ use App\Entity\Result;
 
 class UneExpFixtures extends Fixture
 {
+    
     public function load(ObjectManager $manager)
     {
         $idexp = rand(1,9);

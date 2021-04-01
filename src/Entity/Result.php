@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Entity;
 
 use App\Repository\ResultRepository;
@@ -35,27 +36,27 @@ class Result
     /**
      * @ORM\Column(type="float", nullable=false)
      */
-    private $S;
+    private $S1;
 
     /**
      * @ORM\Column(type="float", nullable=false)
      */
-    private $U;
+    private $U1;
 
     /**
      * @ORM\Column(type="float", nullable=false)
      */
-    private $P;
+    private $P1;
 
     /**
      * @ORM\Column(type="float", nullable=false)
      */
-    private $RU;
+    private $RU1;
 
     /**
      * @ORM\Column(type="float", nullable=false)
      */
-    private $RP;
+    private $RP1;
 
     /**
      * @ORM\Column(type="float", nullable=false)
@@ -93,10 +94,24 @@ class Result
     private $idexp;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ExpResume::class, inversedBy="ExpDetail")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="float")
      */
-    private $idexpérience;
+    private $s2;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $u2;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $rp2;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $ru2;
 
     public function getId(): ?int
     {
@@ -283,15 +298,53 @@ class Result
         return $this;
     }
 
-    public function getIdexpérience(): ?ExpResume
+    public function getS2(): ?float
     {
-        return $this->idexpérience;
+        return $this->s2;
     }
 
-    public function setIdexpérience(?ExpResume $idexpérience): self
+    public function setS2(float $s2): self
     {
-        $this->idexpérience = $idexpérience;
+        $this->s2 = $s2;
 
         return $this;
     }
+
+    public function getU2(): ?float
+    {
+        return $this->u2;
+    }
+
+    public function setU2(float $u2): self
+    {
+        $this->u2 = $u2;
+
+        return $this;
+    }
+
+    public function getRp2(): ?float
+    {
+        return $this->rp2;
+    }
+
+    public function setRp2(float $rp2): self
+    {
+        $this->rp2 = $rp2;
+
+        return $this;
+    }
+
+    public function getRu2(): ?float
+    {
+        return $this->ru2;
+    }
+
+    public function setRu2(float $su2): self
+    {
+        $this->su2 = $r
+        u2;
+
+        return $this;
+    }
+
 }
