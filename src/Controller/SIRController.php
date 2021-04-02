@@ -61,10 +61,8 @@ class SIRController extends AbstractController
      * @Route("/result/{id}", name="detail_exp")
      */
 
-    public function detailexpi($id) 
+    public function detailexpi($id,Result $infoexp) 
     {
-        $repo = $this->getDoctrine()->getRepository(Result::class) ;
-        $infoexp = $repo->Find($id) ; 
         return $this->render('sir/detailexp.html.twig',[
             'infoexp'=>$infoexp
         ]);

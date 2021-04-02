@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ResuemeExpRepository;
+use App\Repository\ResemeExpRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ResuemeExpRepository::class)
+ * @ORM\Entity(repositoryClass=ResumeExpRepository::class)
  */
-class ResuemeExp
+class ResumeExp
 {
     /**
      * @ORM\Id
