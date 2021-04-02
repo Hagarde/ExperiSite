@@ -6,8 +6,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\ResultEntity;
-use App\Entity\ResuemeExp;
+use App\Entity\DetailExp;
+use App\Entity\ResumeExperience;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -41,7 +41,7 @@ class SIRController extends AbstractController
 
     public function result() 
     {
-        $repo = $this->getDoctrine()->getRepository(ResuemeExp::class) ;
+        $repo = $this->getDoctrine()->getRepository(ResumeExperience::class) ;
         $resume = $repo->FindAll() ; 
         return $this->render('sir/result.html.twig',[
             'resume'=>$resume
@@ -61,7 +61,7 @@ class SIRController extends AbstractController
      * @Route("/result/{id}", name="detail_exp")
      */
 
-    public function detailexpi($id,ResultEntity $infoexp) 
+    public function detailexpi($id,DetailExp $infoexp) 
     {
         return $this->render('sir/detailexp.html.twig',[
             'infoexp'=>$infoexp
@@ -74,7 +74,7 @@ class SIRController extends AbstractController
 
     public function exp_form() 
     {
-        $resultexp = new ResultEntity();
+        $resultexp = new DetailExp();
         $form = $this->createFormBuilder($resultexp)
                     
                     -> add('Repartition1', RangeType::class, [
@@ -108,8 +108,8 @@ class SIRController extends AbstractController
 
     public function exp_form_suite(Request $request,ObjectManager $manager) 
     {
-        $repo = $this->getDoctrine()->getRepository(ResultEntity::class) ;
-        $resultexp = new ResultEntity();
+        $repo = $this->getDoctrine()->getRepository(DetailExp::class) ;
+        $resultexp = new DetailExp();
         $form = $this->createFormBuilder($resultexp)
                     
                     -> add('Repartition1', RangeType::class, [

@@ -122,6 +122,11 @@ class DetailExp
      */
     private $rp4;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $T;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -375,6 +380,18 @@ class DetailExp
     public function setRp4(float $rp4): self
     {
         $this->rp4 = $rp4;
+
+        return $this;
+    }
+
+    public function getT(): ?int
+    {
+        return $this->T;
+    }
+
+    public function setT(int $T): self
+    {
+        $this->T = $T;
 
         return $this;
     }
