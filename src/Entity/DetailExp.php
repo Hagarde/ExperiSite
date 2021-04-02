@@ -127,6 +127,26 @@ class DetailExp
      */
     private $T;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $Repartition1;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $Repartition2;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $Repartition3;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $Repartition4;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -392,6 +412,54 @@ class DetailExp
     public function setT(int $T): self
     {
         $this->T = $T;
+
+        return $this;
+    }
+
+    public function getRepartition1(): ?float
+    {
+        return $this->Repartition1;
+    }
+
+    public function setRepartition1(float $Repartition1): self
+    {
+        $this->Repartition1 = $Repartition1;
+
+        return $this;
+    }
+
+    public function getRepartition2(): ?float
+    {
+        return $this->Repartition2;
+    }
+
+    public function setRepartition2(float $Repartition2): self
+    {
+        $this->Repartition2 = $Repartition2;
+
+        return $this;
+    }
+
+    public function getRepartition3(): ?float
+    {
+        return $this->Repartition3;
+    }
+
+    public function setRepartition3(float $Repartition3): self
+    {
+        $this->Repartition3 = $Repartition3;
+
+        return $this;
+    }
+
+    public function getRepartition4(): ?float
+    {
+        return $this->Repartition4;
+    }
+
+    public function setRepartition4(float $Repartition4): self
+    {
+        $this->Repartition4 = $Repartition4;
 
         return $this;
     }

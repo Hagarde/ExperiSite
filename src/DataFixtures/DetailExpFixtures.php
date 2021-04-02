@@ -37,7 +37,7 @@ class DetailExpFixtures extends Fixture
                     -> setRepartition2(rand())
                     -> setRepartition3(rand())
                     -> setRepartition4(rand())
-                    -> setT($i)
+                    -> setT(rand())
                     -> setidexp($idexp);
         
         $manager->persist($detail);
