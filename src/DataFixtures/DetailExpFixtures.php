@@ -13,7 +13,7 @@ class DetailExpFixtures extends Fixture
         $idexp = rand(1,9);
         for ($i=1 ; $i<10 ; $i++) {
             $detail = new DetailExp();
-            $result-> setS1(rand())
+            $detail-> setS1(rand())
                     -> setS2(rand())
                     -> setS3(rand())
                     -> setS4(rand())
@@ -39,8 +39,9 @@ class DetailExpFixtures extends Fixture
                     -> setRepartition4(rand())
                     -> setT($i)
                     -> setidexp($idexp);
-        }
+        
         $manager->persist($detail);
         $manager->flush();
+        }
     }
 }

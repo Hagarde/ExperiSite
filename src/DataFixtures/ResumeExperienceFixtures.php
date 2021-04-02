@@ -16,7 +16,9 @@ class ResumeExperienceFixtures extends Fixture
                     -> setpi(rand(0,2))
                     -> setmu(rand(0,15))
                     -> setproportioninitiale(rand());
+            $manager->persist($resume);
+            $manager->flush();
         }
-    $manager->flush();
+    
     }
 }
