@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\ResumeExp;
+use App\Entity\ResumeExperience;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method ResumeExp|null find($id, $lockMode = null, $lockVersion = null)
- * @method ResumeExp|null findOneBy(array $criteria, array $orderBy = null)
- * @method ResumeExp[]    findAll()
- * @method ResumeExp[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ResumeExperience|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ResumeExperience|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ResumeExperience[]    findAll()
+ * @method ResumeExperience[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ResumeExpRepository extends ServiceEntityRepository
+class ResumeExperienceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ResumeExp::class);
+        parent::__construct($registry, ResumeExperience::class);
     }
 
     // /**
-    //  * @return ResumeExp[] Returns an array of ResumeExp objects
+    //  * @return ResumeExperience[] Returns an array of ResumeExperience objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ResumeExpRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ResumeExp
+    public function findOneBySomeField($value): ?ResumeExperience
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')

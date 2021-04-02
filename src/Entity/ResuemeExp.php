@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ResumeExpRepository;
+use App\Repository\ResuemeExpRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ResumeExpRepository::class)
  */
-class ResumeExp
+class ResuemeExp
 {
     /**
      * @ORM\Id
@@ -18,9 +18,9 @@ class ResumeExp
     private $id;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
-    private $r0;
+    private $R0;
 
     /**
      * @ORM\Column(type="float")
@@ -37,14 +37,14 @@ class ResumeExp
         return $this->id;
     }
 
-    public function getR0(): ?float
+    public function getR0(): ?int
     {
-        return $this->r0;
+        return $this->R0;
     }
 
-    public function setR0(float $r0): self
+    public function setR0(int $R0): self
     {
-        $this->r0 = $r0;
+        $this->R0 = $R0;
 
         return $this;
     }
