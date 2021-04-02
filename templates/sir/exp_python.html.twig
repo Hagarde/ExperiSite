@@ -2,6 +2,7 @@
 {% form_theme formExp 'bootstrap_4_layout.html.twig' %}
 {% block title %} Expérience en cours ...{% endblock %}
 
+
 {% block body %}
   <style>
       .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
@@ -27,7 +28,7 @@
     {{form_widget(formExp.Repartition3)}}
   </div>
 
-<a href='{{path('exp_form_suite')}}'>
+<a href='{{path('exp_form')}}'>
   <button >Enregistrer ma décision</button>
 </a>
 {{form_end(formExp)}}

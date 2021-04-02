@@ -70,7 +70,7 @@ class SIRController extends AbstractController
     }
 
     /**
-     * @Route("/exp/exp_form_0", name="exp_form")
+     * @Route("/exp/exp_form", name="exp_form")
      */
 
     public function exp_form() 
@@ -97,46 +97,11 @@ class SIRController extends AbstractController
                             'max' => 100]
                         ])
                         ->getForm();
-        return $this->render('sir/exp_python_initiale.html.twig',[
+        return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView()
         ]
     );
     }
 
-    /**
-     * @Route("/exp/exp_form_suite", name="exp_form_suite")
-     */
-
-    public function exp_form_suite(Request $request,ObjectManager $manager) 
-    {
-        $repo = $this->getDoctrine()->getRepository(DetailExp::class) ;
-        $resultexp = new DetailExp();
-        $form = $this->createFormBuilder($resultexp)
-                    
-                    -> add('Repartition1', RangeType::class, [
-                        'attr' => [
-                            'autocomplete' => 'on',
-                            'min' => 0,
-                            'max' => 100]
-                        ])
-                    -> add('Repartition2', RangeType::class, [
-                        'attr' => [
-                            'autocomplete' => 'on',
-                            'min' => 0,
-                            'max' => 100]
-                        ])
-                    -> add('Repartition3', RangeType::class, [
-                        'attr' => [
-                            'autocomplete' => 'on',
-                            'min' => 0,
-                            'max' => 100]
-                        ])
-                    ->getForm();
-        $form->handleRequest($request);
-        return $this->render('sir/exp_python_suite.html.twig',[
-            'formExp' => $form->createView(),
-            // 'infoexp' => $repo->Find
-        ]
-    );
-    }
+    
 }
