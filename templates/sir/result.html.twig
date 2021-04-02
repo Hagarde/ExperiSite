@@ -13,7 +13,7 @@ Voilà les expériences qui ont été faites et leur résumé :
     {% for exp in resume %}
         <h2>Expérience n°{{exp.id}}</h2>
 
-        <p> &Beta; = {{exp.beta}} , &Pi; = {{exp.pi}} , &Mu; = {{exp.mu}} , %0 d'infecté : {{exp.Propotioninitiale}} </p>
+        <p> &Beta; = {{exp.r0}} , &Pi; = {{exp.pi}} , &Mu; = {{exp.mu}} , %0 d'infecté : {{exp.i0}} </p>
         <a href='/result/{{exp.id}}'>
         <button >Plus de détails ...</button>
         </a>

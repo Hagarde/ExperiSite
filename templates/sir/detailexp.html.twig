@@ -8,10 +8,10 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<h1> Expérience n° {{infoexp.id}} </h1>
+<h1> Expérience n° {{resume.id}} </h1>
 
-<p> Nous avons simuler une épidémie avec les paramètres suivants pour l'utilisateur {{infoexp.idexp}} </p>
-<p> &Beta; = {{infoexp.beta}} , &Pi; = {{infoexp.pi}} , &Mu; = {{infoexp.mu}} , %0 d'infecté : {{infoexp.Proportioninitiale}} </p>
+<p> Nous avons simuler une épidémie avec les paramètres suivants pour l'utilisateur {{resume.idexp}} </p>
+<p> &Beta; = {{resume.r0}} , &Pi; = {{resume.pi}} , &Mu; = {{resume.mu}} , %0 d'infecté : {{resume.i0}} </p>
 
 
 {% endblock %}

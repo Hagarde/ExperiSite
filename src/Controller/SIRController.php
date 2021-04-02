@@ -61,10 +61,11 @@ class SIRController extends AbstractController
      * @Route("/result/{id}", name="detail_exp")
      */
 
-    public function detailexpi($id,DetailExp $infoexp) 
+    public function detailexpi($id, DetailExp $infoexp,ResumeExperience $resume ) 
     {
         return $this->render('sir/detailexp.html.twig',[
-            'infoexp'=>$infoexp
+            'infoexp'=>$infoexp,
+            'resume'=>$resume
         ]);
     }
 
