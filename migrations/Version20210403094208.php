@@ -25,7 +25,7 @@ final class Version20210403094208 extends AbstractMigration
         $this->addSql('ALTER TABLE detail_exp ADD identifiantexp_id INT NOT NULL');
         $this->addSql('ALTER TABLE detail_exp ADD CONSTRAINT FK_3101808FAFECABEA FOREIGN KEY (identifiantexp_id) REFERENCES resume_experience (id)');
         $this->addSql('CREATE INDEX IDX_3101808FAFECABEA ON detail_exp (identifiantexp_id)');
-        $this->addSql('ALTER TABLE `detail_exp` CHANGE `idexp` `idexp` INT NULL');
+        
     }
 
     public function down(Schema $schema) : void

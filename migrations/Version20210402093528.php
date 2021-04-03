@@ -23,6 +23,7 @@ final class Version20210402093528 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE detail_exp ADD t INT NOT NULL, ADD repartition1 DOUBLE PRECISION NOT NULL, ADD repartition2 DOUBLE PRECISION NOT NULL, ADD repartition3 DOUBLE PRECISION NOT NULL, ADD repartition4 DOUBLE PRECISION NOT NULL');
+        $this->addSql('ALTER TABLE `detail_exp` CHANGE `idexp` `idexp` INT NULL');
     }
 
     public function down(Schema $schema) : void
