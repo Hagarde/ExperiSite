@@ -12,13 +12,15 @@ class ResumeExperienceFixtures extends Fixture
     {
         for ($i=1 ; $i<10 ; $i++) {
             $resume = new ResumeExperience();
-            $resume-> setR0(rand(0,20))
+            $resume-> setR0(mt_rand(0,20))
                     -> setPi(rand(0,2))
                     -> setMu(rand(0,15))
-                    -> setI0(rand());
+                    -> setI0(rand())
+                    -> setIdentifiantexp($i);
             $manager->persist($resume);
-            $manager->flush();
+            
         }
+        $manager->flush();
     
     }
 }
