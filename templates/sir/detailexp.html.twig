@@ -13,8 +13,15 @@
 <p> Nous avons simuler une épidémie avec les paramètres suivants : </p>
 <p> &Beta; = {{resume.r0}} , &Pi; = {{resume.pi}} , &Mu; = {{resume.mu}} , %0 d'infecté : {{resume.i0}} </p>
 
-{{data_exp}}
+{% for instant in  data_exp %}
 
-
+    <p>A l'instant t={{instant.T}} :
+    <ul>
+        <li>le sujet a observé {{instant.p1}} cas positifs dans la première région chez les jeunes  </li>
+        <li>le sujet a observé {{instant.p2}} cas positifs dans la première région chez les vieux  </li>
+        <li>le sujet a observé {{instant.p3}} cas positifs dans la seconde région chez les jeunes  </li>
+        <li>le sujet a observé {{instant.p4}} cas positifs dans la seconde région chez les vieux  </li>
+    </ul>
+{% endfor %}
 
 {% endblock %}

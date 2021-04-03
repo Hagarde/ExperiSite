@@ -50,6 +50,7 @@ class SIRController extends AbstractController
         ]);
     }
 
+    
     /**
      * @Route("/about", name="about_us")
      */
@@ -66,7 +67,7 @@ class SIRController extends AbstractController
     public function detailexpi($id, EtatExp $infoexp,Resume $resume ) 
     {
         $repo = $this->getDoctrine()->getRepository(EtatExp::class);
-        $alldata = $repo->FindBy(array(''=$id),array());
+        $alldata = $repo->FindBy(array('experience'=>$id),array('T'=>'asc'));
         return $this->render('sir/detailexp.html.twig',[
             'data_exp'=>$alldata,
             'resume'=>$resume
