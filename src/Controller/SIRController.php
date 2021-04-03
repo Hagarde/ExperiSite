@@ -7,8 +7,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\DetailExp;
-use App\Entity\ResumeExperience;
+use App\Entity\EtatExp;
+use App\Entity\Resume;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,7 +43,7 @@ class SIRController extends AbstractController
 
     public function result() 
     {
-        $repo = $this->getDoctrine()->getRepository(ResumeExperience::class) ;
+        $repo = $this->getDoctrine()->getRepository(Resume::class) ;
         $resume = $repo->FindAll() ; 
         return $this->render('sir/result.html.twig',[
             'resume'=>$resume
@@ -63,10 +63,12 @@ class SIRController extends AbstractController
      * @Route("/result/{id}", name="detail_exp")
      */
 
-    public function detailexpi($id, DetailExp $infoexp,ResumeExperience $resume ) 
+    public function detailexpi($id, EtatExp $infoexp,Resume $resume ) 
     {
+        $repo = $this->getDoctrine()->getRepository(EtatExp::class);
+        $alldata = $repo->FindBy(array(''=$id),array());
         return $this->render('sir/detailexp.html.twig',[
-            'infoexp'=>$infoexp,
+            'data_exp'=>$alldata,
             'resume'=>$resume
         ]);
     }
@@ -77,7 +79,7 @@ class SIRController extends AbstractController
 
     public function exp_form(Request $request,EntityManagerInterface $manager) 
     {
-        $resultexp = new DetailExp();
+        $resultexp = new EtatExp();
         $form = $this->createFormBuilder($resultexp)
                     
                     -> add('Repartition1', RangeType::class, [

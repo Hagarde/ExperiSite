@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-
-use App\Repository\DetailExpRepository;
+use App\Repository\EtatExpRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DetailExpRepository::class)
+ * @ORM\Entity(repositoryClass=EtatExpRepository::class)
  */
-class DetailExp
+class EtatExp
 {
     /**
      * @ORM\Id
@@ -17,11 +16,6 @@ class DetailExp
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idexp;
 
     /**
      * @ORM\Column(type="float")
@@ -46,8 +40,29 @@ class DetailExp
     /**
      * @ORM\Column(type="float")
      */
+    private $p1;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $p2;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $p3;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $p4;
+
+    /**
+     * @ORM\Column(type="float")
+     */
     private $u1;
 
+    
     /**
      * @ORM\Column(type="float")
      */
@@ -66,22 +81,22 @@ class DetailExp
     /**
      * @ORM\Column(type="float")
      */
-    private $p1;
+    private $rp1;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $p2;
+    private $rp2;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $p3;
+    private $rp3;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $p4;
+    private $rp4;
 
     /**
      * @ORM\Column(type="float")
@@ -106,22 +121,22 @@ class DetailExp
     /**
      * @ORM\Column(type="float")
      */
-    private $rp1;
+    private $Test11;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $rp2;
+    private $Test12;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $rp3;
+    private $Test21;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $rp4;
+    private $Test22;
 
     /**
      * @ORM\Column(type="integer")
@@ -129,46 +144,14 @@ class DetailExp
     private $T;
 
     /**
-     * @ORM\Column(type="float")
-     */
-    private $Repartition1;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $Repartition2;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $Repartition3;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $Repartition4;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=ResumeExperience::class, inversedBy="identifiantexp")
+     * @ORM\ManyToOne(targetEntity=Resume::class, inversedBy="detail")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $identifiantexp;
+    private $experience;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdexp(): ?int
-    {
-        return $this->idexp;
-    }
-
-    public function setIdexp(int $idexp): self
-    {
-        $this->idexp = $idexp;
-
-        return $this;
     }
 
     public function getS1(): ?float
@@ -215,54 +198,6 @@ class DetailExp
     public function setS4(float $s4): self
     {
         $this->s4 = $s4;
-
-        return $this;
-    }
-
-    public function getU1(): ?float
-    {
-        return $this->u1;
-    }
-
-    public function setU1(float $u1): self
-    {
-        $this->u1 = $u1;
-
-        return $this;
-    }
-
-    public function getU2(): ?float
-    {
-        return $this->u2;
-    }
-
-    public function setU2(float $u2): self
-    {
-        $this->u2 = $u2;
-
-        return $this;
-    }
-
-    public function getU3(): ?float
-    {
-        return $this->u3;
-    }
-
-    public function setU3(float $u3): self
-    {
-        $this->u3 = $u3;
-
-        return $this;
-    }
-
-    public function getU4(): ?float
-    {
-        return $this->u4;
-    }
-
-    public function setU4(float $u4): self
-    {
-        $this->u4 = $u4;
 
         return $this;
     }
@@ -315,50 +250,50 @@ class DetailExp
         return $this;
     }
 
-    public function getRu1(): ?float
+    public function getU1(): ?float
     {
-        return $this->ru1;
+        return $this->u1;
     }
 
-    public function setRu1(float $ru1): self
+    public function setU1(float $u1): self
     {
-        $this->ru1 = $ru1;
+        $this->u1 = $u1;
 
         return $this;
     }
 
-    public function getRu2(): ?float
+    public function getU2(): ?float
     {
-        return $this->ru2;
+        return $this->u2;
     }
 
-    public function setRu2(float $ru2): self
+    public function setU2(float $u2): self
     {
-        $this->ru2 = $ru2;
+        $this->u2 = $u2;
 
         return $this;
     }
 
-    public function getRu3(): ?float
+    public function getU3(): ?float
     {
-        return $this->ru3;
+        return $this->u3;
     }
 
-    public function setRu3(float $ru3): self
+    public function setU3(float $u3): self
     {
-        $this->ru3 = $ru3;
+        $this->u3 = $u3;
 
         return $this;
     }
 
-    public function getRu4(): ?float
+    public function getU4(): ?float
     {
-        return $this->ru4;
+        return $this->u4;
     }
 
-    public function setRu4(float $ru4): self
+    public function setU4(float $u4): self
     {
-        $this->ru4 = $ru4;
+        $this->u4 = $u4;
 
         return $this;
     }
@@ -411,6 +346,102 @@ class DetailExp
         return $this;
     }
 
+    public function getRu1(): ?float
+    {
+        return $this->ru1;
+    }
+
+    public function setRu1(float $ru1): self
+    {
+        $this->ru1 = $ru1;
+
+        return $this;
+    }
+
+    public function getRu2(): ?float
+    {
+        return $this->ru2;
+    }
+
+    public function setRu2(float $ru2): self
+    {
+        $this->ru2 = $ru2;
+
+        return $this;
+    }
+
+    public function getRu3(): ?float
+    {
+        return $this->ru3;
+    }
+
+    public function setRu3(float $ru3): self
+    {
+        $this->ru3 = $ru3;
+
+        return $this;
+    }
+
+    public function getRu4(): ?float
+    {
+        return $this->ru4;
+    }
+
+    public function setRu4(float $ru4): self
+    {
+        $this->ru4 = $ru4;
+
+        return $this;
+    }
+
+    public function getTest11(): ?float
+    {
+        return $this->Test11;
+    }
+
+    public function setTest11(float $Test11): self
+    {
+        $this->Test11 = $Test11;
+
+        return $this;
+    }
+
+    public function getTest12(): ?float
+    {
+        return $this->Test12;
+    }
+
+    public function setTest12(float $Test12): self
+    {
+        $this->Test12 = $Test12;
+
+        return $this;
+    }
+
+    public function getTest21(): ?float
+    {
+        return $this->Test21;
+    }
+
+    public function setTest21(float $Test21): self
+    {
+        $this->Test21 = $Test21;
+
+        return $this;
+    }
+
+    public function getTest22(): ?float
+    {
+        return $this->Test22;
+    }
+
+    public function setTest22(float $Test22): self
+    {
+        $this->Test22 = $Test22;
+
+        return $this;
+    }
+
     public function getT(): ?int
     {
         return $this->T;
@@ -423,62 +454,14 @@ class DetailExp
         return $this;
     }
 
-    public function getRepartition1(): ?float
+    public function getExperience(): ?Resume
     {
-        return $this->Repartition1;
+        return $this->experience;
     }
 
-    public function setRepartition1(float $Repartition1): self
+    public function setExperience(?Resume $experience): self
     {
-        $this->Repartition1 = $Repartition1;
-
-        return $this;
-    }
-
-    public function getRepartition2(): ?float
-    {
-        return $this->Repartition2;
-    }
-
-    public function setRepartition2(float $Repartition2): self
-    {
-        $this->Repartition2 = $Repartition2;
-
-        return $this;
-    }
-
-    public function getRepartition3(): ?float
-    {
-        return $this->Repartition3;
-    }
-
-    public function setRepartition3(float $Repartition3): self
-    {
-        $this->Repartition3 = $Repartition3;
-
-        return $this;
-    }
-
-    public function getRepartition4(): ?float
-    {
-        return $this->Repartition4;
-    }
-
-    public function setRepartition4(float $Repartition4): self
-    {
-        $this->Repartition4 = $Repartition4;
-
-        return $this;
-    }
-
-    public function getIdentifiantexp(): ?ResumeExperience
-    {
-        return $this->identifiantexp;
-    }
-
-    public function setIdentifiantexp(?ResumeExperience $identifiantexp): self
-    {
-        $this->identifiantexp = $identifiantexp;
+        $this->experience = $experience;
 
         return $this;
     }

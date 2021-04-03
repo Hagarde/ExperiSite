@@ -1,17 +1,16 @@
 <?php
 
-
 namespace App\Entity;
 
-use App\Repository\ResumeExperienceRepository;
+use App\Repository\ResumeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ResumeExperienceRepository::class)
+ * @ORM\Entity(repositoryClass=ResumeRepository::class)
  */
-class ResumeExperience
+class Resume
 {
     /**
      * @ORM\Id
@@ -36,18 +35,18 @@ class ResumeExperience
     private $mu;
 
     /**
+     * @ORM\OneToMany(targetEntity=EtatExp::class, mappedBy="experience", orphanRemoval=true)
+     */
+    private $detail;
+
+    /**
      * @ORM\Column(type="float")
      */
     private $I0;
 
-    /**
-     * @ORM\OneToMany(targetEntity=DetailExp::class, mappedBy="identifiantexp", orphanRemoval=true)
-     */
-    private $identifiantexp;
-
     public function __construct()
     {
-        $this->identifiantexp = new ArrayCollection();
+        $this->detail = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,6 +90,36 @@ class ResumeExperience
         return $this;
     }
 
+    /**
+     * @return Collection|EtatExp[]
+     */
+    public function getDetail(): Collection
+    {
+        return $this->detail;
+    }
+
+    public function addDetail(EtatExp $detail): self
+    {
+        if (!$this->detail->contains($detail)) {
+            $this->detail[] = $detail;
+            $detail->setExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetail(EtatExp $detail): self
+    {
+        if ($this->detail->removeElement($detail)) {
+            // set the owning side to null (unless already changed)
+            if ($detail->getExperience() === $this) {
+                $detail->setExperience(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getI0(): ?float
     {
         return $this->I0;
@@ -99,36 +128,6 @@ class ResumeExperience
     public function setI0(float $I0): self
     {
         $this->I0 = $I0;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|DetailExp[]
-     */
-    public function getIdentifiantexp(): Collection
-    {
-        return $this->identifiantexp;
-    }
-
-    public function addIdentifiantexp(DetailExp $identifiantexp): self
-    {
-        if (!$this->identifiantexp->contains($identifiantexp)) {
-            $this->identifiantexp[] = $identifiantexp;
-            $identifiantexp->setIdentifiantexp($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdentifiantexp(DetailExp $identifiantexp): self
-    {
-        if ($this->identifiantexp->removeElement($identifiantexp)) {
-            // set the owning side to null (unless already changed)
-            if ($identifiantexp->getIdentifiantexp() === $this) {
-                $identifiantexp->setIdentifiantexp(null);
-            }
-        }
 
         return $this;
     }
