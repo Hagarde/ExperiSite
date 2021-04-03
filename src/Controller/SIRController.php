@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 
 class SIRController extends AbstractController
 {
@@ -73,7 +75,7 @@ class SIRController extends AbstractController
      * @Route("/exp/exp_form", name="exp_form")
      */
 
-    public function exp_form() 
+    public function exp_form(Request $request,EntityManagerInterface $manager) 
     {
         $resultexp = new DetailExp();
         $form = $this->createFormBuilder($resultexp)
@@ -97,11 +99,22 @@ class SIRController extends AbstractController
                             'max' => 100]
                         ])
                         ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid() ){
+            $resultexp->setRepartition1()
+                    ->setRepartition2()
+                    ->setRepartition3()
+                    ->setRepartition4();
+
+            $manager->persist($resultexp);
+            $manager->flush();
+            return $this->redirectToRoute('exp_form',[]);
+        }                        
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView()
         ]
     );
-    }
-
-    
+    }   
 }

@@ -147,6 +147,12 @@ class DetailExp
      */
     private $Repartition4;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ResumeExperience::class, inversedBy="identifiantexp")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $identifiantexp;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -460,6 +466,18 @@ class DetailExp
     public function setRepartition4(float $Repartition4): self
     {
         $this->Repartition4 = $Repartition4;
+
+        return $this;
+    }
+
+    public function getIdentifiantexp(): ?ResumeExperience
+    {
+        return $this->identifiantexp;
+    }
+
+    public function setIdentifiantexp(?ResumeExperience $identifiantexp): self
+    {
+        $this->identifiantexp = $identifiantexp;
 
         return $this;
     }
