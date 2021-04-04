@@ -15,6 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
+function random_0_1() 
+{
+    return (float)rand() / (float)getrandmax();
+}
+
 class SIRController extends AbstractController
 {
     /**
@@ -50,7 +55,7 @@ class SIRController extends AbstractController
         ]);
     }
 
-    
+
     /**
      * @Route("/about", name="about_us")
      */
@@ -75,48 +80,72 @@ class SIRController extends AbstractController
     }
 
     /**
+     * @Route("/exp/exp_form/{$id}", name="exp_form")
      * @Route("/exp/exp_form", name="exp_form")
      */
 
-    public function exp_form(Request $request,EntityManagerInterface $manager) 
+    public function exp_form(Resume $resume=null ,Request $request,EntityManagerInterface $manager) 
     {
+        if (!$resume) {
+            $resume = new Resume();
+            $resume->setR0(rand(3,15))
+                    ->setpi(random_0_1())
+                    ->setMu(1/rand(5,25))
+                    ->setI0(random_0_1());
+            $manager->persist($resume);
+            $manager->flush();
+            
+        }
+
+
+
         $resultexp = new EtatExp();
         $form = $this->createFormBuilder($resultexp)
                     
-                    -> add('Repartition1', RangeType::class, [
+                    -> add('Test11', RangeType::class, [
                         'attr' => [
                             'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100]
                         ])
-                    -> add('Repartition2', RangeType::class, [
+                    -> add('Test12', RangeType::class, [
                         'attr' => [
                             'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100]
                         ])
-                    -> add('Repartition3', RangeType::class, [
+                    -> add('Test21', RangeType::class, [
                         'attr' => [
                             'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100]
-                        ])
+                            ])
+                    ->add('save', SubmitType::class,[
+                        'label'=>'Enregistrer ma décision'
+                    ])
+                        
                         ->getForm();
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() ){
-            $resultexp->setRepartition1()
-                    ->setRepartition2()
-                    ->setRepartition3()
-                    ->setRepartition4();
+            $repartition1 = $resultexp->getTest11();
+            $repartition2 = $resultexp->getTest12();
+            $repartition3 = $resultexp->getTest21();
+            $resultexp->setTest11((100-$repartition1)*(100-$repartition2)/10000)
+                    ->setTest12((100-$repartition1)*($repartition2)/10000)
+                    ->setTest21(($repartition1)*(100-$repartition3)/10000)
+                    ->setTest22(($repartition1)*($repartition3)/10000)
+                    ->setExperience($resume);
+                    
 
             $manager->persist($resultexp);
             $manager->flush();
             return $this->redirectToRoute('exp_form',[]);
         }                        
         return $this->render('sir/exp_python.html.twig',[
-            'formExp' => $form->createView()
+            'formExp' => $form->createView(),
+            'varable du resume ' => $resume // aucun sens il faudrait que ce soit les données de l'état actuelle de l'épidémie 
         ]
     );
     }   

@@ -12,25 +12,22 @@
   <h1> Voilà le panneau à partir duquel vous allez pouvoir gérer comme bon vous semble la répartition des tests entre les deux départements et les deux âges </h1>
   <p> Vous allez enregistrer votre décision puis nous avancerons de 1 jour dans l'épidémie et vous allez avoir accés aux résulatts des tests que vous avez permis </p>
 
-<p> Pour le moment nous n'avons aucune informations sur cette nouvelle épidémie mais vous en saurez peut-être plus demain !</p>
+<p> Pour le moment les seules informations qu'un virus inconnu a été détecté dans la population de votre région </p>
 
   {{form_start(formExp)}}
   <div name="form">
     <label>Répartition entre les deux départements</label>
-    {{form_widget(formExp.Repartition1)}}
+    {{form_widget(formExp.Test11)}}
   </div>
   <div name="form">
     <label>Répartition entre la population jeune et vieille dans le premier département :</label>
-    {{form_widget(formExp.Repartition2)}}
+    {{form_widget(formExp.Test12)}}
   </div>
   <div name="form">
     <label>Répartition entre la population jeune et vieille dans le second département :</label>
-    {{form_widget(formExp.Repartition3)}}
+    {{form_widget(formExp.Test21)}}
   </div>
 
-<a href='{{path('exp_form')}}'>
-  <button >Enregistrer ma décision</button>
-</a>
 {{form_end(formExp)}}
 
 {% endblock %}
