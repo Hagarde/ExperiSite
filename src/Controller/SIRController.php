@@ -86,20 +86,49 @@ class SIRController extends AbstractController
 
     public function exp_form(Resume $resume=null ,Request $request,EntityManagerInterface $manager) 
     {
+
+        $resultexp = new EtatExp();
         if (!$resume) {
+            $etatinitial = new EtatExp;
+            $i0=random_0_1();
+            $NN=100;
             $resume = new Resume();
             $resume->setR0(rand(3,15))
                     ->setpi(random_0_1())
                     ->setMu(1/rand(5,25))
-                    ->setI0(random_0_1());
+                    ->setI0($i0);
             $manager->persist($resume);
             $manager->flush();
-            
+            $etatinitial-> setU1($i0*random_0_1())
+                -> setU2($i0*random_0_1())
+                -> setU3($i0*random_0_1())
+                -> setU4($i0*random_0_1())
+                -> setS1($NN-$etatinitial->getU1())
+                -> setS2($NN-$etatinitial->getU1())
+                -> setS3($NN-$etatinitial->getU1())
+                -> setS4($NN-$etatinitial->getU1())
+                -> setP1(0)
+                -> setP2(0)
+                -> setP3(0)
+                -> setP4(0)
+                -> setRu1(0)
+                -> setRu2(0)
+                -> setRu3(0)
+                -> setRu4(0)
+                -> setRp1(0)
+                -> setRp2(0)
+                -> setRp3(0)
+                -> setRp4(0)
+                ->setT(0)
+                ->setTest11(0)
+                ->setTest12(0)
+                ->setTest21(0)
+                ->setTest22(0)
+                ->setExperience($resume);
+            $manager->persist($etatinitial);
+            $manager->flush();
         }
-
-
-
-        $resultexp = new EtatExp();
+        
         $form = $this->createFormBuilder($resultexp)
                     
                     -> add('Test11', RangeType::class, [
@@ -129,6 +158,7 @@ class SIRController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() ){
+
             $repartition1 = $resultexp->getTest11();
             $repartition2 = $resultexp->getTest12();
             $repartition3 = $resultexp->getTest21();
@@ -137,7 +167,9 @@ class SIRController extends AbstractController
                     ->setTest21(($repartition1)*(100-$repartition3)/10000)
                     ->setTest22(($repartition1)*($repartition3)/10000)
                     ->setExperience($resume);
-                    
+
+            $command = escapeshellcmd('/python_script/application_env.py');
+            $output = shell_exec($command);
 
             $manager->persist($resultexp);
             $manager->flush();
@@ -145,7 +177,7 @@ class SIRController extends AbstractController
         }                        
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView(),
-            'varable du resume ' => $resume // aucun sens il faudrait que ce soit les données de l'état actuelle de l'épidémie 
+            'data' => $resultexp // aucun sens il faudrait que ce soit les données de l'état actuelle de l'épidémie 
         ]
     );
     }   
