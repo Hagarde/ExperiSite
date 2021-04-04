@@ -44,6 +44,36 @@ class Resume
      */
     private $I0;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $influence12;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $influence13;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $influence14;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $influence23;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $influence24;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $influence34;
+
     public function __construct()
     {
         $this->detail = new ArrayCollection();
@@ -128,6 +158,78 @@ class Resume
     public function setI0(float $I0): self
     {
         $this->I0 = $I0;
+
+        return $this;
+    }
+
+    public function getInfluence12(): ?float
+    {
+        return $this->influence12;
+    }
+
+    public function setInfluence12(float $influence12): self
+    {
+        $this->influence12 = $influence12;
+
+        return $this;
+    }
+
+    public function getInfluence13(): ?float
+    {
+        return $this->influence13;
+    }
+
+    public function setInfluence13(float $influence13): self
+    {
+        $this->influence13 = $influence13;
+
+        return $this;
+    }
+
+    public function getInfluence14(): ?float
+    {
+        return $this->influence14;
+    }
+
+    public function setInfluence14(float $influence14): self
+    {
+        $this->influence14 = $influence14;
+
+        return $this;
+    }
+
+    public function getInfluence23(): ?float
+    {
+        return $this->influence23;
+    }
+
+    public function setInfluence23(float $influence23): self
+    {
+        $this->influence23 = $influence23;
+
+        return $this;
+    }
+
+    public function getInfluence24(): ?float
+    {
+        return $this->influence24;
+    }
+
+    public function setInfluence24(float $influence24): self
+    {
+        $this->influence24 = $influence24;
+
+        return $this;
+    }
+
+    public function getInfluence34(): ?float
+    {
+        return $this->influence34;
+    }
+
+    public function setInfluence34(float $influence34): self
+    {
+        $this->influence34 = $influence34;
 
         return $this;
     }

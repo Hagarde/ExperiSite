@@ -2,7 +2,8 @@ import environnement_exp as env
 import  numpy as np 
 import pandas as pd
 import time 
-
+import sys 
+import os 
 # Test pour voir de beaux graphes de base et cool 
 """
 NN = (10**5) 
@@ -102,3 +103,44 @@ Lorraine = env.env_minimal("Lorraine",NN,VIRUS,0,NN*0.99,NN*0.01,0,0,0)
 Lorraine.crache_un_graphe_continu(proportion_test,duree)
 print(Lorraine.determiner_controllabilite (proportion_test,100))
 """
+
+
+
+if __name__ == "__main__":
+    s1 = float(sys.argv[1])
+    s2 = float(sys.argv[2])
+    s3 = float(sys.argv[3])
+    s4 = float(sys.argv[4])
+    u1 = float(sys.argv[5])
+    u2 = float(sys.argv[6])
+    u3 = float(sys.argv[7])
+    u4 = float(sys.argv[8])
+    p1 = float(sys.argv[9])
+    p2 = float(sys.argv[10])
+    p3 = float(sys.argv[11])
+    p4 = float(sys.argv[12])
+    ru1 = float(sys.argv[13])
+    ru2 = float(sys.argv[14])
+    ru3 = float(sys.argv[15])
+    ru4 = float(sys.argv[16])
+    rp1 = float(sys.argv[17])
+    rp2 = float(sys.argv[18])
+    rp3 = float(sys.argv[19])
+    rp4 = float(sys.argv[20])
+    R = float(sys.argv[21])
+    pi = float(sys.argv[22])
+    mu = float(sys.argv[23])
+    test11 = float(sys.argv[24])
+    test12 = float(sys.argv[25])
+    test21 = float(sys.argv[26])
+    test22 = float(sys.argv[27])
+    influence1_2 =float(sys.argv[28])
+    influence1_3 =float(sys.argv[29])
+    influence1_4 =float(sys.argv[30])
+    influence2_3 =float(sys.argv[31])
+    influence2_4 =float(sys.argv[32])
+    influence3_4 =float(sys.argv[33])
+    matrice_influence = np.array[[0,influence1_2,influence1_3,influence1_4],[influence1_2,0,influence2_3,influence2_4],[influence1_3,influence2_3,0,influence3_4],[influence1_4,influence2_4,influence3_4,0]]
+    VIRUS = env.maladie(R,pi,mu)
+    environnement_total = env.env_total(1000000,1000000,1000000,1000000,R,pi,mu,matrice_influence,s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4)
+    message = environnement_local.je_veux_juste_le_lendemain()

@@ -144,6 +144,7 @@ class env_total:
         self.history[3][2].append(self.P4)
         self.history[3][3].append(self.R4_U)
         self.history[3][4].append(self.R4_P)
+        return self.history
 
     def graphe_sur_charge(self,prop_test1,prop_test2,prop_test3,prop_test4) :
         test1 = prop_test1 * self.NN1

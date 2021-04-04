@@ -80,29 +80,38 @@ class SIRController extends AbstractController
     }
 
     /**
-     * @Route("/exp/exp_form/{$id}", name="exp_form")
+     * @Route("/exp/exp_form/{$id}/{$t}", name="exp_form")
      * @Route("/exp/exp_form", name="exp_form")
      */
 
     public function exp_form(Resume $resume=null ,Request $request,EntityManagerInterface $manager) 
     {
-
+        // j'aimerais accéder à l'état exp du t précèdent 
+        
         $resultexp = new EtatExp();
         if (!$resume) {
             $etatinitial = new EtatExp;
-            $i0=random_0_1();
-            $NN=100;
+            $i0 = random_0_1()/10;
+            $NN = 100;
             $resume = new Resume();
             $resume->setR0(rand(3,15))
                     ->setpi(random_0_1())
                     ->setMu(1/rand(5,25))
-                    ->setI0($i0);
+                    ->setI0($i0)
+                    ->setInfluence12(random_0_1())
+                    ->setInfluence13(random_0_1())
+                    ->setInfluence14(random_0_1())
+                    ->setInfluence23(random_0_1())
+                    ->setInfluence24(random_0_1())
+                    ->setInfluence34(random_0_1());
+
             $manager->persist($resume);
             $manager->flush();
-            $etatinitial-> setU1($i0*random_0_1())
-                -> setU2($i0*random_0_1())
-                -> setU3($i0*random_0_1())
-                -> setU4($i0*random_0_1())
+
+            $etatinitial-> setU1($i0)
+                -> setU2($i0)
+                -> setU3($i0)
+                -> setU4($i0)
                 -> setS1($NN-$etatinitial->getU1())
                 -> setS2($NN-$etatinitial->getU1())
                 -> setS3($NN-$etatinitial->getU1())
@@ -127,8 +136,14 @@ class SIRController extends AbstractController
                 ->setExperience($resume);
             $manager->persist($etatinitial);
             $manager->flush();
+            $etatavant = $etatinitial;
         }
-        
+        else {
+            $repo = $this->getDoctrine()->getRepository(EtatExp::class);
+
+            $etatavant= 1;
+        }
+
         $form = $this->createFormBuilder($resultexp)
                     
                     -> add('Test11', RangeType::class, [
@@ -149,9 +164,6 @@ class SIRController extends AbstractController
                             'min' => 0,
                             'max' => 100]
                             ])
-                    ->add('save', SubmitType::class,[
-                        'label'=>'Enregistrer ma décision'
-                    ])
                         
                         ->getForm();
 
@@ -168,8 +180,43 @@ class SIRController extends AbstractController
                     ->setTest22(($repartition1)*($repartition3)/10000)
                     ->setExperience($resume);
 
-            $command = escapeshellcmd('/python_script/application_env.py');
+            $s1 = strval($resultexp->getS1());
+            $s2 = strval($resultexp->getS2());
+            $s3 = strval($resultexp->getS3());
+            $s4 = strval($resultexp->getS4());
+            $u1 = strval($resultexp->getU1());
+            $u2 = strval($resultexp->getU2());
+            $u3 = strval($resultexp->getU3());
+            $u4 = strval($resultexp->getU4());
+            $p1 = strval($resultexp->getP1());
+            $p2 = strval($resultexp->getP2());
+            $p3 = strval($resultexp->getP3());
+            $p4 = strval($resultexp->getP4());
+            $ru1 =strval($resultexp->getRu1());
+            $ru2 =strval($resultexp->getRu2());
+            $ru3 =strval($resultexp->getRu3());
+            $ru4 =strval($resultexp->getRu4());
+            $rp1 =strval($resultexp->getRp1());
+            $rp2 =strval($resultexp->getRp2());
+            $rp3 =strval($resultexp->getRp3());
+            $rp4 =strval($resultexp->getRp4());
+            $R0 =strval($resume->getR0());
+            $pi =strval($resume->getPi());
+            $mu =strval($resume->getMu());
+            $test11 =strval($resultexp->getTest11());
+            $test12 =strval($resultexp->getTest12());
+            $test21 =strval($resultexp->getTest21());
+            $test22 =strval($resultexp->getTest22());
+            $influence12 =strval($resultexp->getTest11());
+            $influence13 =strval($resultexp->getTest12());
+            $influence14 =strval($resultexp->getTest21());
+            $influence23 =strval($resultexp->getTest22());
+            $influence24 =strval($resultexp->getTest21());
+            $influence34 =strval($resultexp->getTest22());
+
+            $command = escapeshellcmd('/python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34);
             $output = shell_exec($command);
+            dump($output);
 
             $manager->persist($resultexp);
             $manager->flush();
@@ -177,7 +224,8 @@ class SIRController extends AbstractController
         }                        
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView(),
-            'data' => $resultexp // aucun sens il faudrait que ce soit les données de l'état actuelle de l'épidémie 
+            'num_exp' => $resume->getId() ,
+            'temps' => $resultexp->getT()
         ]
     );
     }   
