@@ -156,4 +156,4 @@ if __name__ == "__main__":
     message = "echo " + message
     os.system(message)
     # pour tester le truc entrer : 
-    # python3 python_script/application_env.py 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    # python3 python_script/application_env.py 95 95 95 95 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 10 1 0.1 0.25 0.25 0.25 0.25 0 0 0 0 0 0 

@@ -171,50 +171,51 @@ class SIRController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid() ){
 
-            $repartition1 = $resultexp->getTest11();
-            $repartition2 = $resultexp->getTest12();
-            $repartition3 = $resultexp->getTest21();
-            $resultexp->setTest11((100-$repartition1)*(100-$repartition2)/10000)
+            $repartition1 = $etatavant->getTest11();
+            $repartition2 = $etatavant->getTest12();
+            $repartition3 = $etatavant->getTest21();
+            $etatavant->setTest11((100-$repartition1)*(100-$repartition2)/10000)
                     ->setTest12((100-$repartition1)*($repartition2)/10000)
                     ->setTest21(($repartition1)*(100-$repartition3)/10000)
                     ->setTest22(($repartition1)*($repartition3)/10000)
                     ->setExperience($resume);
-
-            $s1 = strval($resultexp->getS1());
-            $s2 = strval($resultexp->getS2());
-            $s3 = strval($resultexp->getS3());
-            $s4 = strval($resultexp->getS4());
-            $u1 = strval($resultexp->getU1());
-            $u2 = strval($resultexp->getU2());
-            $u3 = strval($resultexp->getU3());
-            $u4 = strval($resultexp->getU4());
-            $p1 = strval($resultexp->getP1());
-            $p2 = strval($resultexp->getP2());
-            $p3 = strval($resultexp->getP3());
-            $p4 = strval($resultexp->getP4());
-            $ru1 =strval($resultexp->getRu1());
-            $ru2 =strval($resultexp->getRu2());
-            $ru3 =strval($resultexp->getRu3());
-            $ru4 =strval($resultexp->getRu4());
-            $rp1 =strval($resultexp->getRp1());
-            $rp2 =strval($resultexp->getRp2());
-            $rp3 =strval($resultexp->getRp3());
-            $rp4 =strval($resultexp->getRp4());
+            
+            $s1 = strval($etatavant->getS1());
+            $s2 = strval($etatavant->getS2());
+            $s3 = strval($etatavant->getS3());
+            $s4 = strval($etatavant->getS4());
+            $u1 = strval($etatavant->getU1());
+            $u2 = strval($etatavant->getU2());
+            $u3 = strval($etatavant->getU3());
+            $u4 = strval($etatavant->getU4());
+            $p1 = strval($etatavant->getP1());
+            $p2 = strval($etatavant->getP2());
+            $p3 = strval($etatavant->getP3());
+            $p4 = strval($etatavant->getP4());
+            $ru1 =strval($etatavant->getRu1());
+            $ru2 =strval($etatavant->getRu2());
+            $ru3 =strval($etatavant->getRu3());
+            $ru4 =strval($etatavant->getRu4());
+            $rp1 =strval($etatavant->getRp1());
+            $rp2 =strval($etatavant->getRp2());
+            $rp3 =strval($etatavant->getRp3());
+            $rp4 =strval($etatavant->getRp4());
             $R0 =strval($resume->getR0());
             $pi =strval($resume->getPi());
             $mu =strval($resume->getMu());
-            $test11 =strval($resultexp->getTest11());
-            $test12 =strval($resultexp->getTest12());
-            $test21 =strval($resultexp->getTest21());
-            $test22 =strval($resultexp->getTest22());
-            $influence12 =strval($resultexp->getTest11());
-            $influence13 =strval($resultexp->getTest12());
-            $influence14 =strval($resultexp->getTest21());
-            $influence23 =strval($resultexp->getTest22());
-            $influence24 =strval($resultexp->getTest21());
-            $influence34 =strval($resultexp->getTest22());
-
-            $command = escapeshellcmd('pyton  /python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34);
+            $test11 =strval($etatavant->getTest11());
+            $test12 =strval($etatavant->getTest12());
+            $test21 =strval($etatavant->getTest21());
+            $test22 =strval($etatavant->getTest22());
+            $influence12 =strval($etatavant->getTest11());
+            $influence13 =strval($etatavant->getTest12());
+            $influence14 =strval($etatavant->getTest21());
+            $influence23 =strval($etatavant->getTest22());
+            $influence24 =strval($etatavant->getTest21());
+            $influence34 =strval($etatavant->getTest22());
+            
+            $stringcommand = 'python3  python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
+            $command = escapeshellcmd($stringcommand);
             $output = shell_exec($command);
             dump($output);
 
