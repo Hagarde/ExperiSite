@@ -1,6 +1,5 @@
 import environnement_exp as env
-import  numpy as np 
-import pandas as pd
+import numpy as np 
 import time 
 import sys 
 import os 
@@ -104,9 +103,18 @@ Lorraine.crache_un_graphe_continu(proportion_test,duree)
 print(Lorraine.determiner_controllabilite (proportion_test,100))
 """
 
+def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4,R,pi,mu,matrice_influence) :
+    VIRUS = env.maladie(R,pi,mu)
+    en = env.env_total(100000,100000,100000,100000,VIRUS,matrice_influence,s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4)
+    en.donnees_demain(test11,test12,test21,test22)
+    message = str(en.S1)+" "+str(en.S2)+" "+str(en.S3)+" "+str(en.S4)+" "+str(en.U1)+" "+str(en.U2)+" "+str(en.U3)+" "+str(en.U4)+" "+str(en.P1)+" "+str(en.P2)+" "+str(en.P3)+" "+str(en.P4)+" "+str(en.R_U1)+" "+str(en.R_U2)+" "+str(en.R_U3)+" "+str(en.R_U4)+" "+str(en.R_P1)+" "+str(en.R_P2)+" "+str(en.R_P3)+" "+str(en.R_P4)
+    message = "echo " + message
+    os.system(message)
+    return [en.S1,en.S2,en.S3,en.S4,en.U1,en.U2,en.U3,en.U4,en.P1,en.P2,en.P3,en.P4,en.R_U1,en.R_U2,en.R_U3,en.R_U4,en.R_P1,en.R_P2,en.R_P3,en.R_P4]
 
 
 if __name__ == "__main__":
+    proportion_pop_testee = 0.5
     s1 = float(sys.argv[1])
     s2 = float(sys.argv[2])
     s3 = float(sys.argv[3])
@@ -130,17 +138,22 @@ if __name__ == "__main__":
     R = float(sys.argv[21])
     pi = float(sys.argv[22])
     mu = float(sys.argv[23])
-    test11 = float(sys.argv[24])
-    test12 = float(sys.argv[25])
-    test21 = float(sys.argv[26])
-    test22 = float(sys.argv[27])
-    influence1_2 =float(sys.argv[28])
+    test11 = float(sys.argv[24]) * proportion_pop_testee
+    test12 = float(sys.argv[25])* proportion_pop_testee
+    test21 = float(sys.argv[26])* proportion_pop_testee
+    test22 = float(sys.argv[27])* proportion_pop_testee
+    influence1_2 =float(sys.argv[28]) 
     influence1_3 =float(sys.argv[29])
     influence1_4 =float(sys.argv[30])
     influence2_3 =float(sys.argv[31])
     influence2_4 =float(sys.argv[32])
     influence3_4 =float(sys.argv[33])
-    matrice_influence = np.array[[0,influence1_2,influence1_3,influence1_4],[influence1_2,0,influence2_3,influence2_4],[influence1_3,influence2_3,0,influence3_4],[influence1_4,influence2_4,influence3_4,0]]
-    VIRUS = env.maladie(R,pi,mu)
-    environnement_total = env.env_total(1000000,1000000,1000000,1000000,R,pi,mu,matrice_influence,s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4)
-    message = environnement_local.je_veux_juste_le_lendemain()
+    matrice_influence = [[0,influence1_2,influence1_3,influence1_4],[influence1_2,0,influence2_3,influence2_4],[influence1_3,influence2_3,0,influence3_4],[influence1_4,influence2_4,influence3_4,0]]
+    liste = fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4,R,pi,mu,matrice_influence)
+    message =""
+    for element in liste : 
+        message = message + str(element) + " "
+    message = "echo " + message
+    os.system(message)
+    # pour tester le truc entrer : 
+    # python3 python_script/application_env.py 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1

@@ -100,7 +100,9 @@ class env_total:
             return [dS1,dU1,dP1,dR_U1,dR_P1,dS2,dU2,dP2,dR_U2,dR_P2,dS3,dU3,dP3,dR_U3,dR_P3,dS4,dU4,dP4,dR_U4,dR_P4]
         T  = np.arange(0,100,1)
         data = odeint (systeme_diff,[self.S1,self.U1,self.P1,self.R_U1,self.R_P1,self.S2,self.U2,self.P2,self.R_U2,self.R_P2,self.S3,self.U3,self.P3,self.R_U3,self.R_P3,self.S4,self.U4,self.P4,self.R_U4,self.R_P4],T)
+    
     # Actualisation du milion et demi de valeur !!
+
         self.S1 = data[1,0] 
         self.U1 = data[1,1]
         self.P1 = data[1,2]
@@ -143,8 +145,63 @@ class env_total:
         self.history[3][1].append(self.U4)
         self.history[3][2].append(self.P4)
         self.history[3][3].append(self.R4_U)
-        self.history[3][4].append(self.R4_P)
-        return self.history
+
+    def donnees_demain (self,prop_test1,prop_test2,prop_test3,prop_test4) :
+        test1 = prop_test1 * self.NN1
+        test2 = prop_test2 * self.NN2
+        test3 = prop_test3 * self.NN3
+        test4 = prop_test4 * self.NN4
+        def systeme_diff (vecteur_condition_initiale,t) :
+            S01,U01,P01,R0_U1,R0_P1,S02,U02,P02,R0_U2,R0_P2,S03,U03,P03,R0_U3,R0_P3,S04,U04,P04,R0_U4,R0_P4 = vecteur_condition_initiale
+            dS1 = - self.beta1 * S01 * (U01 + (1-self.virus.pi)*P01)
+            dS2 = - self.beta2 * S02 * (U02 + (1-self.virus.pi)*P02)
+            dS3 = - self.beta3 * S03 * (U03 + (1-self.virus.pi)*P03)
+            dS4 = - self.beta4 * S04 * (U04 + (1-self.virus.pi)*P04) 
+            dR_U1 = self.virus.mu * U01 
+            dR_U2 = self.virus.mu * U02 
+            dR_U3 = self.virus.mu * U03 
+            dR_U4 = self.virus.mu * U04  
+            dR_P1 = self.virus.mu * P01
+            dR_P2 = self.virus.mu * P02
+            dR_P3 = self.virus.mu * P03
+            dR_P4 = self.virus.mu * P04
+            dP1 = ((test1)**(1.5))*(((U01/(U01+R0_U1+S01)))**(1.5)) - self.virus.mu * P01
+            dP2 = ((test2)**(1.5))*(((U02/(U02+R0_U2+S02)))**(1.5)) - self.virus.mu * P02
+            dP3 = ((test3)**(1.5))*(((U03/(U03+R0_U3+S03)))**(1.5)) - self.virus.mu * P03
+            dP4 = ((test4)**(1.5))*(((U04/(U04+R0_U4+S04)))**(1.5)) - self.virus.mu * P04
+            dU1 = -dS1 - self.virus.mu*U01 - ((test1)**(1.5))*(((U01/(U01+R0_U1+S01)))**(1.5)) + U02 * self.influence_1_2* self.beta2 + U03 * self.influence_1_3 * self.beta3 + U04 * self.influence_1_4 *self.beta4
+            dU2 = -dS2 - self.virus.mu*U02 - ((test2)**(1.5))*(((U02/(U02+R0_U2+S02)))**(1.5)) + U01 * self.influence_2_1 * self.beta1 + U03 * self.influence_2_3 *self.beta3+ U04 * self.influence_2_4*self.beta4 
+            dU3 = -dS3 - self.virus.mu*U03 - ((test3)**(1.5))*(((U03/(U03+R0_U3+S03)))**(1.5)) + U01 * self.influence_3_1 * self.beta1+ U02 * self.influence_3_2 * self.beta2 + U04 * self.influence_3_4*self.beta4
+            dU4 = -dS4 - self.virus.mu*U04 - ((test4)**(1.5))*(((U04/(U04+R0_U4+S04)))**(1.5)) + U01 * self.influence_4_1 * self.beta1+ U02 * self.influence_4_2 * self.beta2 + U03 * self.influence_4_3*self.beta3 
+            return [dS1,dU1,dP1,dR_U1,dR_P1,dS2,dU2,dP2,dR_U2,dR_P2,dS3,dU3,dP3,dR_U3,dR_P3,dS4,dU4,dP4,dR_U4,dR_P4]
+        T  = np.arange(0,100,1)
+        data = odeint (systeme_diff,[self.S1,self.U1,self.P1,self.R_U1,self.R_P1,self.S2,self.U2,self.P2,self.R_U2,self.R_P2,self.S3,self.U3,self.P3,self.R_U3,self.R_P3,self.S4,self.U4,self.P4,self.R_U4,self.R_P4],T)
+    
+    # Actualisation du milion et demi de valeur !!
+    
+        self.S1 = data[1,0] 
+        self.U1 = data[1,1]
+        self.P1 = data[1,2]
+        self.R1_U = data[1,3]
+        self.R1_P = data[1,4]
+
+        self.S2 = data[1,5] 
+        self.U2 = data[1,6]
+        self.P2 = data[1,7]
+        self.R2_U = data[1,8]
+        self.R2_P = data[1,9]
+
+        self.S3 = data[1,10] 
+        self.U3 = data[1,11]
+        self.P3 = data[1,12]
+        self.R3_U = data[1,13]
+        self.R3_P = data[1,14]
+
+        self.S4 = data[1,15] 
+        self.U4 = data[1,16]
+        self.P4 = data[1,17]
+        self.R4_U = data[1,18]
+        self.R4_P = data[1,19]
 
     def graphe_sur_charge(self,prop_test1,prop_test2,prop_test3,prop_test4) :
         test1 = prop_test1 * self.NN1
