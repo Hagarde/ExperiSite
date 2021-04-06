@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import environnement_exp as env
 import numpy as np 
 import time 
@@ -155,5 +156,10 @@ if __name__ == "__main__":
         message = message + str(element) + " "
     message = "echo " + message
     os.system(message)
+    # Je vais écrire dans un fichier text les données à trnasmettre à php
+    f = open('data.txt','w')
+    f.write(message)
+
+
     # pour tester le truc entrer : 
-    # python3 python_script/application_env.py 95 95 95 95 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 10 1 0.1 0.25 0.25 0.25 0.25 0 0 0 0 0 0 
+    # python3 public/python_script/application_env.py 95 95 95 95 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 10 1 0.1 0.25 0.25 0.25 0.25 0 0 0 0 0 0 
