@@ -175,7 +175,7 @@ class env_total:
             dU3 = -dS3 - self.virus.mu*U03 - ((test3)**(1.5))*(((U03/(U03+R0_U3+S03)))**(1.5)) + U01 * self.influence_3_1 * self.beta1+ U02 * self.influence_3_2 * self.beta2 + U04 * self.influence_3_4*self.beta4
             dU4 = -dS4 - self.virus.mu*U04 - ((test4)**(1.5))*(((U04/(U04+R0_U4+S04)))**(1.5)) + U01 * self.influence_4_1 * self.beta1+ U02 * self.influence_4_2 * self.beta2 + U03 * self.influence_4_3*self.beta3 
             return [dS1,dU1,dP1,dR_U1,dR_P1,dS2,dU2,dP2,dR_U2,dR_P2,dS3,dU3,dP3,dR_U3,dR_P3,dS4,dU4,dP4,dR_U4,dR_P4]
-        T  = np.arange(0,100,1)
+        T  = np.arange(0,2,1)
         data = odeint (systeme_diff,[self.S1,self.U1,self.P1,self.R_U1,self.R_P1,self.S2,self.U2,self.P2,self.R_U2,self.R_P2,self.S3,self.U3,self.P3,self.R_U3,self.R_P3,self.S4,self.U4,self.P4,self.R_U4,self.R_P4],T)
     
     # Actualisation du milion et demi de valeur !!
