@@ -80,24 +80,28 @@ class SIRController extends AbstractController
     }
 
     /**
-     * @Route("/exp/exp_form/{$id}/{$t}", name="exp_form")
+     * @Route("/exp/exp_form/{$id}", name="exp_form")
      * @Route("/exp/exp_form", name="exp_form")
      */
 
-    public function exp_form(Resume $resume=null ,Request $request,EntityManagerInterface $manager) 
+    public function exp_form($id=null,Resume $resume=null ,Request $request,Epidemie $epidemie=null,EtatExp $etatavant=null, EntityManagerInterface $manager) 
     {
-        // j'aimerais accéder à l'état exp du t précèdent 
+
         
         $resultexp = new EtatExp();
-        if (!$resume) {
+
+        if (!$id) {
+            // On s'occupe du cas de l'initialisation de l'exp avec choix de l'expé et tout 
+            $repo = $this->getDoctrine()->getRepository(Epidemie::class);
+            $IDrandom = rand(1,199);
+            $epi = $repo->find($IDrandom);
             $etatinitial = new EtatExp;
-            $i0 = random_0_1()/10;
-            $NN = 100;
+            $NN = 10000;
             $resume = new Resume();
-            $resume->setR0(rand(3,15))
-                    ->setpi(random_0_1())
-                    ->setMu(1/rand(5,25))
-                    ->setI0($i0)
+            $resume->setR0($epi->getR())
+                    ->setpi($epi->getPi())
+                    ->setMu($epi->getMu())
+                    ->setI0(0.05)
                     ->setInfluence12(random_0_1())
                     ->setInfluence13(random_0_1())
                     ->setInfluence14(random_0_1())
@@ -139,9 +143,10 @@ class SIRController extends AbstractController
             $etatavant = $etatinitial;
         }
         else {
-            $repo = $this->getDoctrine()->getRepository(EtatExp::class);
-
-            $etatavant= 1;
+            $repo = $this->getDoctrine()->getRepository(Resume::class);
+            $resume_exp = $repo->findOneById($id);
+            $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
+            $etatavant = $repo->findByResume($resume_exp);
         }
 
         $form = $this->createFormBuilder($resultexp)
@@ -214,14 +219,6 @@ class SIRController extends AbstractController
             $influence24 =strval($etatavant->getTest21());
             $influence34 =strval($etatavant->getTest22());
             
-            /*
-            $command = escapeshellcmd('pip3 install numpy');
-            shell_exec($command);
-            $command = escapeshellcmd('pip3 install scipy');
-            shell_exec($command);
-            $command = escapeshellcmd('pip3 install matplotlib');
-            shell_exec($command);
-            */
 
             $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
             $command = escapeshellcmd($stringcommand .'2>&1');
