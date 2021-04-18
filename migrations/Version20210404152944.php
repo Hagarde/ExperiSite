@@ -21,7 +21,10 @@ final class Version20210404152944 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
+        $this->addSql('ALTER TABLE `etat_exp` CHANGE `test11` `test11` DOUBLE NULL');
+        $this->addSql('ALTER TABLE `etat_exp` CHANGE `test12` `test12` DOUBLE NULL');
+        $this->addSql('ALTER TABLE `etat_exp` CHANGE `test21` `test21` DOUBLE NULL');
+        $this->addSql('ALTER TABLE `etat_exp` CHANGE `test22` `test22` DOUBLE NULL');
         $this->addSql('ALTER TABLE resume ADD influence12 DOUBLE PRECISION NOT NULL, ADD influence13 DOUBLE PRECISION NOT NULL, ADD influence14 DOUBLE PRECISION NOT NULL, ADD influence23 DOUBLE PRECISION NOT NULL, ADD influence24 DOUBLE PRECISION NOT NULL, ADD influence34 DOUBLE PRECISION NOT NULL');
     }
 

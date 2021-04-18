@@ -84,7 +84,7 @@ class SIRController extends AbstractController
      * @Route("/exp/exp_form", name="exp_form")
      */
 
-    public function exp_form($id=null,Resume $resume=null ,Request $request,Epidemie $epidemie=null,EtatExp $etatavant=null, EntityManagerInterface $manager) 
+    public function exp_form($id=null,Resume $resume=null ,Request $request, EntityManagerInterface $manager) 
     {
 
         
@@ -184,7 +184,7 @@ class SIRController extends AbstractController
                     ->setTest21(($repartition1)*(100-$repartition3)/10000)
                     ->setTest22(($repartition1)*($repartition3)/10000)
                     ->setExperience($resume);
-            
+    // Truc chiant pour utiliser le python 
             $s1 = strval($etatavant->getS1());
             $s2 = strval($etatavant->getS2());
             $s3 = strval($etatavant->getS3());
@@ -223,18 +223,32 @@ class SIRController extends AbstractController
             $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
             $command = escapeshellcmd($stringcommand);
             dump($stringcommand );
-
-
-            $strcmd ='python3 python_script/application_env.py 95 95 95 95 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 10 1 0.1 0.25 0.25 0.25 0.25 0 0 0 0 0 0';
-            $command = escapeshellcmd($strcmd);
             $output = shell_exec($command);
-            dump($output);
-            /*
-            $strcmd ='python3 python_script/test.py';
-            $command= escapeshellcmd($strcmd);
-            $output = shell_exec($command);
-            dump($output);
-            */
+            $tableau = explode(' ' , $output);
+
+        // On update 
+
+            $etatcalcule = new EtatExp() ;
+            $etatcalcule-> setS1($tableau[0])
+                        -> setS2($tableau[1])
+                        -> setS3($tableau[2])
+                        -> setS4($tableau[3])
+                        -> setU1($tableau[4])
+                        -> setU2($tableau[5])
+                        -> setU3($tableau[6])
+                        -> setU4($tableau[7])
+                        -> setRu1($tableau[8])
+                        -> setRu2($tableau[9])
+                        -> setRu3($tableau[10])
+                        -> setRu4($tableau[11])
+                        -> setRp1($tableau[12])
+                        -> setRp2($tableau[13])
+                        -> setRp3($tableau[14])
+                        -> setRp4($tableau[15])
+                        -> setT();
+                        
+                 
+
             $manager->persist($resultexp);
             $manager->flush();
             return $this->redirectToRoute('exp_form',[]);

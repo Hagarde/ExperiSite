@@ -115,7 +115,7 @@ def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p
 
 
 if __name__ == "__main__":
-    proportion_pop_testee = 0.5
+    proportion_pop_testee = 
     s1 = float(sys.argv[1])
     s2 = float(sys.argv[2])
     s3 = float(sys.argv[3])
@@ -159,6 +159,7 @@ if __name__ == "__main__":
     # Je vais écrire dans un fichier text les données à trnasmettre à php
     f = open('data.txt','w')
     f.write(message)
+
 
 
     # pour tester le truc entrer : 
