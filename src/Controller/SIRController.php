@@ -146,7 +146,7 @@ class SIRController extends AbstractController
             $repo = $this->getDoctrine()->getRepository(Resume::class);
             $resume_exp = $repo->findOneById($id);
             $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
-            $etatavant = $repo->findByResume($resume_exp);
+            $etatavant = $repo->findBy(['resume' => $resultexp], array ('t' => 'DSC'), $limit = 1);
         }
 
         $form = $this->createFormBuilder($resultexp)
@@ -221,7 +221,7 @@ class SIRController extends AbstractController
             
 
             $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
-            $command = escapeshellcmd($stringcommand .'2>&1');
+            $command = escapeshellcmd($stringcommand);
             dump($stringcommand );
 
 
