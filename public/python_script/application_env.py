@@ -115,7 +115,7 @@ def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p
 
 
 if __name__ == "__main__":
-    proportion_pop_testee = 
+    population = 10000
     s1 = float(sys.argv[1])
     s2 = float(sys.argv[2])
     s3 = float(sys.argv[3])
@@ -139,10 +139,10 @@ if __name__ == "__main__":
     R = float(sys.argv[21])
     pi = float(sys.argv[22])
     mu = float(sys.argv[23])
-    test11 = float(sys.argv[24]) * proportion_pop_testee
-    test12 = float(sys.argv[25])* proportion_pop_testee
-    test21 = float(sys.argv[26])* proportion_pop_testee
-    test22 = float(sys.argv[27])* proportion_pop_testee
+    test11 = float(sys.argv[24]) / population 
+    test12 = float(sys.argv[25])/ population 
+    test21 = float(sys.argv[26])/ population 
+    test22 = float(sys.argv[27])/ population 
     influence1_2 =float(sys.argv[28]) 
     influence1_3 =float(sys.argv[29])
     influence1_4 =float(sys.argv[30])

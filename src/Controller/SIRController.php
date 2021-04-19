@@ -1,14 +1,12 @@
 <?php
-
 namespace App\Controller;
-
 use Doctrine\Common\Persistence\ObjectManager;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\EtatExp;
 use App\Entity\Resume;
+use App\Entity\Epidemie;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -69,8 +67,9 @@ class SIRController extends AbstractController
      * @Route("/result/{id}", name="detail_exp")
      */
 
-    public function detailexpi($id, EtatExp $infoexp,Resume $resume ) 
+    public function detailexpi(int $id,Resume $resume ) 
     {
+
         $repo = $this->getDoctrine()->getRepository(EtatExp::class);
         $alldata = $repo->FindBy(array('experience'=>$id),array('T'=>'asc'));
         return $this->render('sir/detailexp.html.twig',[
@@ -80,28 +79,28 @@ class SIRController extends AbstractController
     }
 
     /**
-     * @Route("/exp/exp_form/{$id}", name="exp_form")
-     * @Route("/exp/exp_form", name="exp_form")
+     * @Route("/exp/exp_form/{identifiant}", name="exp_form_suite")
      */
 
-    public function exp_form($id=null,Resume $resume=null ,Request $request, EntityManagerInterface $manager) 
+    public function exp_form(int $identifiant,Request $request, EntityManagerInterface $manager) 
     {
-
         
         $resultexp = new EtatExp();
-
-        if (!$id) {
+        $NN = 10000;
+        $I0 = 0.05;
+        $i0 = $I0 * $NN;
+        if ($identifiant==0) {
             // On s'occupe du cas de l'initialisation de l'exp avec choix de l'expé et tout 
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
             $IDrandom = rand(1,199);
             $epi = $repo->find($IDrandom);
             $etatinitial = new EtatExp;
-            $NN = 10000;
+            
             $resume = new Resume();
             $resume->setR0($epi->getR())
                     ->setpi($epi->getPi())
                     ->setMu($epi->getMu())
-                    ->setI0(0.05)
+                    ->setI0($I0)
                     ->setInfluence12(random_0_1())
                     ->setInfluence13(random_0_1())
                     ->setInfluence14(random_0_1())
@@ -133,10 +132,7 @@ class SIRController extends AbstractController
                 -> setRp3(0)
                 -> setRp4(0)
                 ->setT(0)
-                ->setTest11(0)
-                ->setTest12(0)
-                ->setTest21(0)
-                ->setTest22(0)
+                // On ne set pas les test pour l'état initial pq on va les mettre seulement lorsque la première décision sera reçue 
                 ->setExperience($resume);
             $manager->persist($etatinitial);
             $manager->flush();
@@ -144,9 +140,10 @@ class SIRController extends AbstractController
         }
         else {
             $repo = $this->getDoctrine()->getRepository(Resume::class);
-            $resume_exp = $repo->findOneById($id);
+            $resume = $repo->findOneById($identifiant);
             $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
-            $etatavant = $repo->findBy(['resume' => $resultexp], array ('t' => 'DSC'), $limit = 1);
+            $etatavant = $repo2->findBy(['experience' => $resume], array ('T' => 'DESC'));
+            dump($etatavant);
         }
 
         $form = $this->createFormBuilder($resultexp)
@@ -176,14 +173,14 @@ class SIRController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid() ){
 
-            $repartition1 = $etatavant->getTest11();
-            $repartition2 = $etatavant->getTest12();
-            $repartition3 = $etatavant->getTest21();
+            $repartition1 = $resultexp->getTest11();
+            $repartition2 = $resultexp->getTest12();
+            $repartition3 = $resultexp->getTest21();
             $etatavant->setTest11((100-$repartition1)*(100-$repartition2)/10000)
                     ->setTest12((100-$repartition1)*($repartition2)/10000)
                     ->setTest21(($repartition1)*(100-$repartition3)/10000)
-                    ->setTest22(($repartition1)*($repartition3)/10000)
-                    ->setExperience($resume);
+                    ->setTest22(($repartition1)*($repartition3)/10000);
+
     // Truc chiant pour utiliser le python 
             $s1 = strval($etatavant->getS1());
             $s2 = strval($etatavant->getS2());
@@ -222,41 +219,44 @@ class SIRController extends AbstractController
 
             $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
             $command = escapeshellcmd($stringcommand);
-            dump($stringcommand );
             $output = shell_exec($command);
             $tableau = explode(' ' , $output);
 
-        // On update 
+        // On update et on crée la nouvelle valeur ! 
 
             $etatcalcule = new EtatExp() ;
-            $etatcalcule-> setS1($tableau[0])
-                        -> setS2($tableau[1])
-                        -> setS3($tableau[2])
-                        -> setS4($tableau[3])
-                        -> setU1($tableau[4])
-                        -> setU2($tableau[5])
-                        -> setU3($tableau[6])
-                        -> setU4($tableau[7])
-                        -> setRu1($tableau[8])
-                        -> setRu2($tableau[9])
-                        -> setRu3($tableau[10])
-                        -> setRu4($tableau[11])
-                        -> setRp1($tableau[12])
-                        -> setRp2($tableau[13])
-                        -> setRp3($tableau[14])
-                        -> setRp4($tableau[15])
-                        -> setT();
-                        
-                 
-
-            $manager->persist($resultexp);
+            $new_T = ($etatavant->getT())+1;
+            $etatcalcule-> setS1(floatval($tableau[0]))
+                        -> setS2(floatval($tableau[1]))
+                        -> setS3(floatval($tableau[2]))
+                        -> setS4(floatval($tableau[3]))
+                        -> setU1(floatval($tableau[4]))
+                        -> setU2(floatval($tableau[5]))
+                        -> setU3(floatval($tableau[6]))
+                        -> setU4(floatval($tableau[7]))
+                        -> setP1(floatval($tableau[8]))
+                        -> setP2(floatval($tableau[9]))
+                        -> setP3(floatval($tableau[10]))
+                        -> setP4(floatval($tableau[11]))
+                        -> setRu1(floatval($tableau[12]))
+                        -> setRu2(floatval($tableau[13]))
+                        -> setRu3(floatval($tableau[14]))
+                        -> setRu4(floatval($tableau[15]))
+                        -> setRp1(floatval($tableau[16]))
+                        -> setRp2(floatval($tableau[17]))
+                        -> setRp3(floatval($tableau[18]))
+                        -> setRp4(floatval($tableau[19]))
+                        -> setT($new_T)
+                        -> setExperience($etatavant->getExperience());
+            $manager->persist($etatcalcule);
             $manager->flush();
-            return $this->redirectToRoute('exp_form',[]);
+            $url = '/exp/exp_form/'.strval($new_T);
+            return $this->redirect($url);
         }                        
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView(),
             'num_exp' => $resume->getId() ,
-            'temps' => $resultexp->getT()
+            'temps' => $identifiant 
         ]
     );
     }   
