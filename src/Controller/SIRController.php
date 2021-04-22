@@ -163,7 +163,6 @@ class SIRController extends AbstractController
                         ])
                     -> add('Test21', RangeType::class, [
                         'attr' => [
-                            'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100]
                             ])

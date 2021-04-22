@@ -5,21 +5,22 @@
 
 {% block body %}
 
-{% if {{temps}} == 0 %}
-<p> Bienvenue, nous sommes le premier jour d'une horrible épidémie, nous ne savons pas encore combien d'infectés sont parmi la population de 10 000 dans chaque région et âge  </p>
+{% if temps < 0.2 %}
+
+  <p> Bienvenue, nous sommes le premier jour d'une horrible épidémie, nous ne savons pas encore combien d'infectés sont parmi la population de 10 000 dans chaque région et âge  </p>
 
 {% else %}
-<div class="card" style="width: 18rem;">
-  <div class="card-header">
-    Compte-rendu de la Veille : 
+  <div class="card" style="width: 18rem;">
+    <div class="card-header">
+      Compte-rendu de la Veille : 
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Nombre d'infectés chez les jeunes dans Région 1 : {{etat_avant.p1}}</li>
+      <li class="list-group-item">Nombre d'infectés chez les personnes âgées dans Région 1 : {{etat_avant.p2}}</li>
+      <li class="list-group-item">Nombre d'infectés chez les jeunes dans Région 2 : {{etat_avant.p3}}</li>
+      <li class="list-group-item">Nombre d'infectés chez les personnes âgées dans Région 2 : {{etat_avant.p4}}</li>
+    </ul>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Nombre d'infectés chez les jeunes dans Région 1 : {{etat_avant.p1}}</li>
-    <li class="list-group-item">Nombre d'infectés chez les personnes âgées dans Région 1 : {{etat_avant.p2}}</li>
-    <li class="list-group-item">Nombre d'infectés chez les jeunes dans Région 2 : {{etat_avant.p3}}</li>
-    <li class="list-group-item">Nombre d'infectés chez les personnes âgées dans Région 2 : {{etat_avant.p4}}</li>
-  </ul>
-</div>
 {% endif %}
 
   <style>

@@ -3,25 +3,35 @@
 {% block title %}Résultat des expériences {% endblock %}
 
 {% block body %}
+
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-
-<h1> Expérience n° {{resume.id}} </h1>
-
-<p> Nous avons simuler une épidémie avec les paramètres suivants : </p>
-<p> &Beta; = {{resume.r0}} , &Pi; = {{resume.pi}} , &Mu; = {{resume.mu}} , %0 d'infecté : {{resume.i0}} </p>
+<div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Expérience n°{{resume.id}}</h5>
+                <p class="card-text">Caractéristiques globales de l'épidémie : </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">&Beta; = {{resume.r0}} </li>
+                <li class="list-group-item">&Pi; = {{resume.pi}}</li>
+                <li class="list-group-item">&Mu; = {{resume.mu}}</li>
+                <li class="list-group-item"> Proportion d'infecté initiale : {{resume.i0}}</li>
+            </ul>
+</div>
 
 {% for instant in  data_exp %}
-
-    <p>A l'instant t={{instant.T}} :
-    <ul>
-        <li>le sujet a observé {{instant.p1}} cas positifs dans la première région chez les jeunes  </li>
-        <li>le sujet a observé {{instant.p2}} cas positifs dans la première région chez les vieux  </li>
-        <li>le sujet a observé {{instant.p3}} cas positifs dans la seconde région chez les jeunes  </li>
-        <li>le sujet a observé {{instant.p4}} cas positifs dans la seconde région chez les vieux  </li>
-    </ul>
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+                Situtation à t = {{instant.T}}
+        </div>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+    </div>
 {% endfor %}
 
 {% endblock %}
