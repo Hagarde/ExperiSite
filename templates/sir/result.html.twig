@@ -11,11 +11,22 @@
 Voilà les expériences qui ont été faites et leur résumé : 
 </h1>
     {% for exp in resume %}
-        <h2>Expérience n°{{exp.id}}</h2>
+    
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Expérience n°{{exp.id}}</h5>
+                <p class="card-text">Caractéristiques globales de l'épidémie : </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">&Beta; = {{exp.r0}} </li>
+                <li class="list-group-item">&Pi; = {{exp.pi}}</li>
+                <li class="list-group-item">&Mu; = {{exp.mu}}</li>
+                <li class="list-group-item"> Proportion d'infecté initiale : {{exp.i0}}</li>
 
-        <p> &Beta; = {{exp.r0}} , &Pi; = {{exp.pi}} , &Mu; = {{exp.mu}} , %0 d'infecté : {{exp.i0}} </p>
-        <a href='/result/{{exp.id}}'>
-        <button >Plus de détails ...</button>
-        </a>
+            </ul>
+            <div class="card-body">
+                <a href='/result/{{exp.id}}' class="card-link">Plus de détails ...</a>
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}

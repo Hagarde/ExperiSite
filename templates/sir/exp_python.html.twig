@@ -4,6 +4,24 @@
 
 
 {% block body %}
+
+{% if {{temps}} == 0 %}
+<p> Bienvenue, nous sommes le premier jour d'une horrible épidémie, nous ne savons pas encore combien d'infectés sont parmi la population de 10 000 dans chaque région et âge  </p>
+
+{% else %}
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    Compte-rendu de la Veille : 
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Nombre d'infectés chez les jeunes dans Région 1 : {{etat_avant.p1}}</li>
+    <li class="list-group-item">Nombre d'infectés chez les personnes âgées dans Région 1 : {{etat_avant.p2}}</li>
+    <li class="list-group-item">Nombre d'infectés chez les jeunes dans Région 2 : {{etat_avant.p3}}</li>
+    <li class="list-group-item">Nombre d'infectés chez les personnes âgées dans Région 2 : {{etat_avant.p4}}</li>
+  </ul>
+</div>
+{% endif %}
+
   <style>
       .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
       .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
@@ -12,7 +30,6 @@
   <h1> Voilà le panneau à partir duquel vous allez pouvoir gérer comme bon vous semble la répartition des tests entre les deux départements et les deux âges </h1>
   <p> Vous allez enregistrer votre décision puis nous avancerons de 1 jour dans l'épidémie et vous allez avoir accés aux résulatts des tests que vous avez permis </p>
 
-<p> Pour le moment les seules informations qu'un virus inconnu a été détecté dans la population de votre région </p>
 
   {{form_start(formExp)}}
   <div name="form">
@@ -27,9 +44,7 @@
     <label>Répartition entre la population jeune et vieille dans le second département :</label>
     {{form_widget(formExp.Test21)}}
   </div>
-  <a href='/exp/exp_form/{{num_exp}}/{{temps}}'>
   <button type='submit'> Enregistrer ma décision !</button>
-  <a>
 
 {{form_end(formExp)}}
 

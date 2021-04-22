@@ -142,7 +142,8 @@ class SIRController extends AbstractController
             $repo = $this->getDoctrine()->getRepository(Resume::class);
             $resume = $repo->findOneById($identifiant);
             $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
-            $etatavant = $repo2->findBy(['experience' => $resume], array ('T' => 'DESC'));
+            // prbl ici $etatavant est vide à la sortie 
+            $etatavant = $repo2->findBy(['experience' => $resume ,'T' => $identifiant]);
             dump($etatavant);
         }
 
@@ -181,7 +182,7 @@ class SIRController extends AbstractController
                     ->setTest21(($repartition1)*(100-$repartition3)/10000)
                     ->setTest22(($repartition1)*($repartition3)/10000);
 
-    // Truc chiant pour utiliser le python 
+            // Truc chiant pour utiliser le python 
             $s1 = strval($etatavant->getS1());
             $s2 = strval($etatavant->getS2());
             $s3 = strval($etatavant->getS3());
@@ -255,8 +256,9 @@ class SIRController extends AbstractController
         }                        
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView(),
-            'num_exp' => $resume->getId() ,
-            'temps' => $identifiant 
+            'resume' => $resume ,
+            'temps' => $identifiant ,
+            'etat_avant' => $etatavant
         ]
     );
     }   
