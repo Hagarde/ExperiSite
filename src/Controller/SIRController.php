@@ -71,6 +71,7 @@ class SIRController extends AbstractController
     {
 
         $repo = $this->getDoctrine()->getRepository(EtatExp::class);
+        
         $alldata = $repo->FindBy(array('experience'=>$id),array('T'=>'asc'));
         return $this->render('sir/detailexp.html.twig',[
             'data_exp'=>$alldata,
@@ -79,17 +80,17 @@ class SIRController extends AbstractController
     }
 
     /**
-     * @Route("/exp/exp_form/{identifiant}", name="exp_form_suite")
+     * @Route("/exp/exp_form/{num_exp}", name="exp_form_suite")
      */
 
-    public function exp_form(int $identifiant,Request $request, EntityManagerInterface $manager) 
+    public function exp_form(int $num_exp,Request $request, EntityManagerInterface $manager) 
     {
         
         $resultexp = new EtatExp();
         $NN = 10000;
         $I0 = 0.05;
         $i0 = $I0 * $NN;
-        if ($identifiant==0) {
+        if ($num_exp == 0) {
             // On s'occupe du cas de l'initialisation de l'exp avec choix de l'expé et tout 
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
             $IDrandom = rand(1,199);
@@ -137,15 +138,17 @@ class SIRController extends AbstractController
             $manager->persist($etatinitial);
             $manager->flush();
             $etatavant = $etatinitial;
+
         }
         else {
             $repo = $this->getDoctrine()->getRepository(Resume::class);
-            $resume = $repo->findOneById($identifiant);
+            $resume = $repo->findOneBy(['id'=>$num_exp]);
+        // prbl avec etat avant 
             $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
-            // prbl ici $etatavant est vide à la sortie 
-            $etatavant = $repo2->findBy(['experience' => $resume ,'T' => $identifiant]);
-            dump($etatavant);
+            $etatavant = $repo2->findBy(['experience' => $resume ],['T' => 'DESC'])[0];
+            dump($etatavant) ;
         }
+
 
         $form = $this->createFormBuilder($resultexp)
                     
@@ -170,7 +173,7 @@ class SIRController extends AbstractController
                         ->getForm();
 
         $form->handleRequest($request);
-
+        $T = $etatavant->getT() ;
         if($form->isSubmitted() && $form->isValid() ){
 
             $repartition1 = $resultexp->getTest11();
@@ -250,13 +253,13 @@ class SIRController extends AbstractController
                         -> setExperience($etatavant->getExperience());
             $manager->persist($etatcalcule);
             $manager->flush();
-            $url = '/exp/exp_form/'.strval($new_T);
+            $url = '/exp/exp_form/'.strval($num_exp);
             return $this->redirect($url);
         }                        
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView(),
             'resume' => $resume ,
-            'temps' => $identifiant ,
+            'temps' => $T ,
             'etat_avant' => $etatavant
         ]
     );
