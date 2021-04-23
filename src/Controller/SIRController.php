@@ -64,15 +64,13 @@ class SIRController extends AbstractController
     }
 
     /**
-     * @Route("/result/{id}", name="detail_exp")
+     * @Route("/result/{num_exp}", name="detail_exp")
      */
 
-    public function detailexpi(int $id,Resume $resume ) 
+    public function detailexpi(int $num_exp,Resume $resume ) 
     {
-
         $repo = $this->getDoctrine()->getRepository(EtatExp::class);
-        
-        $alldata = $repo->FindBy(array('experience'=>$id),array('T'=>'asc'));
+        $alldata = $repo->FindBy(['experience'=>$num_exp],['T'=>'ASC']);
         return $this->render('sir/detailexp.html.twig',[
             'data_exp'=>$alldata,
             'resume'=>$resume
@@ -145,7 +143,7 @@ class SIRController extends AbstractController
             $resume = $repo->findOneBy(['id'=>$num_exp]);
         // prbl avec etat avant 
             $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
-            $etatavant = $repo2->findBy(['experience' => $resume ],['T' => 'DESC'])[0];
+            $etatavant = $repo2->findBy(['experience' => $resume ,'T' => 'DESC'])[0];
             dump($etatavant) ;
         }
 

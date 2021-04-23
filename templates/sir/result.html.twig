@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Résultat des expériences {% endblock %}
 
 {% block body %}
@@ -10,8 +11,11 @@
 <h1>
 Voilà les expériences qui ont été faites et leur résumé : 
 </h1>
+
+<div class="card-group"style="flex-wrap:wrap;justify-content:space-evenly">
+
     {% for exp in resume %}
-    
+   
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">Expérience n°{{exp.id}}</h5>
@@ -28,5 +32,6 @@ Voilà les expériences qui ont été faites et leur résumé :
                 <a href='/result/{{exp.id}}' class="card-link">Plus de détails ...</a>
             </div>
         </div>
+</div>
     {% endfor %}
 {% endblock %}
