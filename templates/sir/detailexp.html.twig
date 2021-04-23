@@ -8,59 +8,75 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-<div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Expérience n°{{resume.id}}</h5>
-                <p class="card-text">Caractéristiques globales de l'épidémie : </p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">&Beta; = {{resume.r0}} </li>
-                <li class="list-group-item">&Pi; = {{resume.pi}}</li>
-                <li class="list-group-item">&Mu; = {{resume.mu}}</li>
-                <li class="list-group-item"> Proportion d'infecté initiale : {{resume.i0}}</li>
-            </ul>
-</div>
- 
-<div class="card" style="width: 18rem;">
 
-  <svg>
+{# Ici on fait le petit résumé #}
+<div class="card text-center">
+  <div class="card-header">
+    Résume de l'épidémie soumise : 
+  </div>
   <div class="card-body">
-    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 1 chez les jeunes </p>
+    <h5 class="card-title">Les caractéristiques du virus : </h5>
+    <p class="card-text">&Beta; = {{resume.r0}} , &Pi; = {{resume.pi}} ,&Mu; = {{resume.mu}} , Proportion d'infecté initiale : {{resume.i0}}</p>
+  </div>
+  <div class="card-footer text-muted">
+     Il y a eu {{T_max}} décision(s) prise(s) par le sujet 
   </div>
 </div>
 
+ {# Ici on commence à display les différents graphiques de l'expérience (il faudrait faire un div qui englobe les 4 S U R P de chaque région #}
 <div class="card" style="width: 18rem;">
 
-  <svg>
-  <div class="card-body">
-    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 1 chez les personnes âgées  </p>
-  </div>
-</div>
-
-<div class="card" style="width: 18rem;">
-
-  <svg>
-  <div class="card-body">
-    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 2 chez les jeunes </p>
-  </div>
-</div>
-
-<div class="card" style="width: 18rem;">
-
-  <svg>
-  <div class="card-body">
-    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 2 chez les personnes âgées </p>
-  </div>
-</div>
-
-
-
-
-<svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
-    {% for value in alldata %}
-      <rect x="{{ loop.index }}" y="0" width="5" height="{{ value }}" />
+  <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+    {% for etat in data_exp %}
+      <rect x="{{ etat.T }}" y="0" width="5" height="{{ etat.p1 }}" />
     {% endfor %}
-</svg>
+    </svg>
+
+</div>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-title">
+        <h5 class="card-title">Evolution de Positif  chez les jeunes de région 1</h5>
+    </div>
+  <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+    {% for etat in data_exp %}
+      <rect x="{{ etat.T }}" y="0" width="5" height="{{ etat.p2 }}" />
+    {% endfor %}
+    </svg>
+</div>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-title">
+        <h5 class="card-title">Evolution de Positif  chez les personnes âgées de région 1</h5>
+    </div>
+  <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+    {% for etat in data_exp %}
+      <rect x="{{ etat.T }}" y="0" width="5" height="{{ etat.p2 }}" />
+    {% endfor %}
+    </svg>
+</div>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-title">
+        <h5 class="card-title">Evolution de Positif  chez les jeunes de région 2</h5>
+    </div>
+  <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+    {% for etat in data_exp %}
+      <rect x="{{ etat.T }}" y="0" width="5" height="{{ etat.p2 }}" />
+    {% endfor %}
+    </svg>
+</div>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-title">
+        <h5 class="card-title">Evolution de Positif  chez les personnes âgées de région 2</h5>
+    </div>
+  <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+    {% for etat in data_exp %}
+      <rect x="{{ etat.T }}" y="0" width="5" height="{{ etat.p2 }}" />
+    {% endfor %}
+    </svg>
+</div>
 
 
 
