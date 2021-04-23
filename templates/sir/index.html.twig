@@ -7,11 +7,19 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-<h1>
-Bienvenue sur la page d'acceuil ! 
-</h1>
-<p1>
-Ce site va vous permettre d'aider les travaux d'une équipe de chercheurs de l'AMSE ! 
-Prenez les commandes de la France comme un vrai Emmanuel Macron, et gérer une épidémie.
-</p1>
+
+
+<div class="card text-center">
+  <div class="card-header">
+    Bienvenue sur Expisite !
+    
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"> Expérience de gestion de Pandémie  </h5>
+    <p class="card-text">Pour le moment nous ne proposons qu'une seule expérience et vous pouvez en apprendre dessus et peut-être même participer en cliquant sur ce bouton ! </p>
+    <a href={{path('exp_presentation')}} class="btn btn-primary">Faire l'expérience ! </a>
+  </div>
+</div>
+
+
 {% endblock %}

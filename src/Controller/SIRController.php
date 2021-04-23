@@ -144,15 +144,19 @@ class SIRController extends AbstractController
             $manager->flush();
             $etatavant = $etatinitial;
             $num_exp = $resume->getId();
+            $test = 'Je suis passé par la boucle ou id = O';
+            dump($test);
 
         }
         else {
             $repo = $this->getDoctrine()->getRepository(Resume::class);
             $resume = $repo->findOneBy(['id'=>$num_exp]);
-        // prbl avec etat avant 
+        // prbl avec etat avant c'est pas le bon je rechoppe le 1er etat initial 
             $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
             $etatavant = $repo2->findBy(['experience' => $resume ,'T' => 'DESC'])[0];
-            dump($etatavant) ;
+            dump($resume) ;
+            $test = 'Je suis passé par la boucle où pas id = 0 ';
+            dump($test);
         }
 
 
