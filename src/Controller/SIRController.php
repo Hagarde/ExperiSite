@@ -48,8 +48,10 @@ class SIRController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Resume::class) ;
         $resume = $repo->FindAll() ; 
+
         return $this->render('sir/result.html.twig',[
-            'resume'=>$resume
+            'resume'=>$resume,
+            'nmbr_exp' => count($resume)
         ]);
     }
 
@@ -141,6 +143,7 @@ class SIRController extends AbstractController
             $manager->persist($etatinitial);
             $manager->flush();
             $etatavant = $etatinitial;
+            $num_exp = $resume->getId();
 
         }
         else {
@@ -257,6 +260,7 @@ class SIRController extends AbstractController
             $manager->persist($etatcalcule);
             $manager->flush();
             $url = '/exp/exp_form/'.strval($num_exp);
+            dump($url);
             return $this->redirect($url);
         }                        
         return $this->render('sir/exp_python.html.twig',[

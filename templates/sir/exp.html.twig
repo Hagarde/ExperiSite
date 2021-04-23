@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ExpController!{% endblock %}
+{% block title %} Présentation Expérience {% endblock %}
 
 
 {% block body %}
@@ -9,18 +9,19 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<h1>
-Bienvenue sur le jeu : CovidSimulator 2021
-</h1>
-<p>
-Votre rôle pendant ce jeu va être de décider de comment gérer une crise sanitaire, les caractéristiques (mortalité, infectuosité, traitement, ...) de la maladie sont inconnues. 
-Vous êtes aux commandes du centre de gestion des tests pour une région avec 2 départements.
-Vous allez pouvoir décider de comment allouez les tests entre deux tranches d'âges et entre les deux régions
-L'objectif est bien évidemment de limiter au plus les dégâts fait par la maladie ( qu'est-ce que ça veut dire ? )
-</p>
-
-<a href="/exp/exp_form/0">
-<button > Prêt ! </button>
-</a>
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title"> Bienvenue !</h5>
+    <p class="card-text"> 
+    Super, vous êtes prêt pour participer à des recherches scientifiques ? 
+    Si vous l'accepter nous allons receuillir des données sur comment nous les humains, nous gérons des situations de gestion de ressources en cas d'épidémie 
+    Pour cela vous n'avez qu'à cliquer sur Commncer 
+    </p>
+    <a href="/exp/exp_form/0" class="btn btn-primary">Commencer </a>
+  </div>
+  <div class="card-footer text-muted">
+    Bonne journée ! 
+  </div>
+</div>
 
 {% endblock %}

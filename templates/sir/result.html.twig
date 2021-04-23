@@ -1,18 +1,24 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Résultat des expériences {% endblock %}
+{% block title %} Résultat des expériences {% endblock %}
 
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-<h1>
-Voilà les expériences qui ont été faites et leur résumé : 
-</h1>
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Résumé des expériences déjà menées</h5>
+    <p class="card-text"> Il y a actuellement {{nmbr_exp}} expréiences effectués, merci beaucoup ! </p>
+  </div>
+  <div class="card-footer text-muted">
+    Bonne journée ! 
+  </div>
+</div>
 
-<div class="card-group"style="flex-wrap:wrap;justify-content:space-evenly">
+<div class="d-flex flex-wrap">
 
     {% for exp in resume %}
    
