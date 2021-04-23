@@ -11,17 +11,15 @@
 <div class="card text-center">
   <div class="card-body">
     <h5 class="card-title">Résumé des expériences déjà menées</h5>
-    <p class="card-text"> Il y a actuellement {{nmbr_exp}} expréiences effectués, merci beaucoup ! </p>
+    <p class="card-text"> Il y a actuellement {{nmbr_exp}} expériences effectuées, merci beaucoup ! </p>
   </div>
   <div class="card-footer text-muted">
     Bonne journée ! 
   </div>
 </div>
 
-<div class="d-flex flex-wrap">
-
+<div class="d-flex flex-wrap align-content-around">
     {% for exp in resume %}
-   
         <div class="card" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">Expérience n°{{exp.id}}</h5>
@@ -32,12 +30,12 @@
                 <li class="list-group-item">&Pi; = {{exp.pi}}</li>
                 <li class="list-group-item">&Mu; = {{exp.mu}}</li>
                 <li class="list-group-item"> Proportion d'infecté initiale : {{exp.i0}}</li>
-
             </ul>
             <div class="card-body">
-                <a href='/result/{{exp.id}}' class="card-link">Plus de détails ...</a>
+                <a href='/result/{{exp.id}}' class="card-link"> Plus de détails ...</a>
             </div>
         </div>
-</div>
+
     {% endfor %}
+</div>
 {% endblock %}

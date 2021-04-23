@@ -88,7 +88,7 @@ class SIRController extends AbstractController
      * @Route("/exp/exp_form/{num_exp}", name="exp_form_suite")
      */
 
-    public function exp_form(int $num_exp,Request $request, EntityManagerInterface $manager) 
+    public function exp_form(int $num_exp, int $temps = null, Request $request, EntityManagerInterface $manager) 
     {
         
         $resultexp = new EtatExp();
@@ -144,19 +144,15 @@ class SIRController extends AbstractController
             $manager->flush();
             $etatavant = $etatinitial;
             $num_exp = $resume->getId();
-            $test = 'Je suis passé par la boucle ou id = O';
-            dump($test);
-
         }
         else {
             $repo = $this->getDoctrine()->getRepository(Resume::class);
             $resume = $repo->findOneBy(['id'=>$num_exp]);
         // prbl avec etat avant c'est pas le bon je rechoppe le 1er etat initial 
             $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
-            $etatavant = $repo2->findBy(['experience' => $resume ,'T' => 'DESC'])[0];
-            dump($resume) ;
-            $test = 'Je suis passé par la boucle où pas id = 0 ';
-            dump($test);
+            $etatlie = $repo2->findBy(array('experience'=> $resume));
+            $avantdernier = count($etatlie)-1;
+            $etatavant= $etatlie[$avantdernier];
         }
 
 
@@ -263,9 +259,10 @@ class SIRController extends AbstractController
                         -> setExperience($etatavant->getExperience());
             $manager->persist($etatcalcule);
             $manager->flush();
-            $url = '/exp/exp_form/'.strval($num_exp);
-            dump($url);
-            return $this->redirect($url);
+            return $this->redirectToRoute('exp_form_suite', [
+                'num_exp' => $num_exp ,
+                'temps' => $etatcalcule
+            ]);
         }                        
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView(),
