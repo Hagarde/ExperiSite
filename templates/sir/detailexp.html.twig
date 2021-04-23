@@ -21,7 +21,47 @@
             </ul>
 </div>
  
+<div class="card" style="width: 18rem;">
 
- 
+  <svg>
+  <div class="card-body">
+    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 1 chez les jeunes </p>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+
+  <svg>
+  <div class="card-body">
+    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 1 chez les personnes âgées  </p>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+
+  <svg>
+  <div class="card-body">
+    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 2 chez les jeunes </p>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+
+  <svg>
+  <div class="card-body">
+    <p class="card-text">Voici l'évolution de p1 en focntion du temps dnas la région 2 chez les personnes âgées </p>
+  </div>
+</div>
+
+
+
+
+<svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+    {% for value in alldata %}
+      <rect x="{{ loop.index }}" y="0" width="5" height="{{ value }}" />
+    {% endfor %}
+</svg>
+
+
 
 {% endblock %}
