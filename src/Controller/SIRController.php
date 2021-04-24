@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 function random_0_1() 
 {
@@ -71,17 +73,47 @@ class SIRController extends AbstractController
 
     public function detailexpi(int $num_exp) 
     {
+        // Ici je chope les données nécessaires pour les graphes et tout ... 
+
         $repo1 =$this->getDoctrine()->getRepository(Resume::class);
         $resume = $repo1->findOneById($num_exp);
         $repo2 = $this->getDoctrine()->getRepository(EtatExp::class);
         $alldata = $repo2->FindBy(['experience'=>$resume]);
-        $intermediaire = $repo2->FindBy(['experience'=>$resume,'T'=>'DESC'])[0];
-        $T_max = $intermediaire->getT();
-        dump($alldata);
+        // Récupération des données pour graph 
+        foreach($repo2 as $data){
+            $labels[] = $data->getT();
+            $datasetP1[] = $data->getP1();
+            $datasetP2[] = $data->getP2();
+            $datasetP3[] = $data->getP3();
+            $datasetP4[] = $data->getP4();
+            
+        }
+        $T_max = strval(count($alldata)-1);
+
+        // Ici je voudraisa générer les graphiques que nous allons montrer au monde entier 
+
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart->setData([
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'My First dataset',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => $datasetP1,
+                ]
+            ],
+        ]);
+
+
+
+
         return $this->render('sir/detailexp.html.twig',[
             'data_exp'=>$alldata,
             'resume'=>$resume,
-            'T_max'=> $T_max
+            'T_max'=> $T_max,
+            'largeur'=> 200/($T_max+1),
+            'chart' => $chart
         ]);
     }
 
