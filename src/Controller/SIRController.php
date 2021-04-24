@@ -74,9 +74,10 @@ class SIRController extends AbstractController
         $repo1 =$this->getDoctrine()->getRepository(Resume::class);
         $resume = $repo1->findOneById($num_exp);
         $repo2 = $this->getDoctrine()->getRepository(EtatExp::class);
-        $alldata = $repo2->FindBy(['experience'=>$resume,'T'=>'ASC']);
+        $alldata = $repo2->FindBy(['experience'=>$resume]);
         $intermediaire = $repo2->FindBy(['experience'=>$resume,'T'=>'DESC'])[0];
         $T_max = $intermediaire->getT();
+        dump($alldata);
         return $this->render('sir/detailexp.html.twig',[
             'data_exp'=>$alldata,
             'resume'=>$resume,
@@ -153,7 +154,7 @@ class SIRController extends AbstractController
             $etatlie = $repo2->findBy(array('experience'=> $resume));
             $avantdernier = count($etatlie)-1;
             $etatavant= $etatlie[$avantdernier];
-        }
+      }
 
 
         $form = $this->createFormBuilder($resultexp)
