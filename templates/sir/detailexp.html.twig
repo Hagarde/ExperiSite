@@ -29,24 +29,45 @@
 
  {# Ici on commence à display les différents graphiques de l'expérience (il faudrait faire un div qui englobe les 4 S U R P de chaque région #}
 
-<div class="d-flex justify-content-around">
-  <div class='card-deck'>
-
-      <div class="card" style="width: 18rem;">
-          <div class="card-title">
-              <h5 class="card-title">Evolution de Positif  chez les jeunes de région 1</h5>
-          </div>
-        <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
-          {% for etat in data_exp %}
-
-            <rect x="{{ etat.T }}" y="0" width={{largeur}} height="{{ etat.p2 }}" />
-          {% endfor %}
-        </svg>
-      </div>
-    
-
-      
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Graphique de la population jeune de la région 1 </h5>
 </div>
+
+<div style='padding:30px'>    
+{{ render_chart(chart_1) }}
+</div> 
+
+
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Graphique de la population âgée de la région 1 </h5>
+</div>
+
+<div style='padding:30px'>    
+{{ render_chart(chart_2) }}
+</div> 
+
+
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Graphique de la population jeune de la région 2 </h5>
+</div>
+
+<div style='padding:30px'>    
+{{ render_chart(chart_3) }}
+</div> 
+
+
+
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Graphique de la population âgée de la région 2 </h5>
+</div>
+
+<div style='padding:30px'>    
+{{ render_chart(chart_4) }}
+</div> 
 
 {# Maintenant, il ne reste plus qu'à faire pareil pour les autres paramètres de SURP #}
 

@@ -71,7 +71,7 @@ class SIRController extends AbstractController
      * @Route("/result/{num_exp}", name="detail_exp")
      */
 
-    public function detailexpi(int $num_exp) 
+    public function detailexpi(int $num_exp,ChartBuilderInterface $chartBuilder) 
     {
         // Ici je chope les données nécessaires pour les graphes et tout ... 
 
@@ -80,28 +80,193 @@ class SIRController extends AbstractController
         $repo2 = $this->getDoctrine()->getRepository(EtatExp::class);
         $alldata = $repo2->FindBy(['experience'=>$resume]);
         // Récupération des données pour graph 
-        foreach($repo2 as $data){
+        $labels = [];
+        $datasetP1 =[];
+        $datasetP2 =[];
+        $datasetP3 =[];
+        $datasetP4 =[];
+
+        foreach($alldata as $data){
             $labels[] = $data->getT();
             $datasetP1[] = $data->getP1();
             $datasetP2[] = $data->getP2();
             $datasetP3[] = $data->getP3();
             $datasetP4[] = $data->getP4();
             
+            $datasetU1[] = $data->getU1();
+            $datasetU2[] = $data->getU2();
+            $datasetU3[] = $data->getU3();
+            $datasetU4[] = $data->getU4();
+
+            $datasetS1[] = $data->getS1();
+            $datasetS2[] = $data->getS2();
+            $datasetS3[] = $data->getS3();
+            $datasetS4[] = $data->getS4();
+
+            $datasetRU1[] = $data->getRu1();
+            $datasetRU2[] = $data->getRu2();
+            $datasetRU3[] = $data->getRu3();
+            $datasetRU4[] = $data->getRu4();
+
+            $datasetRP1[] = $data->getRp1();
+            $datasetRP2[] = $data->getRp2();
+            $datasetRP3[] = $data->getRp3();
+            $datasetRP4[] = $data->getRp4();
+            
         }
         $T_max = strval(count($alldata)-1);
-
-        // Ici je voudraisa générer les graphiques que nous allons montrer au monde entier 
-
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
-        $chart->setData([
+        // Ici je voudrais générer les graphiques que nous allons montrer au monde entier 
+        $chart1 = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart1->setData([
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'My First dataset',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
+                    'label' => 'Suceptible',
+                    'backgroundColor' => 'rgb(136, 206, 251)',
+                    'borderColor' => 'rgb(136, 206, 251)',
+                    'data' => $datasetS1,
+                ],
+                [
+                    'label' => 'Undetected',
+                    'backgroundColor' => 'rgb(255, 153, 169)',
+                    'borderColor' => 'rgb(255, 153, 169)',
+                    'data' => $datasetU1,
+                ],
+                [
+                    'label' => 'Positif',
+                    'backgroundColor' => 'rgb(252, 204, 204)',
+                    'borderColor' => 'rgb(252, 204, 204)',
                     'data' => $datasetP1,
+                ],
+                [
+                    'label' => 'Recovered Undetected',
+                    'backgroundColor' => 'rgb(146, 242, 148)',
+                    'borderColor' => 'rgb(146, 242, 148)',
+                    'data' => $datasetRU1,
+                ],
+                [
+                    'label' => 'Recovered Positif',
+                    'backgroundColor' => 'rgb(100, 233, 135)',
+                    'borderColor' => 'rgb(100, 233, 135)',
+                    'data' => $datasetRP1,
                 ]
+                
+            ],
+        ]);
+
+
+
+        $chart2 = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart2->setData([
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Suceptible',
+                    'backgroundColor' => 'rgb(136, 206, 251)',
+                    'borderColor' => 'rgb(136, 206, 251)',
+                    'data' => $datasetS2,
+                ],
+                [
+                    'label' => 'Undetected',
+                    'backgroundColor' => 'rgb(255, 153, 169)',
+                    'borderColor' => 'rgb(255, 153, 169)',
+                    'data' => $datasetU2,
+                ],
+                [
+                    'label' => 'Positif',
+                    'backgroundColor' => 'rgb(252, 204, 204)',
+                    'borderColor' => 'rgb(252, 204, 204)',
+                    'data' => $datasetP2,
+                ],
+                [
+                    'label' => 'Recovered Undetected',
+                    'backgroundColor' => 'rgb(146, 242, 148)',
+                    'borderColor' => 'rgb(146, 242, 148)',
+                    'data' => $datasetRU2,
+                ],
+                [
+                    'label' => 'Recovered Positif',
+                    'backgroundColor' => 'rgb(100, 233, 135)',
+                    'borderColor' => 'rgb(100, 233, 135)',
+                    'data' => $datasetRP2,
+                ]
+                
+            ],
+        ]);
+
+        $chart4 = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart4->setData([
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Suceptible',
+                    'backgroundColor' => 'rgb(136, 206, 251)',
+                    'borderColor' => 'rgb(136, 206, 251)',
+                    'data' => $datasetS4,
+                ],
+                [
+                    'label' => 'Undetected',
+                    'backgroundColor' => 'rgb(255, 153, 169)',
+                    'borderColor' => 'rgb(255, 153, 169)',
+                    'data' => $datasetU4,
+                ],
+                [
+                    'label' => 'Positif',
+                    'backgroundColor' => 'rgb(252, 204, 204)',
+                    'borderColor' => 'rgb(252, 204, 204)',
+                    'data' => $datasetP4,
+                ],
+                [
+                    'label' => 'Recovered Undetected',
+                    'backgroundColor' => 'rgb(146, 242, 148)',
+                    'borderColor' => 'rgb(146, 242, 148)',
+                    'data' => $datasetRU4,
+                ],
+                [
+                    'label' => 'Recovered Positif',
+                    'backgroundColor' => 'rgb(100, 233, 135)',
+                    'borderColor' => 'rgb(100, 233, 135)',
+                    'data' => $datasetRP4,
+                ]
+                
+            ],
+        ]);
+
+        $chart3 = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart3->setData([
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Suceptible ',
+                    'backgroundColor' => 'rgb(136, 206, 251)',
+                    'borderColor' => 'rgb(136, 206, 251)',
+                    'data' => $datasetS3,
+                ],
+                [
+                    'label' => 'Undetected ',
+                    'backgroundColor' => 'rgb(255, 153, 169)',
+                    'borderColor' => 'rgb(255, 153, 169)',
+                    'data' => $datasetU3,
+                ],
+                [
+                    'label' => 'Positif ',
+                    'backgroundColor' => 'rgb(252, 204, 204)',
+                    'borderColor' => 'rgb(252, 204, 204)',
+                    'data' => $datasetP3,
+                ],
+                [
+                    'label' => 'ERecovered Undetected',
+                    'backgroundColor' => 'rgb(146, 242, 148)',
+                    'borderColor' => 'rgb(146, 242, 148)',
+                    'data' => $datasetRU3,
+                ],
+                [
+                    'label' => 'Recovered Positif',
+                    'backgroundColor' => 'rgb(100, 233, 135)',
+                    'borderColor' => 'rgb(100, 233, 135)',
+                    'data' => $datasetRP3,
+                ]
+                
             ],
         ]);
 
@@ -112,8 +277,10 @@ class SIRController extends AbstractController
             'data_exp'=>$alldata,
             'resume'=>$resume,
             'T_max'=> $T_max,
-            'largeur'=> 200/($T_max+1),
-            'chart' => $chart
+            'chart_1' => $chart1,
+            'chart_2' => $chart2,
+            'chart_3' => $chart3,
+            'chart_4' => $chart4
         ]);
     }
 
