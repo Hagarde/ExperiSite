@@ -66,29 +66,32 @@
     <p class="card-text">Ce panneau de contrôle vous permet de répartir les test parmi les différentes populations de vos villes </p>
   </div>
 </div>
-
+<div style='padding:2%  5% '>
   {{form_start(formExp)}}
 
   <div class="">
-    <div name="form" >
+    <div name="form"  >
       <div class="d-flex justify-content-between">
         <p> Région 1 </p>
         <p> Région 2  </p>
       </div>
       {{form_widget(formExp.Test11)}}
     </div>
-    {# Petite explication de ce qui siggnifie les range type #}
-    <div class="d-flex justify-content-center">
-      <p> Dans Ville 1 
-    </div>
-    <div class="d-flex justify-content-between">
-        <p> Jeunes </p>
-        <p> Vieux  </p>
+    {# Dans Ville 1#}
+    <div style='padding:3% 0'>
+      <div class="d-flex justify-content-center">
+        <p> Dans Ville 1 
       </div>
-    <div name="form">
-      {{form_widget(formExp.Test12)}}
+      <div class="d-flex justify-content-between">
+          <p> Jeunes </p>
+          <p> Vieux  </p>
+        </div>
+      <div name="form">
+        {{form_widget(formExp.Test12)}}
+      </div>
     </div>
-
+  {# Dans Ville 2 #}
+  <div style='padding:1% 0'>
     <div class="d-flex justify-content-center">
       <p> Dans Ville 2 
     </div>
@@ -99,7 +102,11 @@
     <div name="form">
       {{form_widget(formExp.Test21)}}
     </div>
-    <div class="card text-center">
+  </div>
+  {# Bouton de submit #}
+
+
+    <div class="card text-center" style='padding: 2%'>
       <div class="card-body">
         <h5 class="card-title">Êtes-vous sûr de vouloir confirmer cette décision ? </h5>
         <button type='submit'> Oui </button>
@@ -107,5 +114,5 @@
     </div>
   </div>
 {{form_end(formExp)}}
-
+</div>
 {% endblock %}
