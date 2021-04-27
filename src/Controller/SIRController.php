@@ -380,6 +380,7 @@ class SIRController extends AbstractController
 
         $form->handleRequest($request);
         $T = $etatavant->getT() ;
+        
         if($form->isSubmitted() && $form->isValid() ){
 
             $repartition1 = $resultexp->getTest11();

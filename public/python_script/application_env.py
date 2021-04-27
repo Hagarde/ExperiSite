@@ -114,6 +114,7 @@ def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p
     return [en.S1,en.S2,en.S3,en.S4,en.U1,en.U2,en.U3,en.U4,en.P1,en.P2,en.P3,en.P4,en.R_U1,en.R_U2,en.R_U3,en.R_U4,en.R_P1,en.R_P2,en.R_P3,en.R_P4]
 
 
+
 if __name__ == "__main__":
     population = 10000
     s1 = float(sys.argv[1])
