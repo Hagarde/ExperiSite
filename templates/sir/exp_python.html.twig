@@ -8,47 +8,18 @@
 <div class="card text-center">
   <div class="card-body">
     <h5 class="card-title"> Jour {{etat_avant.T}} </h5>
-    <p class="card-text">
-    Nous avons découvert qu'un virus inconnu était en train de se propager parmi la population de (la ville la plus proche de chez vous ) et ( la deuxième ville la plus proche de chez vous )
-    Vous avez été désigné pour gérer la répartition des tests dans ces villes
-    Il existe 4 populations des cette zone géographique que nous allons vous décrire :
-    </p>
   </div>
 </div>
 
-<div class="card-deck">
-    <div class="card">
-      <img class="card-img-top" src="/image/jeune.jpeg" alt="Satané Jeunes">
-      <div class="card-body">
-        <h5 class="card-title">Les jeunes de la ville 1 </h5>
-        <p class="card-text"> Population : 10 000 </p>
-        <p class="card-text"> Dont {{etat_avant.p2}} positif(s)</p>
-      </div>
-    </div>
-    <div class="card">
-      <img class="card-img-top" src="/image/vieux.jpeg" alt="papi et mami">
-      <div class="card-body">
-        <h5 class="card-title">Les personnes âgées de la ville 1 </h5>
-        <p class="card-text"> Population : 10 000 </p>
-        <p class="card-text"> Dont {{etat_avant.p2}} positif(s)</p>
-      </div>
-    </div>
-    <div class="card">
-      <img class="card-img-top" src="/image/jeune.jpeg" alt="Les autres jeunes">
-      <div class="card-body">
-        <h5 class="card-title">Les jeunes de la ville 2 </h5>
-        <p class="card-text"> Population : 10 000 </p>
-        <p class="card-text"> Dont {{etat_avant.p2}} positif(s)</p>
-      </div>
-    </div>
-      <div class="card">
-      <img class="card-img-top" src="/image/vieux.jpeg" alt="papi et mami ">
-      <div class="card-body">
-        <h5 class="card-title">Les personnes âgées de la ville 2 </h5>
-        <p class="card-text"> Population : 10 000 </p>
-        <p class="card-text"> Dont {{etat_avant.p2}} positif(s)</p>
-      </div>
-    </div>
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    Les définitions : 
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Taux d'incidence : rapporte le nombre de nouveaux cas d'une pathologie observés pendant une période donnée </li>
+    <li class="list-group-item">taux de positivité : mesure le pourcentage de cas positifs par rapport au nombre de tests</li>
+    <li class="list-group-item">Nombre de cas recensé cumulé : est le nombre de personnes testées positives depuis le début de l'épidémiep</li>
+  </ul>
 </div>
 
 
@@ -62,57 +33,89 @@
     Panneau de contrôle 
   </div>
   <div class="card-body">
-    <h5 class="card-title">Description :</h5>
+    <h5 class="card-title">Description : </h5>
     <p class="card-text">Ce panneau de contrôle vous permet de répartir les test parmi les différentes populations de vos villes </p>
   </div>
 </div>
 <div style='padding:2%  5% '>
-  {{form_start(formExp)}}
 
-  <div class="">
-    <div name="form"  >
-      <div class="d-flex justify-content-between">
-        <p> Région 1 </p>
-        <p> Région 2  </p>
+{# panneau de droite pour décision #}
+<div class='container'>
+  <div class='col-4'>
+  
+    {{form_start(formExp)}}
+    <div class="">
+      <div name="form"  >
+        <div class="d-flex justify-content-between">
+          <p> Région 1 </p>
+          <p> Région 2  </p>
+        </div>
+        {{form_widget(formExp.Test11)}}
       </div>
-      {{form_widget(formExp.Test11)}}
-    </div>
-    {# Dans Ville 1#}
-    <div style='padding:3% 0'>
+      {# Dans Ville 1#}
+      <div style='padding:3% 0'>
+        <div class="d-flex justify-content-center">
+          <p> Dans Ville 1 
+        </div>
+        <div class="d-flex justify-content-between">
+            <p> Jeunes </p>
+            <p> Vieux  </p>
+          </div>
+        <div name="form">
+          {{form_widget(formExp.Test12)}}
+        </div>
+      </div>
+    {# Dans Ville 2 #}
+    <div style='padding:1% 0'>
       <div class="d-flex justify-content-center">
-        <p> Dans Ville 1 
+        <p> Dans Ville 2 
       </div>
       <div class="d-flex justify-content-between">
           <p> Jeunes </p>
           <p> Vieux  </p>
         </div>
       <div name="form">
-        {{form_widget(formExp.Test12)}}
+        {{form_widget(formExp.Test21)}}
       </div>
     </div>
-  {# Dans Ville 2 #}
-  <div style='padding:1% 0'>
-    <div class="d-flex justify-content-center">
-      <p> Dans Ville 2 
-    </div>
-    <div class="d-flex justify-content-between">
-        <p> Jeunes </p>
-        <p> Vieux  </p>
-      </div>
-    <div name="form">
-      {{form_widget(formExp.Test21)}}
-    </div>
-  </div>
-  {# Bouton de submit #}
+    {# Bouton de submit #}
 
 
-    <div class="card text-center" style='padding: 2%'>
-      <div class="card-body">
-        <h5 class="card-title">Êtes-vous sûr de vouloir confirmer cette décision ? </h5>
-        <button type='submit'> Oui </button>
+      <div class="card text-center" style='padding: 2%'>
+        <div class="card-body">
+          <h5 class="card-title">Êtes-vous sûr de vouloir confirmer cette décision ? </h5>
+          <button type='submit'> Oui </button>
+        </div>
       </div>
     </div>
+    {{form_end(formExp)}}
   </div>
-{{form_end(formExp)}}
+{# panneau de gauche pour montrer les données  #}
+  <div class='col-8'>
+  {# Les cartes des 4 régions  #}
+    <div class='col-6'>
+      <div class='card'>
+      <h5 class="card-title"> Région 1 Population Jeune </h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"> Population : 10 000 </li>
+        <li class="list-group-item"> Taux de positivité : (+ ... depuis la veille ) </li>
+        <li class="list-group-item"> Nombre de cas cumulé : </li>
+        <li class="list-group-item"> Test </li>
+        
+        {% if acc == True %}
+        <li class="list-group-item"> Indice d'accélération : </li>
+        {% endif %}
+      </ul>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+  </div>
 </div>
 {% endblock %}

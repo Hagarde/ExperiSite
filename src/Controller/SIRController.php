@@ -296,12 +296,16 @@ class SIRController extends AbstractController
         $I0 = 0.05;
         $i0 = $I0 * $NN;
         if ($num_exp == 0) {
-            // On s'occupe du cas de l'initialisation de l'exp avec choix de l'expé et tout 
+            // A revoir avec nouvelle épidémie et intégrer espilon 
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
             $IDrandom = rand(1,199);
             $epi = $repo->find($IDrandom);
             $etatinitial = new EtatExp;
-            
+            // randomization de si on display la valeur de accélration de pintus 
+            $acceleration = True ;
+            if (rand(0,1) < 0.5) {
+                $acceleration = false ;
+            }
             $resume = new Resume();
             $resume->setR0($epi->getR())
                     ->setpi($epi->getPi())
@@ -312,7 +316,8 @@ class SIRController extends AbstractController
                     ->setInfluence14(random_0_1())
                     ->setInfluence23(random_0_1())
                     ->setInfluence24(random_0_1())
-                    ->setInfluence34(random_0_1());
+                    ->setInfluence34(random_0_1())
+                    ->setAcc($acceleration);
 
             $manager->persist($resume);
             $manager->flush();
@@ -460,6 +465,19 @@ class SIRController extends AbstractController
                         -> setExperience($etatavant->getExperience());
             $manager->persist($etatcalcule);
             $manager->flush();
+
+            # calcul des données à montrer au sujet : 
+
+            $cas_cumule1 = $etatavant->getP1() + $etatavant->getRu1();
+            $cas_cumule2 = $etatavant->getP2() + $etatavant->getRu2();
+            $cas_cumule3 = $etatavant->getP3() + $etatavant->getRu3();
+            $cas_cumule4 = $etatavant->getP4() + $etatavant->getRu4();
+
+
+
+
+
+
             return $this->redirectToRoute('exp_form_suite', [
                 'num_exp' => $num_exp ,
                 'temps' => $etatcalcule

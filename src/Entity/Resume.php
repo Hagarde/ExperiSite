@@ -74,6 +74,11 @@ class Resume
      */
     private $influence34;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $acc;
+
     public function __construct()
     {
         $this->detail = new ArrayCollection();
@@ -230,6 +235,18 @@ class Resume
     public function setInfluence34(float $influence34): self
     {
         $this->influence34 = $influence34;
+
+        return $this;
+    }
+
+    public function getAcc(): ?bool
+    {
+        return $this->acc;
+    }
+
+    public function setAcc(bool $acc): self
+    {
+        $this->acc = $acc;
 
         return $this;
     }

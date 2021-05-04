@@ -180,6 +180,7 @@ class env_total:
     
     # Actualisation du milion et demi de valeur !!
     
+    
         self.S1 = data[1,0] 
         self.U1 = data[1,1]
         self.P1 = data[1,2]
