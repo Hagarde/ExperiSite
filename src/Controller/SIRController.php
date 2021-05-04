@@ -293,12 +293,10 @@ class SIRController extends AbstractController
         
         $resultexp = new EtatExp();
         $NN = 10000;
-        $I0 = 0.05;
-        $i0 = $I0 * $NN;
         if ($num_exp == 0) {
             // A revoir avec nouvelle épidémie et intégrer espilon 
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
-            $IDrandom = rand(1,199);
+            $IDrandom = rand(1,3);
             $epi = $repo->find($IDrandom);
             $etatinitial = new EtatExp;
             // randomization de si on display la valeur de accélration de pintus 
@@ -306,17 +304,21 @@ class SIRController extends AbstractController
             if (rand(0,1) < 0.5) {
                 $acceleration = false ;
             }
+            $inter = 0;
+            if (rand(0,1) < 0.5) {
+                $inter = 1;
+            }
             $resume = new Resume();
             $resume->setR0($epi->getR())
                     ->setpi($epi->getPi())
                     ->setMu($epi->getMu())
-                    ->setI0($I0)
-                    ->setInfluence12(random_0_1())
-                    ->setInfluence13(random_0_1())
-                    ->setInfluence14(random_0_1())
-                    ->setInfluence23(random_0_1())
-                    ->setInfluence24(random_0_1())
-                    ->setInfluence34(random_0_1())
+                    ->setI0($epi->getI0()*$NN)
+                    ->setInfluence12($inter)
+                    ->setInfluence13($inter)
+                    ->setInfluence14($inter)
+                    ->setInfluence23($inter)
+                    ->setInfluence24($inter)
+                    ->setInfluence34($inter)
                     ->setAcc($acceleration);
 
             $manager->persist($resume);
@@ -372,12 +374,15 @@ class SIRController extends AbstractController
                     -> add('Test12', RangeType::class, [
                         'attr' => [
                             'autocomplete' => 'on',
+                            'orient' => "vertical",
                             'min' => 0,
                             'max' => 100]
                         ])
                     -> add('Test21', RangeType::class, [
                         'attr' => [
                             'min' => 0,
+                            'autocomplete' => 'on',
+                            'orient' => "vertical",
                             'max' => 100]
                             ])
                         
@@ -487,7 +492,12 @@ class SIRController extends AbstractController
             'formExp' => $form->createView(),
             'resume' => $resume ,
             'temps' => $T ,
-            'etat_avant' => $etatavant
+            'etat_avant' => $etatavant,
+            'cas_cumule1'  => $cas_cumule1,
+            'cas_cumule2'  => $cas_cumule2,
+            'cas_cumule3'  => $cas_cumule3,
+            'cas_cumule4'  => $cas_cumule4,
+            
         ]
     );
     }   

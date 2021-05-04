@@ -32,6 +32,16 @@ class Epidemie
      */
     private $mu;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $i0;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $epsilon;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +79,30 @@ class Epidemie
     public function setMu(float $mu): self
     {
         $this->mu = $mu;
+
+        return $this;
+    }
+
+    public function getI0(): ?float
+    {
+        return $this->i0;
+    }
+
+    public function setI0(float $i0): self
+    {
+        $this->i0 = $i0;
+
+        return $this;
+    }
+
+    public function getEpsilon(): ?float
+    {
+        return $this->epsilon;
+    }
+
+    public function setEpsilon(float $epsilon): self
+    {
+        $this->epsilon = $epsilon;
 
         return $this;
     }
