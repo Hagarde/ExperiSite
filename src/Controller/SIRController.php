@@ -290,17 +290,16 @@ class SIRController extends AbstractController
 
     public function exp_form(int $num_exp, int $temps = null, Request $request, EntityManagerInterface $manager) 
     {
-        
         $resultexp = new EtatExp();
         $NN = 10000;
         if ($num_exp == 0) {
-            // A revoir avec nouvelle épidémie et intégrer espilon 
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
             $IDrandom = rand(1,3);
             $epi = $repo->find($IDrandom);
+            $i0 = $epi->getI0()*$NN;
             $etatinitial = new EtatExp;
             // randomization de si on display la valeur de accélration de pintus 
-            $acceleration = True ;
+            $acceleration = true ;
             if (rand(0,1) < 0.5) {
                 $acceleration = false ;
             }
@@ -319,7 +318,8 @@ class SIRController extends AbstractController
                     ->setInfluence23($inter)
                     ->setInfluence24($inter)
                     ->setInfluence34($inter)
-                    ->setAcc($acceleration);
+                    ->setAcc($acceleration)
+                    ->setEpsilon($epi->getEpsilon());
 
             $manager->persist($resume);
             $manager->flush();
@@ -390,16 +390,72 @@ class SIRController extends AbstractController
 
         $form->handleRequest($request);
         $T = $etatavant->getT() ;
+        $epsilon = $resume->getEpsilon();
+        $nmbr_test = $epsilon * $NN ;
+        # calcul des données à montrer au sujet : 
+
+        $cas_cumule1 = $etatavant->getP1() + $etatavant->getRu1();
+        $cas_cumule2 = $etatavant->getP2() + $etatavant->getRu2();
+        $cas_cumule3 = $etatavant->getP3() + $etatavant->getRu3();
+        $cas_cumule4 = $etatavant->getP4() + $etatavant->getRu4();
+        $positivite1 = 'pas encore accessible';
+        $positivite2 = 'pas encore accessible';
+        $positivite3 = 'pas encore accessible';
+        $positivite4 = 'pas encore accessible';
+        $new_P1 = 'Pas encore disponible';
+        $new_P2 = 'Pas encore disponible';
+        $new_P3 = 'Pas encore disponible';
+        $new_P4 = 'Pas encore disponible';
+        $test_avant1 = $etatavant->getTest11();
+        $test_avant2 = $etatavant->getTest12();
+        $test_avant3 = $etatavant->getTest21();
+        $test_avant4 = $etatavant->getTest22();
+        
+        $acc1 = 'Pas encore disponible' ;
+        $acc2 = 'Pas encore disponible' ;
+        $acc3 = 'Pas encore disponible' ;
+        $acc4 = 'Pas encore disponible' ;
+        
+
+        if ($T > 1.5) {
+            $etatavantavant = $etatlie[$avantdernier - 1] ;
+            $new_P1 = ($etatavant->getP1() - $etatavantavant->getP1());
+            $new_P2 = ($etatavant->getP2() - $etatavantavant->getP2());
+            $new_P3 = ($etatavant->getP3() - $etatavantavant->getP3());
+            $new_P4 = ($etatavant->getP4() - $etatavantavant->getP4());
+
+            $positivite1 = (($etatavant->getP1() - $etatavantavant->getP1()) / $etatavant->getTest11() )*100;
+            $positivite2 = (($etatavant->getP2() - $etatavantavant->getP2()) / $etatavant->getTest12() )*100;
+            $positivite3 = (($etatavant->getP3() - $etatavantavant->getP3()) / $etatavant->getTest21() )*100;
+            $positivite4 = (($etatavant->getP4() - $etatavantavant->getP4()) / $etatavant->getTest22() )*100;
+
+            if ($resume->getAcc()){
+                for ($i = 0; $i <= count($etatlie) ; $i++) {
+                    $test_cumule1  = $etatlie[i]->getTest11();
+                    $test_cumule2  = $etatlie[i]->getTest12();
+                    $test_cumule3  = $etatlie[i]->getTest21();
+                    $test_cumule4  = $etatlie[i]->getTest22();
+                }
+                $acc1 = ($test_cumule1/$cas_cumule1) / $positivite1 ;
+                $acc2 = ($test_cumule2/$cas_cumule2) / $positivite2 ;
+                $acc3 = ($test_cumule3/$cas_cumule3) / $positivite3 ;
+                $acc4 = ($test_cumule4/$cas_cumule4) / $positivite4 ;
+
+            }
+        }
+
+        
         
         if($form->isSubmitted() && $form->isValid() ){
 
             $repartition1 = $resultexp->getTest11();
             $repartition2 = $resultexp->getTest12();
             $repartition3 = $resultexp->getTest21();
-            $etatavant->setTest11((100-$repartition1)*(100-$repartition2)/10000)
-                    ->setTest12((100-$repartition1)*($repartition2)/10000)
-                    ->setTest21(($repartition1)*(100-$repartition3)/10000)
-                    ->setTest22(($repartition1)*($repartition3)/10000);
+            
+            $etatavant->setTest11(((100-$repartition1)*(100-$repartition2)/10000)*$epsilon)
+                    ->setTest12(((100-$repartition1)*($repartition2)/10000)*$epsilon)
+                    ->setTest21((($repartition1)*(100-$repartition3)/10000)*$epsilon)
+                    ->setTest22((($repartition1)*($repartition3)/10000)*$epsilon);
 
             // Truc chiant pour utiliser le python 
             $s1 = strval($etatavant->getS1());
@@ -429,12 +485,12 @@ class SIRController extends AbstractController
             $test12 =strval($etatavant->getTest12());
             $test21 =strval($etatavant->getTest21());
             $test22 =strval($etatavant->getTest22());
-            $influence12 =strval($etatavant->getTest11());
-            $influence13 =strval($etatavant->getTest12());
-            $influence14 =strval($etatavant->getTest21());
-            $influence23 =strval($etatavant->getTest22());
-            $influence24 =strval($etatavant->getTest21());
-            $influence34 =strval($etatavant->getTest22());
+            $influence12 =strval($resume->getInfluence12());
+            $influence13 =strval($resume->getInfluence13());
+            $influence14 =strval($resume->getInfluence14());
+            $influence23 =strval($resume->getInfluence23());
+            $influence24 =strval($resume->getInfluence24());
+            $influence34 =strval($resume->ggetInfluence34());
             
 
             $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
@@ -471,18 +527,6 @@ class SIRController extends AbstractController
             $manager->persist($etatcalcule);
             $manager->flush();
 
-            # calcul des données à montrer au sujet : 
-
-            $cas_cumule1 = $etatavant->getP1() + $etatavant->getRu1();
-            $cas_cumule2 = $etatavant->getP2() + $etatavant->getRu2();
-            $cas_cumule3 = $etatavant->getP3() + $etatavant->getRu3();
-            $cas_cumule4 = $etatavant->getP4() + $etatavant->getRu4();
-
-
-
-
-
-
             return $this->redirectToRoute('exp_form_suite', [
                 'num_exp' => $num_exp ,
                 'temps' => $etatcalcule
@@ -497,7 +541,15 @@ class SIRController extends AbstractController
             'cas_cumule2'  => $cas_cumule2,
             'cas_cumule3'  => $cas_cumule3,
             'cas_cumule4'  => $cas_cumule4,
-            
+            'positivite1' => $positivite1,
+            'positivite2' => $positivite2,
+            'positivite3' => $positivite3,
+            'positivite4' => $positivite4,
+            'acc'=> $resume->getAcc(),
+            'acc1' => $acc1,
+            'acc2' => $acc2,
+            'acc3' => $acc3,
+            'acc4' => $acc4
         ]
     );
     }   

@@ -147,11 +147,8 @@ class env_total:
         self.history[3][2].append(self.P4)
         self.history[3][3].append(self.R4_U)
 
-    def donnees_demain (self,prop_test1,prop_test2,prop_test3,prop_test4) :
-        test1 = prop_test1 * self.NN1
-        test2 = prop_test2 * self.NN2
-        test3 = prop_test3 * self.NN3
-        test4 = prop_test4 * self.NN4
+    def donnees_demain (self,test1,test2,test3,test4) :
+        # les test doivent être donné en nombre de test et non en proportion de population 
         def systeme_diff (vecteur_condition_initiale,t) :
             S01,U01,P01,R0_U1,R0_P1,S02,U02,P02,R0_U2,R0_P2,S03,U03,P03,R0_U3,R0_P3,S04,U04,P04,R0_U4,R0_P4 = vecteur_condition_initiale
             dS1 = - self.beta1 * S01 * (U01 + (1-self.virus.pi)*P01)

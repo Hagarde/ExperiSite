@@ -104,6 +104,7 @@ Lorraine.crache_un_graphe_continu(proportion_test,duree)
 print(Lorraine.determiner_controllabilite (proportion_test,100))
 """
 
+
 def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4,R,pi,mu,matrice_influence) :
     VIRUS = env.maladie(R,pi,mu)
     en = env.env_total(100000,100000,100000,100000,VIRUS,matrice_influence,s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4)
@@ -140,10 +141,11 @@ if __name__ == "__main__":
     R = float(sys.argv[21])
     pi = float(sys.argv[22])
     mu = float(sys.argv[23])
-    test11 = float(sys.argv[24]) / population 
-    test12 = float(sys.argv[25])/ population 
-    test21 = float(sys.argv[26])/ population 
-    test22 = float(sys.argv[27])/ population 
+    # indiquer le nombre de test en nombr de test 
+    test11 = float(sys.argv[24]) 
+    test12 = float(sys.argv[25])
+    test21 = float(sys.argv[26]) 
+    test22 = float(sys.argv[27])
     influence1_2 =float(sys.argv[28]) 
     influence1_3 =float(sys.argv[29])
     influence1_4 =float(sys.argv[30])

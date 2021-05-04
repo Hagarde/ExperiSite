@@ -79,6 +79,11 @@ class Resume
      */
     private $acc;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $epsilon;
+
     public function __construct()
     {
         $this->detail = new ArrayCollection();
@@ -247,6 +252,18 @@ class Resume
     public function setAcc(bool $acc): self
     {
         $this->acc = $acc;
+
+        return $this;
+    }
+
+    public function getEpsilon(): ?float
+    {
+        return $this->epsilon;
+    }
+
+    public function setEpsilon(float $epsilon): self
+    {
+        $this->epsilon = $epsilon;
 
         return $this;
     }
