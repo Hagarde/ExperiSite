@@ -392,16 +392,17 @@ class SIRController extends AbstractController
         $T = $etatavant->getT() ;
         $epsilon = $resume->getEpsilon();
         $nmbr_test = $epsilon * $NN ;
+        dump($nmbr_test);
         # calcul des données à montrer au sujet : 
 
         $cas_cumule1 = $etatavant->getP1() + $etatavant->getRu1();
         $cas_cumule2 = $etatavant->getP2() + $etatavant->getRu2();
         $cas_cumule3 = $etatavant->getP3() + $etatavant->getRu3();
         $cas_cumule4 = $etatavant->getP4() + $etatavant->getRu4();
-        $positivite1 = 'pas encore accessible';
-        $positivite2 = 'pas encore accessible';
-        $positivite3 = 'pas encore accessible';
-        $positivite4 = 'pas encore accessible';
+        $positivite1 = 'Pas encore disponible';
+        $positivite2 = 'Pas encore disponible';
+        $positivite3 = 'Pas encore disponible';
+        $positivite4 = 'Pas encore disponible';
         $new_P1 = 'Pas encore disponible';
         $new_P2 = 'Pas encore disponible';
         $new_P3 = 'Pas encore disponible';
@@ -424,38 +425,37 @@ class SIRController extends AbstractController
             $new_P3 = ($etatavant->getP3() - $etatavantavant->getP3());
             $new_P4 = ($etatavant->getP4() - $etatavantavant->getP4());
 
-            $positivite1 = (($etatavant->getP1() - $etatavantavant->getP1()) / $etatavant->getTest11() )*100;
-            $positivite2 = (($etatavant->getP2() - $etatavantavant->getP2()) / $etatavant->getTest12() )*100;
-            $positivite3 = (($etatavant->getP3() - $etatavantavant->getP3()) / $etatavant->getTest21() )*100;
-            $positivite4 = (($etatavant->getP4() - $etatavantavant->getP4()) / $etatavant->getTest22() )*100;
-
-            if ($resume->getAcc()){
-                for ($i = 0; $i <= count($etatlie) ; $i++) {
-                    $test_cumule1  = $etatlie[i]->getTest11();
-                    $test_cumule2  = $etatlie[i]->getTest12();
-                    $test_cumule3  = $etatlie[i]->getTest21();
-                    $test_cumule4  = $etatlie[i]->getTest22();
-                }
-                $acc1 = ($test_cumule1/$cas_cumule1) / $positivite1 ;
-                $acc2 = ($test_cumule2/$cas_cumule2) / $positivite2 ;
-                $acc3 = ($test_cumule3/$cas_cumule3) / $positivite3 ;
-                $acc4 = ($test_cumule4/$cas_cumule4) / $positivite4 ;
-
-            }
+            if (($etatavant->getTest11()>0)and ($etatavant->getTest12()>0) and ($etatavant->getTest21()>0) and ($etatavant->getTest22()>0 )) {
+                $positivite1 = (($etatavant->getP1() - $etatavantavant->getP1()) / $etatavant->getTest11() )*100;
+                $positivite2 = (($etatavant->getP2() - $etatavantavant->getP2()) / $etatavant->getTest12() )*100;
+                $positivite3 = (($etatavant->getP3() - $etatavantavant->getP3()) / $etatavant->getTest21() )*100;
+                $positivite4 = (($etatavant->getP4() - $etatavantavant->getP4()) / $etatavant->getTest22() )*100;
+                if ($resume->getAcc()){
+                    for ($i = 0; $i < count($etatlie) ; $i++) {
+                        $test_cumule1  = $etatlie[$i]->getTest11();
+                        $test_cumule2  = $etatlie[$i]->getTest12();
+                        $test_cumule3  = $etatlie[$i]->getTest21();
+                        $test_cumule4  = $etatlie[$i]->getTest22();
+                    
+                    $acc1 = ($test_cumule1/$cas_cumule1) / $positivite1 ;
+                    $acc2 = ($test_cumule2/$cas_cumule2) / $positivite2 ;
+                    $acc3 = ($test_cumule3/$cas_cumule3) / $positivite3 ;
+                    $acc4 = ($test_cumule4/$cas_cumule4) / $positivite4 ;
+                    }
+                };
+            };
         }
 
-        
-        
         if($form->isSubmitted() && $form->isValid() ){
 
             $repartition1 = $resultexp->getTest11();
             $repartition2 = $resultexp->getTest12();
             $repartition3 = $resultexp->getTest21();
-            
-            $etatavant->setTest11(((100-$repartition1)*(100-$repartition2)/10000)*$epsilon)
-                    ->setTest12(((100-$repartition1)*($repartition2)/10000)*$epsilon)
-                    ->setTest21((($repartition1)*(100-$repartition3)/10000)*$epsilon)
-                    ->setTest22((($repartition1)*($repartition3)/10000)*$epsilon);
+            dump($repartition1);
+            $etatavant->setTest11(((100-$repartition1)*(100-$repartition2)/10000)*$nmbr_test)
+                    ->setTest12(((100-$repartition1)*($repartition2)/10000)*$nmbr_test)
+                    ->setTest21((($repartition1)*(100-$repartition3)/10000)*$nmbr_test)
+                    ->setTest22((($repartition1)*($repartition3)/10000)*$nmbr_test);
 
             // Truc chiant pour utiliser le python 
             $s1 = strval($etatavant->getS1());
@@ -490,13 +490,14 @@ class SIRController extends AbstractController
             $influence14 =strval($resume->getInfluence14());
             $influence23 =strval($resume->getInfluence23());
             $influence24 =strval($resume->getInfluence24());
-            $influence34 =strval($resume->ggetInfluence34());
+            $influence34 =strval($resume->getInfluence34());
             
 
             $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
             $command = escapeshellcmd($stringcommand);
             $output = shell_exec($command);
             $tableau = explode(' ' , $output);
+            dump($command);
 
         // On update et on crée la nouvelle valeur ! 
 
@@ -549,7 +550,15 @@ class SIRController extends AbstractController
             'acc1' => $acc1,
             'acc2' => $acc2,
             'acc3' => $acc3,
-            'acc4' => $acc4
+            'acc4' => $acc4,
+            'newP1' => $new_P1,
+            'newP2' => $new_P2,
+            'newP3' => $new_P3,
+            'newP4' => $new_P4,
+            'testhier1' => $etatavant->getTest11(),
+            'testhier2' => $etatavant->getTest12(),
+            'testhier3' => $etatavant->getTest21(),
+            'testhier4' => $etatavant->getTest22()
         ]
     );
     }   

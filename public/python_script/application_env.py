@@ -105,6 +105,7 @@ print(Lorraine.determiner_controllabilite (proportion_test,100))
 """
 
 
+
 def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4,R,pi,mu,matrice_influence) :
     VIRUS = env.maladie(R,pi,mu)
     en = env.env_total(100000,100000,100000,100000,VIRUS,matrice_influence,s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4)
