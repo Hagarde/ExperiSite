@@ -2,7 +2,6 @@
 {% form_theme formExp 'bootstrap_4_layout.html.twig' %}
 {% block title %} Expérience en cours ...{% endblock %}
 
-
 {% block body %}
 
 <div class="card text-center">
@@ -11,16 +10,7 @@
   </div>
 </div>
 
-<div class="card" style="width: 18rem;">
-  <div class="card-header">
-    Les définitions : 
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Taux d'incidence : rapporte le nombre de nouveaux cas d'une pathologie observés pendant une période donnée </li>
-    <li class="list-group-item">taux de positivité : mesure le pourcentage de cas positifs par rapport au nombre de tests</li>
-    <li class="list-group-item">Nombre de cas recensé cumulé : est le nombre de personnes testées positives depuis le début de l'épidémiep</li>
-  </ul>
-</div>
+
 
 
   <style>
@@ -28,7 +18,7 @@
       .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
   </style>
 
- <div class="card text-center">
+<div class="card text-center">
   <div class="card-header">
     Panneau de contrôle 
   </div>
@@ -37,85 +27,104 @@
     <p class="card-text">Ce panneau de contrôle vous permet de répartir les test parmi les différentes populations de vos villes </p>
   </div>
 </div>
-<div style='padding:2%  5% '>
+
 
 {# panneau de droite pour décision #}
 <div class='container'>
-  <div class='col-4'>
-  
-    {{form_start(formExp)}}
-    <div class="">
-      <div name="form"  >
-        <div class="d-flex justify-content-between">
-          <p> Région 1 </p>
-          <p> Région 2  </p>
+  <div class='row' >
+    <div class='col-4'>
+    
+      {{form_start(formExp)}}
+      <div class="">
+        <div name="form"  >
+          <div class="d-flex justify-content-between">
+            <p> Région 1 </p>
+            <p> Région 2  </p>
+          </div>
+          {{form_widget(formExp.Test11)}}
         </div>
-        {{form_widget(formExp.Test11)}}
-      </div>
-      {# Dans Ville 1#}
-      <div style='padding:3% 0'>
+        {# Dans Ville 1#}
+        <div style=''>
+          <div class="d-flex justify-content-center">
+            <p> Dans Ville 1 
+          </div>
+          <div class="d-flex justify-content-between">
+              <p> Jeunes </p>
+              <p> Vieux  </p>
+            </div>
+          <div name="form">
+            {{form_widget(formExp.Test12)}}
+          </div>
+        </div>
+      {# Dans Ville 2 #}
+      <div style=''>
         <div class="d-flex justify-content-center">
-          <p> Dans Ville 1 
+          <p> Dans Ville 2 
         </div>
         <div class="d-flex justify-content-between">
             <p> Jeunes </p>
             <p> Vieux  </p>
           </div>
         <div name="form">
-          {{form_widget(formExp.Test12)}}
+          {{form_widget(formExp.Test21)}}
         </div>
       </div>
-    {# Dans Ville 2 #}
-    <div style='padding:1% 0'>
-      <div class="d-flex justify-content-center">
-        <p> Dans Ville 2 
-      </div>
-      <div class="d-flex justify-content-between">
-          <p> Jeunes </p>
-          <p> Vieux  </p>
-        </div>
-      <div name="form">
-        {{form_widget(formExp.Test21)}}
-      </div>
-    </div>
-    {# Bouton de submit #}
+      {# Bouton de submit #}
 
 
-      <div class="card text-center" style='padding: 2%'>
-        <div class="card-body">
-          <h5 class="card-title">Êtes-vous sûr de vouloir confirmer cette décision ? </h5>
-          <button type='submit'> Oui </button>
+        <div class="card text-center" style=''>
+          <div class="card-body">
+            <h5 class="card-title">Êtes-vous sûr de vouloir confirmer cette décision ? </h5>
+            <button type='submit'> Oui </button>
+          </div>
         </div>
       </div>
+      {{form_end(formExp)}}
     </div>
-    {{form_end(formExp)}}
-  </div>
-{# panneau de gauche pour montrer les données  #}
-  <div class='col-8'>
-  {# Les cartes des 4 régions  #}
-    <div class='col-6'>
-      <div class='card'>
-      <h5 class="card-title"> Région 1 Population Jeune </h5>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"> Population : 10 000 </li>
-        <li class="list-group-item"> Taux de positivité : (+ ... depuis la veille ) </li>
-        <li class="list-group-item"> Nombre de cas cumulé : </li>
-        <li class="list-group-item"> Test </li>
-        
-        {% if acc == True %}
-        <li class="list-group-item"> Indice d'accélération : </li>
-        {% endif %}
-      </ul>
+    
+  {# panneau de gauche pour montrer les données  #}
+    <div class='col-8'>
+    {# Les cartes des 4 régions  #}
+      <div class='col-6'>
+        <div class="row">
+          <div class='card'>
+            <h5 class="card-title"> Région 1 Population Jeune </h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"> Population : 10 000 </li>
+              <li class="list-group-item"> Taux de positivité : {{positivite1}} </li>
+              <li class="list-group-item"> Nombre de cas cumulé : {{cas_cumule1}}</li>
+              <li class="list-group-item"> Nouveau cas détecté : {{newP1}} </li>
+              <li class="list-group-item"> Nombre de test la veille : {{ testhier1 }}</li>
+              {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
-      </div>
+              {% if acc %}
+              <li class="list-group-item"> Indice d'accélération : {{acc1}}</li>
+              {% endif %}
+            </ul>
+          </div>
+          <div class='col-6'>
+            
+          </div>
+        </div>
     </div>
-
-
-
-
-
-
-
   </div>
 </div>
+
 {% endblock %}
+
+
+          <div class='card'>
+              <h5 class="card-title"> Région 1 Population Agée </h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"> Population : 10 000 </li>
+                <li class="list-group-item"> Taux de positivité : {{positivite2}} </li>
+                <li class="list-group-item"> Nombre de cas cumulé : {{cas_cumule2}}</li>
+                <li class="list-group-item"> Nouveau cas détecté : {{newP2}} </li>
+                <li class="list-group-item"> Nombre de test la veille : {{ testhier2 }}</li>
+                {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
+
+                {% if acc %}
+                <li class="list-group-item"> Indice d'accélération : {{acc2}}</li>
+                {% endif %}
+              </ul>
+            </div>
