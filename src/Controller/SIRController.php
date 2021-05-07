@@ -328,10 +328,10 @@ class SIRController extends AbstractController
                 -> setU2($i0)
                 -> setU3($i0)
                 -> setU4($i0)
-                -> setS1($NN-$etatinitial->getU1())
-                -> setS2($NN-$etatinitial->getU1())
-                -> setS3($NN-$etatinitial->getU1())
-                -> setS4($NN-$etatinitial->getU1())
+                -> setS1($NN-$i0)
+                -> setS2($NN-$i0)
+                -> setS3($NN-$i0)
+                -> setS4($NN-$i0)
                 -> setP1(0)
                 -> setP2(0)
                 -> setP3(0)
@@ -392,9 +392,7 @@ class SIRController extends AbstractController
         $T = $etatavant->getT() ;
         $epsilon = $resume->getEpsilon();
         $nmbr_test = $epsilon * $NN ;
-        dump($nmbr_test);
         # calcul des données à montrer au sujet : 
-
         $cas_cumule1 = $etatavant->getP1() + $etatavant->getRu1();
         $cas_cumule2 = $etatavant->getP2() + $etatavant->getRu2();
         $cas_cumule3 = $etatavant->getP3() + $etatavant->getRu3();
@@ -416,8 +414,7 @@ class SIRController extends AbstractController
         $acc2 = 'Pas encore disponible' ;
         $acc3 = 'Pas encore disponible' ;
         $acc4 = 'Pas encore disponible' ;
-        
-
+    
         if ($T > 1.5) {
             $etatavantavant = $etatlie[$avantdernier - 1] ;
             $new_P1 = ($etatavant->getP1() - $etatavantavant->getP1());
@@ -451,7 +448,6 @@ class SIRController extends AbstractController
             $repartition1 = $resultexp->getTest11();
             $repartition2 = $resultexp->getTest12();
             $repartition3 = $resultexp->getTest21();
-            dump($repartition1);
             $etatavant->setTest11(((100-$repartition1)*(100-$repartition2)/10000)*$nmbr_test)
                     ->setTest12(((100-$repartition1)*($repartition2)/10000)*$nmbr_test)
                     ->setTest21((($repartition1)*(100-$repartition3)/10000)*$nmbr_test)
@@ -496,32 +492,34 @@ class SIRController extends AbstractController
             $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
             $command = escapeshellcmd($stringcommand);
             $output = shell_exec($command);
-            $tableau = explode(' ' , $output);
-            dump($command);
-
+            $fichier = fopen ("data.txt", "r");
+            $contenu_du_fichier = fgets ($fichier, 400);
+            $tableau = explode(' ' , $contenu_du_fichier);
+            fclose ($fichier);
+            
         // On update et on crée la nouvelle valeur ! 
 
             $etatcalcule = new EtatExp() ;
             $new_T = ($etatavant->getT())+1;
             $etatcalcule-> setS1(floatval($tableau[0]))
-                        -> setS2(floatval($tableau[1]))
-                        -> setS3(floatval($tableau[2]))
-                        -> setS4(floatval($tableau[3]))
-                        -> setU1(floatval($tableau[4]))
-                        -> setU2(floatval($tableau[5]))
-                        -> setU3(floatval($tableau[6]))
-                        -> setU4(floatval($tableau[7]))
-                        -> setP1(floatval($tableau[8]))
-                        -> setP2(floatval($tableau[9]))
-                        -> setP3(floatval($tableau[10]))
-                        -> setP4(floatval($tableau[11]))
-                        -> setRu1(floatval($tableau[12]))
-                        -> setRu2(floatval($tableau[13]))
-                        -> setRu3(floatval($tableau[14]))
-                        -> setRu4(floatval($tableau[15]))
-                        -> setRp1(floatval($tableau[16]))
-                        -> setRp2(floatval($tableau[17]))
-                        -> setRp3(floatval($tableau[18]))
+                        -> setU1(floatval($tableau[1]))
+                        -> setP1(floatval($tableau[2]))
+                        -> setRu1(floatval($tableau[3]))
+                        -> setRp1(floatval($tableau[4]))
+                        -> setS2(floatval($tableau[5]))
+                        -> setU2(floatval($tableau[6]))
+                        -> setP2(floatval($tableau[7]))
+                        -> setRu2(floatval($tableau[8]))
+                        -> setRP2(floatval($tableau[9]))
+                        -> setS3(floatval($tableau[10]))
+                        -> setU3(floatval($tableau[11]))
+                        -> setP3(floatval($tableau[12]))
+                        -> setRu3(floatval($tableau[13]))
+                        -> setRp3(floatval($tableau[14]))
+                        -> setS4(floatval($tableau[15]))
+                        -> setU4(floatval($tableau[16]))
+                        -> setP4(floatval($tableau[17]))
+                        -> setRu4(floatval($tableau[18]))
                         -> setRp4(floatval($tableau[19]))
                         -> setT($new_T)
                         -> setExperience($etatavant->getExperience());
@@ -533,6 +531,7 @@ class SIRController extends AbstractController
                 'temps' => $etatcalcule
             ]);
         }                        
+
         return $this->render('sir/exp_python.html.twig',[
             'formExp' => $form->createView(),
             'resume' => $resume ,
@@ -558,7 +557,7 @@ class SIRController extends AbstractController
             'testhier1' => $etatavant->getTest11(),
             'testhier2' => $etatavant->getTest12(),
             'testhier3' => $etatavant->getTest21(),
-            'testhier4' => $etatavant->getTest22()
+            'testhier4' => $etatavant->getTest22(),
         ]
     );
     }   

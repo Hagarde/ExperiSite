@@ -3,7 +3,9 @@ import environnement_exp as env
 import numpy as np 
 import time 
 import sys 
+from scipy.integrate import odeint 
 import os 
+import matplotlib.pyplot as plt
 # Test pour voir de beaux graphes de base et cool 
 """
 NN = (10**5) 
@@ -91,19 +93,19 @@ S04,U04,P04,R0_U4,R0_P4 = NN4 * 0.95 ,NN4* 0.05 ,0,0,0
 monde = env.env_total(NN1,NN2,NN3,NN4,peste,matrice_influence,S01,U01,P01,R0_U1,R0_P1,S02,U02,P02,R0_U2,R0_P2,S03,U03,P03,R0_U3,R0_P3,S04,U04,P04,R0_U4,R0_P4)
 monde.graphe_sur_charge(0.1,0.25,0.4,0.5)
 """
+'''
 
-"""
-NN = (10**5) 
-R,pi,mu = 15,1,1/14
+NN = (10**4) 
+R,pi,mu = 4,1,1/28
 VIRUS = env.maladie(R,pi,mu)
-proportion_test = 0.25
+proportion_test = 0.
 VIRUS = env.maladie(R,pi,mu)
 duree = 100
 Lorraine = env.env_minimal("Lorraine",NN,VIRUS,0,NN*0.99,NN*0.01,0,0,0)
 Lorraine.crache_un_graphe_continu(proportion_test,duree)
 print(Lorraine.determiner_controllabilite (proportion_test,100))
-"""
 
+'''
 
 
 def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4,R,pi,mu,matrice_influence) :
@@ -118,7 +120,6 @@ def fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p
 
 
 if __name__ == "__main__":
-    population = 10000
     s1 = float(sys.argv[1])
     s2 = float(sys.argv[2])
     s3 = float(sys.argv[3])
@@ -147,24 +148,54 @@ if __name__ == "__main__":
     test12 = float(sys.argv[25])
     test21 = float(sys.argv[26]) 
     test22 = float(sys.argv[27])
-    influence1_2 =float(sys.argv[28]) 
-    influence1_3 =float(sys.argv[29])
-    influence1_4 =float(sys.argv[30])
-    influence2_3 =float(sys.argv[31])
-    influence2_4 =float(sys.argv[32])
-    influence3_4 =float(sys.argv[33])
-    matrice_influence = [[0,influence1_2,influence1_3,influence1_4],[influence1_2,0,influence2_3,influence2_4],[influence1_3,influence2_3,0,influence3_4],[influence1_4,influence2_4,influence3_4,0]]
-    liste = fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4,R,pi,mu,matrice_influence)
-    message =""
-    for element in liste : 
-        message = message + str(element) + " "
-    message = "echo " + message
-    os.system(message)
-    # Je vais écrire dans un fichier text les données à trnasmettre à php
-    f = open('data.txt','w')
-    f.write(message)
-
-
+    influence_1_2 =float(sys.argv[28]) 
+    influence_1_3 =float(sys.argv[29])
+    influence_1_4 =float(sys.argv[30])
+    influence_2_3 =float(sys.argv[31])
+    influence_2_4 =float(sys.argv[32])
+    influence_3_4 =float(sys.argv[33])
+    
+    #matrice_influence = [[0,influence1_2,influence1_3,influence1_4],[influence1_2,0,influence2_3,influence2_4],[influence1_3,influence2_3,0,influence3_4],[influence1_4,influence2_4,influence3_4,0]]
+    #liste = fonction_horrible(s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4,R,pi,mu,matrice_influence)
 
     # pour tester le truc entrer : 
     # python3 public/python_script/application_env.py 95 95 95 95 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 10 1 0.1 0.25 0.25 0.25 0.25 0 0 0 0 0 0 
+    # python3 python_script/application_env.py 9964.9492310481 9964.9654321322 9964.9905921589 9965.0204496922 22.066571937581 21.980964517671 21.808652046214 21.724154185196 0.29702379227407 0.3685357261746 0.51811328563182 0.57980512788954 0 0 0 0 0 0 0 0.57980512788954 8 1 0.067 10.5 31.5 105.78 152.22 0 0 0 0 0 0
+
+
+# On va réécrire les fonctions utiles ici pour que ce soit plus simple 
+    beta = (R/mu)/ 40000
+    T  = np.arange(0,2,1)
+    print(beta)
+    def systeme_diff(vecteur_condition_initiale,t):
+        S01,U01,P01,R0_U1,R0_P1,S02,U02,P02,R0_U2,R0_P2,S03,U03,P03,R0_U3,R0_P3,S04,U04,P04,R0_U4,R0_P4 = vecteur_condition_initiale
+        dS1 = - beta * S01 * (U01 + (1-pi)*P01)
+        dS2 = - beta * S02 * (U02 + (1-pi)*P02)
+        dS3 = - beta * S03 * (U03 + (1-pi)*P03)
+        dS4 = - beta * S04 * (U04 + (1-pi)*P04) 
+        dR_U1 = mu * U01 
+        dR_U2 = mu * U02 
+        dR_U3 = mu * U03 
+        dR_U4 = mu * U04  
+        dR_P1 = mu * P01
+        dR_P2 = mu * P02
+        dR_P3 = mu * P03
+        dR_P4 = mu * P04
+        dP1 = ((test11)**(1.5))*(((U01/(U01+R0_U1+S01)))**(1.5)) - mu * P01
+        dP2 = ((test12)**(1.5))*(((U02/(U02+R0_U2+S02)))**(1.5)) - mu * P02
+        dP3 = ((test21)**(1.5))*(((U03/(U03+R0_U3+S03)))**(1.5)) - mu * P03
+        dP4 = ((test22)**(1.5))*(((U04/(U04+R0_U4+S04)))**(1.5)) - mu * P04
+        dU1 = -dS1 - mu*U01 - ((test11)**(1.5))*(((U01/(U01+R0_U1+S01)))**(1.5)) + U02 * influence_1_2* beta + U03 * influence_1_3 * beta + U04 * influence_1_4 *beta
+        dU2 = -dS2 - mu*U02 - ((test12)**(1.5))*(((U02/(U02+R0_U2+S02)))**(1.5)) + U01 * influence_1_2 * beta + U03 * influence_2_3 * beta+ U04 * influence_2_4*beta 
+        dU3 = -dS3 - mu*U03 - ((test21)**(1.5))*(((U03/(U03+R0_U3+S03)))**(1.5)) + U01 * influence_1_3 * beta+ U02 * influence_2_3 * beta + U04 * influence_3_4*beta
+        dU4 = -dS4 - mu*U04 - ((test22)**(1.5))*(((U04/(U04+R0_U4+S04)))**(1.5)) + U01 * influence_1_4 * beta+ U02 * influence_2_4 * beta + U03 * influence_3_4*beta 
+        return [dS1,dU1,dP1,dR_U1,dR_P1,dS2,dU2,dP2,dR_U2,dR_P2,dS3,dU3,dP3,dR_U3,dR_P3,dS4,dU4,dP4,dR_U4,dR_P4]
+    data = odeint (systeme_diff,[s1,u1,p1,ru1,rp1,s2,u2,p2,ru2,rp2,s3,u3,p3,ru3,rp3,s4,u4,p4,ru4,rp4],T)
+    liste = data[1]
+    print(data)
+    
+    message =''
+    for element in liste : 
+        message = message + str(element) + " "
+    f = open('data.txt','w') 
+    f.write(message)
