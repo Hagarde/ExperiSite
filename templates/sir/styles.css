@@ -1,0 +1,26 @@
+.conteneur {
+    width: 100% ;
+    display: flex;
+    flex-direction: row ;
+    flex-wrap: nowrap;
+    justify-content: space-evenly ;
+    background-color: blueviolet;
+}
+
+.w3-third{
+    width : 33% ;
+}
+
+.w3-twothird{
+    width : 66% ;
+}
+
+input[type=range]{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 50px;
+    height: 200px;
+    padding: 0 24px;
+    outline: none;
+    background:transparent;
+}
