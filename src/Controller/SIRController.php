@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
+
 function random_0_1() 
 {
     return (float)rand() / (float)getrandmax();
@@ -367,24 +368,19 @@ class SIRController extends AbstractController
                     
                     -> add('Test11', RangeType::class, [
                         'attr' => [
+                            
                             'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100]
                         ])
-                    -> add('Test12', RangeType::class, [
-                        'attr' => [
-                            'autocomplete' => 'on',
-                            'orient' => "vertical",
-                            'min' => 0,
-                            'max' => 100]
-                        ])
-                    -> add('Test21', RangeType::class, [
-                        'attr' => [
-                            'min' => 0,
-                            'autocomplete' => 'on',
-                            'orient' => "vertical",
-                            'max' => 100]
-                            ])
+                    -> add('Test12', RangeType::class , ['attr' => [
+                        'autocomplete' => 'on',
+                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical;',
+                    ]])
+                    -> add('Test21', RangeType::class, ['attr' => [
+                        'autocomplete' => 'on',
+                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical;',
+                    ]])
                         
                         ->getForm();
 
@@ -489,8 +485,9 @@ class SIRController extends AbstractController
             $influence34 =strval($resume->getInfluence34());
             
 
-            $stringcommand = 'python3 python_script/application_env.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
+            $stringcommand = 'python3 python_script/test_4_region.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
             $command = escapeshellcmd($stringcommand);
+            dump($command);
             $output = shell_exec($command);
             $fichier = fopen ("data.txt", "r");
             $contenu_du_fichier = fgets ($fichier, 400);
@@ -537,10 +534,10 @@ class SIRController extends AbstractController
             'resume' => $resume ,
             'temps' => $T ,
             'etat_avant' => $etatavant,
-            'cas_cumule1'  => $cas_cumule1,
-            'cas_cumule2'  => $cas_cumule2,
-            'cas_cumule3'  => $cas_cumule3,
-            'cas_cumule4'  => $cas_cumule4,
+            'cas_cumule1'  => round($cas_cumule1),
+            'cas_cumule2'  => round($cas_cumule2),
+            'cas_cumule3'  => round($cas_cumule3),
+            'cas_cumule4'  => round($cas_cumule4),
             'positivite1' => $positivite1,
             'positivite2' => $positivite2,
             'positivite3' => $positivite3,
@@ -550,14 +547,14 @@ class SIRController extends AbstractController
             'acc2' => $acc2,
             'acc3' => $acc3,
             'acc4' => $acc4,
-            'newP1' => $new_P1,
-            'newP2' => $new_P2,
-            'newP3' => $new_P3,
-            'newP4' => $new_P4,
-            'testhier1' => $etatavant->getTest11(),
-            'testhier2' => $etatavant->getTest12(),
-            'testhier3' => $etatavant->getTest21(),
-            'testhier4' => $etatavant->getTest22(),
+            'newP1' => round($new_P1),
+            'newP2' => round($new_P2),
+            'newP3' => round($new_P3),
+            'newP4' => round($new_P4),
+            'testhier1' => round($etatavant->getTest11()),
+            'testhier2' => round($etatavant->getTest12()),
+            'testhier3' => round($etatavant->getTest21()),
+            'testhier4' => round($etatavant->getTest22()),
         ]
     );
     }   

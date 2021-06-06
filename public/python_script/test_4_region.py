@@ -1,5 +1,6 @@
 import numpy as np 
 import matplotlib.pyplot as plt
+import sys
 
 if __name__ == "__main__":
     S1 = float(sys.argv[1])
@@ -39,8 +40,9 @@ if __name__ == "__main__":
     vecteur_condition_initiale = np.array([S1,U1,Ru1,Rp1,P1,S2,U2,Ru2,Rp2,P2,S3,U3,Ru3,Rp3,P3,S4,U4,Ru4,Rp4,P4])
     
     # Set up des variables : 
+    NN = 10000
     pas = 0.001
-    DD = (1/mu) * / pas
+    DD = (1/mu)  / pas
     beta = (R/DD)/ NN
     alpha = 2
     psi = 1/2
@@ -139,14 +141,17 @@ if __name__ == "__main__":
         return np.array([dS1,dU1,dP1,dR_u1,dR_p1,dS2,dU2,dP2,dR_u2,dR_p2,dS3,dU3,dP3,dR_u3,dR_p3,dS4,dU4,dP4,dR_u4,dR_p4])
 
     def demain(data,nmbr_test1,nmbr_test2,nmbr_test3,nmbr_test4,pas) :
-        for i in range (1/pas) :
+        for i in range (int(1/pas)) :
             data = data + SURP_4(data,nmbr_test1,nmbr_test2,nmbr_test3,nmbr_test4,pas)
         return data
 
-    liste = demain(vecteur_condition_initiale,test1,test2,test3,test4,pas)
+    liste = demain(vecteur_condition_initiale,test11,test12,test21,test22,pas)
     # write in data.txt
     message =''
     for element in liste : 
         message = message + str(element) + " "
     f = open('data.txt','w') 
+    print(liste)
     f.write(message)
+
+# python3 public/python_script/test_4_region.py 10000 10000 10000 10000 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 12 1 0.1 50 50 50 50 1 1 1 1 1 1
