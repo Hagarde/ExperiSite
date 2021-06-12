@@ -352,6 +352,10 @@ class SIRController extends AbstractController
             $manager->flush();
             $etatavant = $etatinitial;
             $num_exp = $resume->getId();
+            $test_avant1= 0;
+            $test_avant2= 0;
+            $test_avant3= 0;
+            $test_avant4= 0;
         }
         else {
             $repo = $this->getDoctrine()->getRepository(Resume::class);
@@ -375,11 +379,11 @@ class SIRController extends AbstractController
                         ])
                     -> add('Test12', RangeType::class , ['attr' => [
                         'autocomplete' => 'on',
-                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical;',
+                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
                     ]])
                     -> add('Test21', RangeType::class, ['attr' => [
                         'autocomplete' => 'on',
-                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical;',
+                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
                     ]])
                         
                         ->getForm();
@@ -401,35 +405,38 @@ class SIRController extends AbstractController
         $new_P2 = 'Pas encore disponible';
         $new_P3 = 'Pas encore disponible';
         $new_P4 = 'Pas encore disponible';
-        $test_avant1 = $etatavant->getTest11();
-        $test_avant2 = $etatavant->getTest12();
-        $test_avant3 = $etatavant->getTest21();
-        $test_avant4 = $etatavant->getTest22();
         
         $acc1 = 'Pas encore disponible' ;
         $acc2 = 'Pas encore disponible' ;
         $acc3 = 'Pas encore disponible' ;
         $acc4 = 'Pas encore disponible' ;
     
-        if ($T > 1.5) {
+        if ($T > 0.5) {
             $etatavantavant = $etatlie[$avantdernier - 1] ;
-            $new_P1 = ($etatavant->getP1() - $etatavantavant->getP1());
-            $new_P2 = ($etatavant->getP2() - $etatavantavant->getP2());
-            $new_P3 = ($etatavant->getP3() - $etatavantavant->getP3());
-            $new_P4 = ($etatavant->getP4() - $etatavantavant->getP4());
 
-            if (($etatavant->getTest11()>0)and ($etatavant->getTest12()>0) and ($etatavant->getTest21()>0) and ($etatavant->getTest22()>0 )) {
-                $positivite1 = (($etatavant->getP1() - $etatavantavant->getP1()) / $etatavant->getTest11() )*100;
-                $positivite2 = (($etatavant->getP2() - $etatavantavant->getP2()) / $etatavant->getTest12() )*100;
-                $positivite3 = (($etatavant->getP3() - $etatavantavant->getP3()) / $etatavant->getTest21() )*100;
-                $positivite4 = (($etatavant->getP4() - $etatavantavant->getP4()) / $etatavant->getTest22() )*100;
+            $test_avant1 = $etatavantavant->getTest11();
+            $test_avant2 = $etatavantavant->getTest12();
+            $test_avant3 = $etatavantavant->getTest21();
+            $test_avant4 = $etatavantavant->getTest22();
+
+            $new_P1 = ($etatavant->getP1() - $etatavantavant->getP1()+($etatavant->getRP1() - $etatavantavant->getRP1()));
+            $new_P2 = ($etatavant->getP2() - $etatavantavant->getP2()+($etatavant->getRP2() - $etatavantavant->getRP2()));
+            $new_P3 = ($etatavant->getP3() - $etatavantavant->getP3()+($etatavant->getRP3() - $etatavantavant->getRP3()));
+            $new_P4 = ($etatavant->getP4() - $etatavantavant->getP4()+($etatavant->getRP4() - $etatavantavant->getRP4()));
+
+            if (($test_avant1>0)and ($test_avant2>0) and ($test_avant3>0) and ($test_avant4>0 ) and ($T > 2.5)) {
+                $etatavantavantavant = $etatlie[$avantdernier - 2] ;
+                $positivite1 = ($new_P1) / $etatavantavant->getTest11() ;
+                $positivite2 = ($new_P2) / $etatavantavant->getTest12() ;
+                $positivite3 = ($new_P3) / $etatavantavant->getTest21() ;
+                $positivite4 = ($new_P4) / $etatavantavant->getTest22() ;
                 if ($resume->getAcc()){
                     for ($i = 0; $i < count($etatlie) ; $i++) {
                         $test_cumule1  = $etatlie[$i]->getTest11();
                         $test_cumule2  = $etatlie[$i]->getTest12();
                         $test_cumule3  = $etatlie[$i]->getTest21();
                         $test_cumule4  = $etatlie[$i]->getTest22();
-                    
+                    dump($etatlie);
                     $acc1 = ($test_cumule1/$cas_cumule1) / $positivite1 ;
                     $acc2 = ($test_cumule2/$cas_cumule2) / $positivite2 ;
                     $acc3 = ($test_cumule3/$cas_cumule3) / $positivite3 ;
@@ -551,10 +558,10 @@ class SIRController extends AbstractController
             'newP2' => round($new_P2),
             'newP3' => round($new_P3),
             'newP4' => round($new_P4),
-            'testhier1' => round($etatavant->getTest11()),
-            'testhier2' => round($etatavant->getTest12()),
-            'testhier3' => round($etatavant->getTest21()),
-            'testhier4' => round($etatavant->getTest22()),
+            'testhier1' => round($test_avant1),
+            'testhier2' => round($test_avant2),
+            'testhier3' => round($test_avant3),
+            'testhier4' => round($test_avant4),
         ]
     );
     }   

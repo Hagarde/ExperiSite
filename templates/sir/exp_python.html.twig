@@ -30,49 +30,50 @@
 
 
 
-<div class='container' style='border: 3px solid red; align-items: center; '>
-  <div class='row'>
+<div class='container' style=' align-items: center; '>
+  <div class='row align-items-center'>
     
-    <div class='col-5' style='align-items: center;'> {# panneau de droite pour décision #}
+    <div class='col-5'> {# panneau de droite pour décision #}
+      <h5 style='text-align: center;'> Gestion des des tests en fonction de la région et de la population </h5>
       {{form_start(formExp)}}
       {{form_widget(formExp.Test11)}}
       <div class='row' style='align-item: center'>
         <div class='col-2'>
-          <div style='border: 3px solid violet;'>
+          <div style=''>
             {{form_widget(formExp.Test12)}}
           </div>
         </div>
         <div class='col-4' style='align-items: center;'>
           <div class='card'>
             <div class='card-body'>
-              Région1
+              Région 1 : Population Jeune
             </div>
           </div>
           <div class='card'>
             <div class='card-body'>
-              Région2
+              Région 1 : Population Âgée
             </div>
           </div>
         </div>
         <div class='col-4' style='align-items: center;'>
           <div class='card'>
             <div class='card-body'>
-              Région3
+              Région 2 : Population Jeune
             </div>
           </div>
           <div class='card'>
             <div class='card-body'>
-              Région4
+              Région 2 : Population Âgée
             </div>
           </div>
         </div>
         <div class='col-2'>
-          <div style='border: 3px solid violet;'>
+          <div style=''>
             {{form_widget(formExp.Test21)}}
           </div>
         </div>
       </div>
-      <div class='container' style='align-items: center;justify-content: center ; width: 100% ;border: 3px solid red; '>
+      <div class='container' style='align-items: center;justify-content: center ; width: 100% ;'>
         <button type='submit' style='width: 100%;'> Confirmer </button>
         {{form_end(formExp)}}
       </div>
@@ -86,10 +87,10 @@
 
 
     <div class='col-7'> {# panneau de droite pour décision #}
-      <div class='container' style='border: 3px solid blue;'>
+      <div class='container' style=''>
         <div class='row'>
           <div class='col-6'>
-            <div class='card' style ='border: 3px solid violet;'>
+            <div class='card' style =''>
               <h5 class="card-title"> Région 1 : Population Jeune </h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"> Population : 10 000 </li>
@@ -136,7 +137,7 @@
                 {% endif %}
               </ul>
             </div>
-            <div class='card' style='border: 3px solid violet;'>
+            <div class='card' style=''>
               <h5 class="card-title"> Région 2 : Population Âgée </h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"> Population : 10 000 </li>
