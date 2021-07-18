@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+use Firebase\JWT\JWT;
 
 
 function random_0_1() 
@@ -301,6 +302,10 @@ class SIRController extends AbstractController
             $etatinitial = new EtatExp;
             // randomization de si on display la valeur de accélration de pintus 
             $acceleration = true ;
+            $niveau_liberte = 1 ;
+            if (rand(0,1) < 0.5) {
+                $niveau_liberte = 2 ;
+            }
             if (rand(0,1) < 0.5) {
                 $acceleration = false ;
             }
@@ -320,7 +325,8 @@ class SIRController extends AbstractController
                     ->setInfluence24($inter)
                     ->setInfluence34($inter)
                     ->setAcc($acceleration)
-                    ->setEpsilon($epi->getEpsilon());
+                    ->setEpsilon($epi->getEpsilon())
+                    ->setNiveauLiberte($niveau_liberte);
 
             $manager->persist($resume);
             $manager->flush();
@@ -393,10 +399,10 @@ class SIRController extends AbstractController
         $epsilon = $resume->getEpsilon();
         $nmbr_test = $epsilon * $NN ;
         # calcul des données à montrer au sujet : 
-        $cas_cumule1 = $etatavant->getP1() + $etatavant->getRu1();
-        $cas_cumule2 = $etatavant->getP2() + $etatavant->getRu2();
-        $cas_cumule3 = $etatavant->getP3() + $etatavant->getRu3();
-        $cas_cumule4 = $etatavant->getP4() + $etatavant->getRu4();
+        $cas_cumule1 = $etatavant->getP1() + $etatavant->getRp1();
+        $cas_cumule2 = $etatavant->getP2() + $etatavant->getRp2();
+        $cas_cumule3 = $etatavant->getP3() + $etatavant->getRp3();
+        $cas_cumule4 = $etatavant->getP4() + $etatavant->getRp4();
         $positivite1 = 'Pas encore disponible';
         $positivite2 = 'Pas encore disponible';
         $positivite3 = 'Pas encore disponible';
@@ -426,25 +432,56 @@ class SIRController extends AbstractController
 
             if (($test_avant1>0)and ($test_avant2>0) and ($test_avant3>0) and ($test_avant4>0 ) and ($T > 2.5)) {
                 $etatavantavantavant = $etatlie[$avantdernier - 2] ;
-                $positivite1 = ($new_P1) / $etatavantavant->getTest11() ;
-                $positivite2 = ($new_P2) / $etatavantavant->getTest12() ;
-                $positivite3 = ($new_P3) / $etatavantavant->getTest21() ;
-                $positivite4 = ($new_P4) / $etatavantavant->getTest22() ;
-                if ($resume->getAcc()){
+                if ($etatavantavant->getTest11() == 0 ){
+                    $positivite1 = 0;
+                    $acc1= 0;
+                }
+                else{
+                    $positivite1 = ($new_P1) / $etatavantavant->getTest11() ;
                     for ($i = 0; $i < count($etatlie) ; $i++) {
                         $test_cumule1  = $etatlie[$i]->getTest11();
-                        $test_cumule2  = $etatlie[$i]->getTest12();
-                        $test_cumule3  = $etatlie[$i]->getTest21();
-                        $test_cumule4  = $etatlie[$i]->getTest22();
-                    dump($etatlie);
-                    $acc1 = ($test_cumule1/$cas_cumule1) / $positivite1 ;
-                    $acc2 = ($test_cumule2/$cas_cumule2) / $positivite2 ;
-                    $acc3 = ($test_cumule3/$cas_cumule3) / $positivite3 ;
-                    $acc4 = ($test_cumule4/$cas_cumule4) / $positivite4 ;
+                        $acc1 = ($test_cumule1/$cas_cumule1) / $positivite1 ;
                     }
+                }
+                
+                if ($etatavantavant->getTest12() == 0 ){
+                    $positivite2 = 0;
+                    $acc2= 0;
+                }
+                else{
+                    $positivite2 = ($new_P2) / $etatavantavant->getTest12() ;
+                    for ($i = 0; $i < count($etatlie) ; $i++) {
+                        $test_cumule2  = $etatlie[$i]->getTest12();
+                        $acc2 = ($test_cumule2/$cas_cumule2) / $positivite2 ;
+                    }
+                }
+
+                if ($etatavantavant->getTest21() == 0 ){
+                    $positivite3 = 0;
+                    $acc3= 0;
+                }
+                else{
+                    $positivite3 = ($new_P3) / $etatavantavant->getTest21() ;
+                    for ($i = 0; $i < count($etatlie) ; $i++) {
+                        $test_cumule3  = $etatlie[$i]->getTest21();
+                        $acc3 = ($test_cumule3/$cas_cumule3) / $positivite3 ;
+                    }
+                }
+
+                if ($etatavantavant->getTest22() == 0 ){
+                    $positivite4 = 0;
+                    $acc4= 0;
+                }
+                else{
+                    $positivite4 = ($new_P4) / $etatavantavant->getTest22() ;
+                    for ($i = 0; $i < count($etatlie) ; $i++) {
+                        $test_cumule4  = $etatlie[$i]->getTest22();
+                        $acc4 = ($test_cumule4/$cas_cumule4) / $positivite4 ;
+                    }
+                }
                 };
             };
-        }
+        
 
         if($form->isSubmitted() && $form->isValid() ){
 
@@ -457,74 +494,73 @@ class SIRController extends AbstractController
                     ->setTest22((($repartition1)*($repartition3)/10000)*$nmbr_test);
 
             // Truc chiant pour utiliser le python 
-            $s1 = strval($etatavant->getS1());
-            $s2 = strval($etatavant->getS2());
-            $s3 = strval($etatavant->getS3());
-            $s4 = strval($etatavant->getS4());
-            $u1 = strval($etatavant->getU1());
-            $u2 = strval($etatavant->getU2());
-            $u3 = strval($etatavant->getU3());
-            $u4 = strval($etatavant->getU4());
-            $p1 = strval($etatavant->getP1());
-            $p2 = strval($etatavant->getP2());
-            $p3 = strval($etatavant->getP3());
-            $p4 = strval($etatavant->getP4());
-            $ru1 =strval($etatavant->getRu1());
-            $ru2 =strval($etatavant->getRu2());
-            $ru3 =strval($etatavant->getRu3());
-            $ru4 =strval($etatavant->getRu4());
-            $rp1 =strval($etatavant->getRp1());
-            $rp2 =strval($etatavant->getRp2());
-            $rp3 =strval($etatavant->getRp3());
-            $rp4 =strval($etatavant->getRp4());
-            $R0 =strval($resume->getR0());
-            $pi =strval($resume->getPi());
-            $mu =strval($resume->getMu());
-            $test11 =strval($etatavant->getTest11());
-            $test12 =strval($etatavant->getTest12());
-            $test21 =strval($etatavant->getTest21());
-            $test22 =strval($etatavant->getTest22());
-            $influence12 =strval($resume->getInfluence12());
-            $influence13 =strval($resume->getInfluence13());
-            $influence14 =strval($resume->getInfluence14());
-            $influence23 =strval($resume->getInfluence23());
-            $influence24 =strval($resume->getInfluence24());
-            $influence34 =strval($resume->getInfluence34());
+            $key = "Victor est le boss !" ;
+            $packet = array(
+                "s1" => $etatavant->getS1(),
+                "s2" => $etatavant->getS2(),
+                "s3" => $etatavant->getS3(),
+                "s4" => $etatavant->getS4(),
+                "u1" => $etatavant->getU1(),
+                "u2" => $etatavant->getU2(),
+                "u3" => $etatavant->getU3(),
+                "u4" => $etatavant->getU4(),
+                "p1" => $etatavant->getP1(),
+                "p2" => $etatavant->getP2(),
+                "p3" => $etatavant->getP3(),
+                "p4" => $etatavant->getP4(),
+                "ru1" => $etatavant->getRu1(),
+                "ru2" => $etatavant->getRu2(),
+                "ru3" => $etatavant->getRu3(),
+                "ru4" => $etatavant->getRu4(),
+                "rp1" => $etatavant->getRp1(),
+                "rp2" => $etatavant->getRp2(),
+                "rp3" => $etatavant->getRp3(),
+                "rp4" => $etatavant->getRp4(),
+                "R0" => $resume->getR0(),
+                "pi" => $resume->getPi(),
+                "mu" => $resume->getMu(),
+                "test11" => $etatavant->getTest11(),
+                "test12" => $etatavant->getTest12(),
+                "test21" => $etatavant->getTest21(),
+                "test22" => $etatavant->getTest22(),
+                "niveau_liberte" =>$resume->getNiveauLiberte()
+            );
+            $jwt = JWT::encode($packet, $key);
             
+            // Adresse de l'API avec les informations encodées 
 
-            $stringcommand = 'python3 python_script/test_4_region.py'.' '. $s1 .' '. $s2 .' '. $s3 .' '. $s4 .' '. $u1 .' '. $u2 .' '. $u3 .' '. $u4 .' '. $p1 .' ' . $p2 .' '.$p3. ' ' .$p4.' ' .$ru1. ' '.$ru2. ' '. $ru3 . ' ' . $ru4 . ' ' .$rp1. ' ' . $rp2 . ' '. $rp3 . ' '. $rp4 . ' ' . $R0 . ' ' . $pi . ' '. $mu .' ' . $test11 . ' ' . $test12 . ' '. $test21 . ' ' . $test22 .' '. $influence12 . ' ' . $influence13 . ' '. $influence14 . ' '. $influence23 . ' ' . $influence24 . ' ' . $influence34 ;
-            $command = escapeshellcmd($stringcommand);
-            dump($command);
-            $output = shell_exec($command);
-            $fichier = fopen ("data.txt", "r");
-            $contenu_du_fichier = fgets ($fichier, 400);
-            $tableau = explode(' ' , $contenu_du_fichier);
-            fclose ($fichier);
-            
+            $URL = "http://127.0.0.1:5000/" . $jwt ;
+            $curl = curl_init($URL);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode($response, true);
+            dump($response);
+            $response = $response[0];
         // On update et on crée la nouvelle valeur ! 
 
             $etatcalcule = new EtatExp() ;
             $new_T = ($etatavant->getT())+1;
-            $etatcalcule-> setS1(floatval($tableau[0]))
-                        -> setU1(floatval($tableau[1]))
-                        -> setP1(floatval($tableau[2]))
-                        -> setRu1(floatval($tableau[3]))
-                        -> setRp1(floatval($tableau[4]))
-                        -> setS2(floatval($tableau[5]))
-                        -> setU2(floatval($tableau[6]))
-                        -> setP2(floatval($tableau[7]))
-                        -> setRu2(floatval($tableau[8]))
-                        -> setRP2(floatval($tableau[9]))
-                        -> setS3(floatval($tableau[10]))
-                        -> setU3(floatval($tableau[11]))
-                        -> setP3(floatval($tableau[12]))
-                        -> setRu3(floatval($tableau[13]))
-                        -> setRp3(floatval($tableau[14]))
-                        -> setS4(floatval($tableau[15]))
-                        -> setU4(floatval($tableau[16]))
-                        -> setP4(floatval($tableau[17]))
-                        -> setRu4(floatval($tableau[18]))
-                        -> setRp4(floatval($tableau[19]))
+            $etatcalcule-> setS1($response['s1'])
+                        -> setU1($response['u1'])
+                        -> setP1($response['p1'])
+                        -> setRu1($response['ru1'])
+                        -> setRp1($response['rp1'])
+                        -> setS2($response['s2'])
+                        -> setU2($response['u2'])
+                        -> setP2($response['p2'])
+                        -> setRu2($response['ru2'])
+                        -> setRP2($response['rp2'])
+                        -> setS3($response['s3'])
+                        -> setU3($response['u3'])
+                        -> setP3($response['p3'])
+                        -> setRu3($response['ru3'])
+                        -> setRp3($response['rp3'])
+                        -> setS4($response['s4'])
+                        -> setU4($response['u4'])
+                        -> setP4($response['p4'])
+                        -> setRu4($response['ru4'])
+                        -> setRp4($response['rp4'])
                         -> setT($new_T)
                         -> setExperience($etatavant->getExperience());
             $manager->persist($etatcalcule);

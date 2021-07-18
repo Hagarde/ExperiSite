@@ -84,6 +84,11 @@ class Resume
      */
     private $epsilon;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $niveau_liberte;
+
     public function __construct()
     {
         $this->detail = new ArrayCollection();
@@ -264,6 +269,18 @@ class Resume
     public function setEpsilon(float $epsilon): self
     {
         $this->epsilon = $epsilon;
+
+        return $this;
+    }
+
+    public function getNiveauLiberte(): ?int
+    {
+        return $this->niveau_liberte;
+    }
+
+    public function setNiveauLiberte(int $niveau_liberte): self
+    {
+        $this->niveau_liberte = $niveau_liberte;
 
         return $this;
     }
