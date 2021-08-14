@@ -13,7 +13,7 @@ Encore
     .setPublicPath('/build')
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
-
+    .addEntry('bar_chart', './assets/bar_chart_script.js')
     /*
      * ENTRY CONFIG
      *

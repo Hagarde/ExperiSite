@@ -36,8 +36,17 @@ class SIRController extends AbstractController
     }
 
     /**
+     * @Route("/boot", name="demarrage")
+     */
+    public function boot() 
+    {
+        return $this->render('sir/boot.html.twig');
+    }
+
+    /**
      * @Route("/exp", name="exp_presentation")
      */
+
 
     public function exp() 
     {
@@ -378,17 +387,19 @@ class SIRController extends AbstractController
                     
                     -> add('Test11', RangeType::class, [
                         'attr' => [
-                            
+                            'id' => 'region_global_bar',
                             'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100]
                         ])
                     -> add('Test12', RangeType::class , ['attr' => [
                         'autocomplete' => 'on',
+                        'id' => 'region1_bar',
                         'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
                     ]])
                     -> add('Test21', RangeType::class, ['attr' => [
                         'autocomplete' => 'on',
+                        'id' => 'region2_bar',
                         'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
                     ]])
                         
@@ -416,8 +427,7 @@ class SIRController extends AbstractController
         $acc2 = 'Pas encore disponible' ;
         $acc3 = 'Pas encore disponible' ;
         $acc4 = 'Pas encore disponible' ;
-    
-        if ($T > 0.5) {
+        if (!empty($T)) {
             $etatavantavant = $etatlie[$avantdernier - 1] ;
 
             $test_avant1 = $etatavantavant->getTest11();
@@ -432,7 +442,7 @@ class SIRController extends AbstractController
 
             if (($test_avant1>0)and ($test_avant2>0) and ($test_avant3>0) and ($test_avant4>0 ) and ($T > 2.5)) {
                 $etatavantavantavant = $etatlie[$avantdernier - 2] ;
-                if ($etatavantavant->getTest11() == 0 ){
+                if (empty($etatavantavant->getTest11())){
                     $positivite1 = 0;
                     $acc1= 0;
                 }
@@ -444,7 +454,7 @@ class SIRController extends AbstractController
                     }
                 }
                 
-                if ($etatavantavant->getTest12() == 0 ){
+                if (empty($etatavantavant->getTest12())){
                     $positivite2 = 0;
                     $acc2= 0;
                 }
@@ -456,7 +466,7 @@ class SIRController extends AbstractController
                     }
                 }
 
-                if ($etatavantavant->getTest21() == 0 ){
+                if (empty($etatavantavant->getTest21())){
                     $positivite3 = 0;
                     $acc3= 0;
                 }
@@ -468,7 +478,7 @@ class SIRController extends AbstractController
                     }
                 }
 
-                if ($etatavantavant->getTest22() == 0 ){
+                if (empty($etatavantavant->getTest22())){
                     $positivite4 = 0;
                     $acc4= 0;
                 }
@@ -484,14 +494,14 @@ class SIRController extends AbstractController
         
 
         if($form->isSubmitted() && $form->isValid() ){
-
+            // Ici on traduit les valeurs rentrées dans les slides-barres en nombre de test réel 
             $repartition1 = $resultexp->getTest11();
             $repartition2 = $resultexp->getTest12();
             $repartition3 = $resultexp->getTest21();
-            $etatavant->setTest11(((100-$repartition1)*(100-$repartition2)/10000)*$nmbr_test)
-                    ->setTest12(((100-$repartition1)*($repartition2)/10000)*$nmbr_test)
-                    ->setTest21((($repartition1)*(100-$repartition3)/10000)*$nmbr_test)
-                    ->setTest22((($repartition1)*($repartition3)/10000)*$nmbr_test);
+            $etatavant->setTest11((100-$repartition1)*($repartition2/10000)*$nmbr_test)
+                    ->setTest12((100-$repartition1)*((100-$repartition2)/10000)*$nmbr_test)
+                    ->setTest21($repartition1*($repartition3/10000)*$nmbr_test)
+                    ->setTest22((($repartition1)*((100-$repartition3))/10000)*$nmbr_test);
 
             // Truc chiant pour utiliser le python 
             $key = "Victor est le boss !" ;
@@ -529,7 +539,7 @@ class SIRController extends AbstractController
             
             // Adresse de l'API avec les informations encodées 
 
-            $URL = "http://127.0.0.1:5000/" . $jwt ;
+            $URL = "https://nac3.herokuapp.com/AMSE/" . $jwt ;
             $curl = curl_init($URL);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($curl);
@@ -577,10 +587,10 @@ class SIRController extends AbstractController
             'resume' => $resume ,
             'temps' => $T ,
             'etat_avant' => $etatavant,
-            'cas_cumule1'  => round($cas_cumule1),
-            'cas_cumule2'  => round($cas_cumule2),
-            'cas_cumule3'  => round($cas_cumule3),
-            'cas_cumule4'  => round($cas_cumule4),
+            'cas_cumule1'  => round($cas_cumule1,1),
+            'cas_cumule2'  => round($cas_cumule2,1),
+            'cas_cumule3'  => round($cas_cumule3,1),
+            'cas_cumule4'  => round($cas_cumule4,1),
             'positivite1' => $positivite1,
             'positivite2' => $positivite2,
             'positivite3' => $positivite3,
@@ -590,14 +600,14 @@ class SIRController extends AbstractController
             'acc2' => $acc2,
             'acc3' => $acc3,
             'acc4' => $acc4,
-            'newP1' => round($new_P1),
-            'newP2' => round($new_P2),
-            'newP3' => round($new_P3),
-            'newP4' => round($new_P4),
-            'testhier1' => round($test_avant1),
-            'testhier2' => round($test_avant2),
-            'testhier3' => round($test_avant3),
-            'testhier4' => round($test_avant4),
+            'newP1' => round($new_P1,1),
+            'newP2' => round($new_P2,1),
+            'newP3' => round($new_P3,1),
+            'newP4' => round($new_P4,1),
+            'testhier1' => round($test_avant1,1),
+            'testhier2' => round($test_avant2,1), //C'est pour arrondir au supérieur pq c'est plus cohérent pour le sujet 
+            'testhier3' => round($test_avant3,1),
+            'testhier4' => round($test_avant4,1),
         ]
     );
     }   
