@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 {% form_theme formExp 'bootstrap_4_layout.html.twig' %}
 {% block title %} Expérience en cours ...{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('assets/bar_chart_scipt.js') }}"></script>
+{% endblock %}
+
 {% block head %}
 
 {% endblock %}
@@ -11,10 +16,6 @@
     <h5 class="card-title"> Jour {{etat_avant.T}} </h5>
   </div>
 </div>
-
-
-
-
   <style>
       .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
       .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
@@ -132,7 +133,7 @@
                     </ul>
                   </div>
                   <svg>
-                  <rect width='20%' height='50%' id='rectangle1' />
+                  <rect width='20%' height='50%' id='rect2' />
                   </svg>
                 </div>
               </div>
@@ -156,7 +157,7 @@
                     </ul>
                   </div>
                   <svg>
-                  <rect width='20%' height='50%' id='rectangle1' />
+                  <rect width='20%' height='50%' id='rect3' />
                   </svg>
                 </div>
               </div>
@@ -178,7 +179,7 @@
                     </ul>
                   </div>
                   <svg>
-                  <rect width='20%' height='50%' id='rectangle1' />
+                  <rect width='20%' height='50%' id='rect4' />
                   </svg>
                 </div>
               </div>
