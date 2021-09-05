@@ -195,53 +195,47 @@
 
 <script>
 
-// On initialise les sélection des élèments car ceux ci seront permanents 
-rect1 = document.getElementById('rectangle1');
-rect2 = document.getElementById('rect2');
-rect3 = document.getElementById('rect3');
-rect4 = document.getElementById('rect4');
+  // On initialise les sélection des élèments car ceux ci seront permanents 
+  rect1 = document.getElementById('rectangle1');
+  rect2 = document.getElementById('rect2');
+  rect3 = document.getElementById('rect3');
+  rect4 = document.getElementById('rect4');
 
 
-sliderregions = document.getElementById('form_Test11');
-sliderregion1 = document.getElementById('form_Test12');
-sliderregion2 = document.getElementById('form_Test21');
+  sliderregions = document.getElementById('form_Test11');
+  sliderregion1 = document.getElementById('form_Test12');
+  sliderregion2 = document.getElementById('form_Test21');
 
-sliderregions.onchange = function actualisationvalue (event){
-    console.log('des trucs ont changé non ? ')
-    sliderregions = document.getElementById('form_Test11');
+  
+  function actualisationvalue (event){
+      console.log('des trucs ont changé non ? ')
+      sliderregions = document.getElementById('form_Test11');
 
-    // on récupère la valeur de chaque slider 
-    valueregions = sliderregions.value ;
-    valueregion1 = sliderregion1.value;
-    valueregion2 = sliderregion2.value;
+      // on récupère la valeur de chaque slider 
+      valueregions = sliderregions.value ;
+      valueregion1 = sliderregion1.value;
+      valueregion2 = sliderregion2.value;
 
 
-    // On calcule ce que ce la représente pour les rectangles 
-    region11 = (100- valueregions) * valueregion1 / 10000;
-    region12 = (100- valueregions) *(100- valueregion1)/ 10000;
-    region21 = valueregions * valueregion2 / 10000;
-    region22 = valueregions * (100-valueregion2) / 10000;
+      // On calcule ce que ce la représente pour les rectangles 
+      region11 = (100- valueregions) * valueregion1 / 10000;
+      region12 = (100- valueregions) *(100- valueregion1)/ 10000;
+      region21 = valueregions * valueregion2 / 10000;
+      region22 = valueregions * (100-valueregion2) / 10000;
 
-    console.log(region11);
-    console.log(region12);
-    console.log(region21);
-    console.log(region22);
+      region11 = (region11 * 100).toString();
+      region12 = (region12 * 100).toString();
+      region21 = (region21 * 100).toString();
+      region22 = (region22 * 100).toString();
 
-    console.log(rect1);
-    console.log(rect2);
-    console.log(rect3);
-    console.log(rect4);
-
-    region11 = String.valueOf(double region11 );
-    region11 = String.valueOf(double region12 );
-    region11 = String.valueOf(double region21 );
-    region11 = String.valueOf(double region22 );
-
-    rect1.style.height = region11 + '%' ; 
-    rect2.style.height = region12 + '%' ; 
-    rect3.style.height = region21 + '%' ; 
-    rect4.style.height = region22 + '%' ; 
-}
+      rect1.style.height = region11 + '%' ; 
+      rect2.style.height = region12 + '%' ; 
+      rect3.style.height = region21 + '%' ; 
+      rect4.style.height = region22 + '%' ; 
+  }
+  sliderregions.onchange = actualisationvalue ;
+  sliderregion1.onchange = actualisationvalue ; 
+  sliderregion2.onchange = actualisationvalue ; 
 </script>
 
 {% endblock %}
