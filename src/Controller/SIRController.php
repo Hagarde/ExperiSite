@@ -387,19 +387,16 @@ class SIRController extends AbstractController
                     
                     -> add('Test11', RangeType::class, [
                         'attr' => [
-                            'id' => 'region_global_bar',
                             'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100]
                         ])
                     -> add('Test12', RangeType::class , ['attr' => [
                         'autocomplete' => 'on',
-                        'id' => 'region1_bar',
                         'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
                     ]])
                     -> add('Test21', RangeType::class, ['attr' => [
                         'autocomplete' => 'on',
-                        'id' => 'region2_bar',
                         'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
                     ]])
                         
