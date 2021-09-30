@@ -2,25 +2,25 @@
 
 {% block title %}Acceuil ExpériSite{% endblock %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ asset('../../public/css/style_index.scss') }}">
+
+{% endblock %}
+
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-
-<div style='vertical-align: middle'>
-  <div class="card text-center">
-    <div class="card-header">
-      Bienvenue sur ExpériSite !
-      
-    </div>
-    
-    <div class="card-body">
-      <h5 class="card-title"> Expérience de gestion de Pandémie  </h5>
-      <p class="card-text">Pour le moment nous ne proposons qu'une seule expérience et vous pouvez en apprendre dessus et peut-être même participer en cliquant sur ce bouton ! </p>
-      <a href={{path('exp_presentation')}} class="btn btn-primary">Faire l'expérience ! </a>
-    </div>
-  </div>
+<div id='tout' style='display :flex ;
+    align-items: center;
+    justify-content: center;
+    padding : 20px ;'>
+<div id='text-content'>
+  <h1> Venez participer à des expériences trop cools ! </h1>
+  <a href="/exp/exp_form/0" class="btn btn-primary">Commencer </a>
 </div>
-<iframe src='https://my.spline.design/3dvirus-e9ad881d5a65ff75c28c1c7fd7f35ea2/' frameborder='0' width='100%' height='400px'></iframe>
+
+
+<iframe src='https://my.spline.design/3dvirus-e9ad881d5a65ff75c28c1c7fd7f35ea2/' frameborder='0' width='50%' height='400px'></iframe>
 {% endblock %}
