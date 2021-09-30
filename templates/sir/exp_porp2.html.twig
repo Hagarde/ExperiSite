@@ -14,53 +14,24 @@
     </section>
 
     <section id="control-panel">
-                
-        <div id='arbre' >
-            
-            <div id='arbre-haut' >
                 {{form_start(formExp)}}
-                <h1> Région1 </h1>
-                {{form_widget(formExp.Test11)}}
-                <h1> Région2 </h1>
-            </div>
-            <div id='arbre-bas' style='flex-direction:row;'>
-                <h1> Jeune </h1>
-                {{form_widget(formExp.Test12)}}
-                <h1> Vieux </h1>
-                <h1> Jeune </h1>
-                {{form_widget(formExp.Test21)}}
-                <h1> Vieux </h1>
-                {{form_end(formExp)}}
-            </div>
-            
+        <div id='arbre' >
         </div>
-        <div id='rectangles' style='flex-direction: row;'>
-            <div id='area1' style='flex-direction: column;' >
-                <svg width="25%" height="100%">
-                    <rect width="25%" height="100%"  id='rect1' style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-                </svg>
-                <h> Région 11 </h>
+        <div id='rectangles'>
+            <div id='rectangle1' >
+                <rect id='rect1' height='50 %' width='100 %'> Région 11 </rect>
             </div>
-            <div id='area2' style='flex-direction: column;' >
-                <svg width="25%" height="100%">
-                    <rect width="25%" height="100%" id='rect2' style="fill:rgb(100,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-                </svg>
-                <h> Région 12 </h>
+            <div id='rectangle2' >
+                <rect id='rect2' height='50 %' width='100 %'> Région 12 </rect>
             </div>
-            <div id='area3' style='flex-direction: column;'>
-                <svg width="25%" height="100%">
-                    <rect width="25%" height="100%" id='rect3' style="fill:rgb(0,200,255);stroke-width:3;stroke:rgb(0,0,0)" />
-                </svg>
-                <h> Région 21 </h>
+            <div id='rectangle3' >
+                <rect id='rect3' height='50 %' width='100 %'> Région 21 </rect>
             </div>
-            <div id='area4' style='flex-direction: column;'>
-                <svg width="25%" height="100%">
-                    <rect width="25%" height="100%" id='rect4' style="fill:rgb(0,200,0);stroke-width:3;stroke:rgb(0,0,0)" />
-                </svg>
-                <h> Région 22 </h>
+            <div id='rectangle4' >
+                <rect id='rect4' height='50 %' width='100 %'> Région 22 </rect>
             </div>
         </div>
-                  
+                  {{form_end(formExp)}}
     </section>
     <section id="display">
         <div id='display1'>
@@ -153,20 +124,20 @@
 
 
       // On calcule ce que ce la représente pour les rectangles 
-      region11 = (100- valueregions) * (100-valueregion1) / 10000;
-      region12 = (100- valueregions) *valueregion1/ 10000;
-      region21 = valueregions * (100-valueregion2 )/ 10000;
-      region22 = valueregions * valueregion2 / 10000;
+      region11 = (100- valueregions) * valueregion1 / 10000;
+      region12 = (100- valueregions) *(100- valueregion1)/ 10000;
+      region21 = valueregions * valueregion2 / 10000;
+      region22 = valueregions * (100-valueregion2) / 10000;
 
       region11 = (region11 * 100).toString();
       region12 = (region12 * 100).toString();
       region21 = (region21 * 100).toString();
       region22 = (region22 * 100).toString();
 
-      rect1.style.height = region11*2 + '%' ; 
-      rect2.style.height = region12*2 + '%' ; 
-      rect3.style.height = region21*2 + '%' ; 
-      rect4.style.height = region22*2 + '%' ; 
+      rect1.style.width = region11 + '%' ; 
+      rect2.style.width = region12 + '%' ; 
+      rect3.style.width = region21 + '%' ; 
+      rect4.style.width = region22 + '%' ; 
   }
   sliderregions.onchange = actualisationvalue ;
   sliderregion1.onchange = actualisationvalue ; 

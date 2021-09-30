@@ -68,6 +68,14 @@ class SIRController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/test", name="test")
+     */ 
+
+    public function test() {
+        return $this->render('sir/new-exp-page.html.twig'
+        );
+    }
 
     /**
      * @Route("/about", name="about_us")
@@ -87,7 +95,7 @@ class SIRController extends AbstractController
         // Ici je chope les données nécessaires pour les graphes et tout ... 
 
         $repo1 =$this->getDoctrine()->getRepository(Resume::class);
-        $resume = $repo1->findOneById($num_exp);
+        $resume = $repo1->findOneBy(['id' => $num_exp]);
         $repo2 = $this->getDoctrine()->getRepository(EtatExp::class);
         $alldata = $repo2->FindBy(['experience'=>$resume]);
         // Récupération des données pour graph 
@@ -393,11 +401,11 @@ class SIRController extends AbstractController
                         ])
                     -> add('Test12', RangeType::class , ['attr' => [
                         'autocomplete' => 'on',
-                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
+                        'style' => 'width=100%,',
                     ]])
                     -> add('Test21', RangeType::class, ['attr' => [
                         'autocomplete' => 'on',
-                        'style' => 'writing-mode: bt-lr; -webkit-appearance: slider-vertical; height: 100%; width: 100%; align-items: center;',
+                        'style' => 'align-items: center;',
                     ]])
                         
                         ->getForm();
@@ -432,14 +440,22 @@ class SIRController extends AbstractController
             $test_avant3 = $etatavantavant->getTest21();
             $test_avant4 = $etatavantavant->getTest22();
 
+            dump("les valeurs des tests_avant : ");
+            dump($test_avant1, $test_avant2, $test_avant3,$test_avant4);
+            
+
             $new_P1 = ($etatavant->getP1() - $etatavantavant->getP1()+($etatavant->getRP1() - $etatavantavant->getRP1()));
             $new_P2 = ($etatavant->getP2() - $etatavantavant->getP2()+($etatavant->getRP2() - $etatavantavant->getRP2()));
             $new_P3 = ($etatavant->getP3() - $etatavantavant->getP3()+($etatavant->getRP3() - $etatavantavant->getRP3()));
             $new_P4 = ($etatavant->getP4() - $etatavantavant->getP4()+($etatavant->getRP4() - $etatavantavant->getRP4()));
 
-            if (($test_avant1>0)and ($test_avant2>0) and ($test_avant3>0) and ($test_avant4>0 ) and ($T > 2.5)) {
-                $etatavantavantavant = $etatlie[$avantdernier - 2] ;
-                if (empty($etatavantavant->getTest11())){
+            dump('les valuers des nouveaux positifs : ');
+            dump($new_P1,$new_P2,$new_P3,$new_P4);
+
+            if (($test_avant1>0)and ($test_avant2>0) and ($test_avant3>0) and ($test_avant4>0 ) and ($T > 2.5) and ($new_P1 > 0) and ($new_P2 > 0) and ($new_P3 > 0) and ($new_P4 > 0)) {
+                // $etatavantavantavant = $etatlie[$avantdernier - 2] ;
+
+                if (empty($etatavantavant->getTest11())) {
                     $positivite1 = 0;
                     $acc1= 0;
                 }
@@ -535,15 +551,14 @@ class SIRController extends AbstractController
             $jwt = JWT::encode($packet, $key);
             
             // Adresse de l'API avec les informations encodées 
-
-            $URL = "https://nac3.herokuapp.com/AMSE/" . $jwt ;
+            // dump($jwt);
+            $URL = "http://ginfo.xyz:3000/AMSE/" . $jwt ;
             $curl = curl_init($URL);
+            // dump($curl);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($curl);
-            curl_close($curl);
             $response = json_decode($response, true);
-            dump($response);
-            $response = $response[0];
+            // dump($response);
         // On update et on crée la nouvelle valeur ! 
 
             $etatcalcule = new EtatExp() ;
@@ -588,10 +603,10 @@ class SIRController extends AbstractController
             'cas_cumule2'  => round($cas_cumule2,1),
             'cas_cumule3'  => round($cas_cumule3,1),
             'cas_cumule4'  => round($cas_cumule4,1),
-            'positivite1' => $positivite1,
-            'positivite2' => $positivite2,
-            'positivite3' => $positivite3,
-            'positivite4' => $positivite4,
+            'positivite1' => round($positivite1,5),
+            'positivite2' => round($positivite2,5),
+            'positivite3' => round($positivite3,5),
+            'positivite4' => round($positivite4,5),
             'acc'=> $resume->getAcc(),
             'acc1' => $acc1,
             'acc2' => $acc2,
