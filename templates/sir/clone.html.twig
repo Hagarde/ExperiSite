@@ -3,42 +3,12 @@
     <meta charset="UTF-8">
     <title> Expérience en cours ... </title>
     <link rel="stylesheet" href="{{ asset('css/styles_exp.scss') }}">
-    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
 </head>
-
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/"> ExpériSite</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item active">
-                        <a class="nav-link" href="{{path('home')}}">Acceuil
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="/exp/exp_form/0"> Jouer</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{path('resultat')}}"> Résultats</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{path('about_us')}}">A propos de nous et de l'expérience ! </a>
-                    </li>
-
-    </div>
-  </div>
-</nav>
 
 <div id='mega-grid'>
     <section name="Explication" id='presentation'>
         <div id='presentation-content' style='flex-direction:column;'>
-            <h2> Une mystérieuse épidémie a fait iruption ...  A vous de faire le nécessaire pour minimiser le nombre d'infecté ...</h2>
+            <h> Une mystérieuse épidémie a fait iruption ...  A vous de faire le nécessaire pour minimiser le nombre d'infecté ...</h>
             <p> Aujourd'hui est le  {{etat_avant.T}} ième jour </p>
         </div>
     </section>
@@ -52,21 +22,21 @@
 
             <div id='arbre-haut' >
                 {{form_start(formExp)}}
-                <h6> Région1 </h6>
+                <h4> Région1 </h4>
                 {{form_widget(formExp.Test11)}}
-                <h6> Région2 </h6>
+                <h4> Région2 </h4>
             </div>
             <div id='arbre-bas' style='flex-direction:row;'>
-                <h6> Jeune </h6>
+                <h4> Jeune </h4>
                 {{form_widget(formExp.Test12)}}
-                <h6> Vieux  </h6>
-                <h6> Jeune </h6>
+                <h4> Vieux  / </h4>
+                <h4> Jeune </h4>
                 {{form_widget(formExp.Test21)}}
                 <h> Vieux </h>
                 
             </div>
             <div id='button-submit' >
-                <button type='submit' class="btn btn-primary" > Soumettre</button>
+                <button type='submit' id='touchemoi' > Soumettre</button>
             </div>
             {{form_end(formExp)}}
             
@@ -167,9 +137,6 @@
         </div>
     </section>
 
-</div>
-
-</body>
 
 <script>
 
@@ -214,5 +181,33 @@
   sliderregion1.onchange = actualisationvalue ; 
   sliderregion2.onchange = actualisationvalue ; 
 </script>
+<script>
+// script pour faire la transition entre deux pages 
+bouton = document.getElementById('touchemoi');
+sidebar = document.getElementById('sidenav');
+rectangletropcool= document.getElementById('rectangletropcool');
+
+function sleep(ms) { 
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+bouton.addEventListener('click',function() {
+    sidebar.style.width = window.innerWidth * 0.2 ;
+    rectangletropcool.style.width = window.innerWidth * 0.2 ;
+    await sleep(200);
+    sidebar.style.width = window.innerWidth * 0.4 ;
+    rectangletropcool.style.width = window.innerWidth * 0.4 ;
+    await sleep(200);
+    sidebar.style.width = window.innerWidth * 0.6 ;
+    rectangletropcool.style.width = window.innerWidth * 0.6 ;
+    await sleep(200);
+    sidebar.style.width = window.innerWidth * 0.8 ;
+    rectangletropcool.style.width = window.innerWidth * 0.8;
+    await sleep(100);
+    sidebar.style.width = window.innerWidth  ;
+    rectangletropcool.style.width = window.innerWidth ;
+})
 
 
+</script>
+</div>

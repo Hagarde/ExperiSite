@@ -440,8 +440,6 @@ class SIRController extends AbstractController
             $test_avant3 = $etatavantavant->getTest21();
             $test_avant4 = $etatavantavant->getTest22();
 
-            dump("les valeurs des tests_avant : ");
-            dump($test_avant1, $test_avant2, $test_avant3,$test_avant4);
             
 
             $new_P1 = ($etatavant->getP1() - $etatavantavant->getP1()+($etatavant->getRP1() - $etatavantavant->getRP1()));
@@ -449,11 +447,11 @@ class SIRController extends AbstractController
             $new_P3 = ($etatavant->getP3() - $etatavantavant->getP3()+($etatavant->getRP3() - $etatavantavant->getRP3()));
             $new_P4 = ($etatavant->getP4() - $etatavantavant->getP4()+($etatavant->getRP4() - $etatavantavant->getRP4()));
 
-            dump('les valuers des nouveaux positifs : ');
-            dump($new_P1,$new_P2,$new_P3,$new_P4);
+
 
             if (($test_avant1>0)and ($test_avant2>0) and ($test_avant3>0) and ($test_avant4>0 ) and ($T > 2.5) and ($new_P1 > 0) and ($new_P2 > 0) and ($new_P3 > 0) and ($new_P4 > 0)) {
                 // $etatavantavantavant = $etatlie[$avantdernier - 2] ;
+                
 
                 if (empty($etatavantavant->getTest11())) {
                     $positivite1 = 0;
@@ -461,10 +459,11 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite1 = ($new_P1) / $etatavantavant->getTest11() ;
+                    $test_cumule1 = 0;
                     for ($i = 0; $i < count($etatlie) ; $i++) {
-                        $test_cumule1  = $etatlie[$i]->getTest11();
-                        $acc1 = ($test_cumule1/$cas_cumule1) / $positivite1 ;
+                        $test_cumule1  += $etatlie[$i]->getTest11() ; 
                     }
+                    $acc1 = ($test_cumule1/$cas_cumule1) * $positivite1 ;
                 }
                 
                 if (empty($etatavantavant->getTest12())){
@@ -473,10 +472,13 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite2 = ($new_P2) / $etatavantavant->getTest12() ;
+                    $test_cumule2 = 0 ; 
                     for ($i = 0; $i < count($etatlie) ; $i++) {
-                        $test_cumule2  = $etatlie[$i]->getTest12();
-                        $acc2 = ($test_cumule2/$cas_cumule2) / $positivite2 ;
+                        $test_cumule2  += $etatlie[$i]->getTest12();
+                        
+                        //dump($acc2);
                     }
+                    $acc2 = ($test_cumule2/$cas_cumule2) * $positivite2 ;
                 }
 
                 if (empty($etatavantavant->getTest21())){
@@ -485,10 +487,13 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite3 = ($new_P3) / $etatavantavant->getTest21() ;
+                    $test_cumule3 = 0 ;
                     for ($i = 0; $i < count($etatlie) ; $i++) {
-                        $test_cumule3  = $etatlie[$i]->getTest21();
-                        $acc3 = ($test_cumule3/$cas_cumule3) / $positivite3 ;
+                        $test_cumule3  += $etatlie[$i]->getTest21();
+                         ;
+                        //dump($acc3);
                     }
+                    $acc3 = ($test_cumule3/$cas_cumule3) * $positivite3;
                 }
 
                 if (empty($etatavantavant->getTest22())){
@@ -497,10 +502,13 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite4 = ($new_P4) / $etatavantavant->getTest22() ;
+                    $test_cumule4 = 0 ;
                     for ($i = 0; $i < count($etatlie) ; $i++) {
-                        $test_cumule4  = $etatlie[$i]->getTest22();
-                        $acc4 = ($test_cumule4/$cas_cumule4) / $positivite4 ;
+                        $test_cumule4  += $etatlie[$i]->getTest22();
+                        
+                        //dump($acc4);
                     }
+                    $acc4 = ($test_cumule4/$cas_cumule4) * $positivite4 ;
                 }
                 };
             };
@@ -511,10 +519,10 @@ class SIRController extends AbstractController
             $repartition1 = $resultexp->getTest11();
             $repartition2 = $resultexp->getTest12();
             $repartition3 = $resultexp->getTest21();
-            $etatavant->setTest11((100-$repartition1)*($repartition2/10000)*$nmbr_test)
-                    ->setTest12((100-$repartition1)*((100-$repartition2)/10000)*$nmbr_test)
-                    ->setTest21($repartition1*($repartition3/10000)*$nmbr_test)
-                    ->setTest22((($repartition1)*((100-$repartition3))/10000)*$nmbr_test);
+            $etatavant->setTest11((100-$repartition1)*((100-$repartition2)/10000)*$nmbr_test)
+                    ->setTest12((100-$repartition1)*($repartition2/10000)*$nmbr_test)
+                    ->setTest21($repartition1*((100-$repartition3)/10000)*$nmbr_test)
+                    ->setTest22($repartition1*($repartition3/10000)*$nmbr_test);
 
             // Truc chiant pour utiliser le python 
             $key = "Victor est le boss !" ;
