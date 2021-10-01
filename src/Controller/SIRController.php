@@ -352,7 +352,8 @@ class SIRController extends AbstractController
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
             $IDrandom = rand(1,3);
             $epi = $repo->find($IDrandom);
-            $i0 = $epi->getI0()*$NN;
+            dump($epi);
+            $i0 = $epi->getI0()*$NN; //ERREUR PK ? 
             $etatinitial = new EtatExp;
             // randomization de si on display la valeur de accélration de pintus 
             $acceleration = true ;
