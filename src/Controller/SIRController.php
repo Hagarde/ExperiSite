@@ -109,7 +109,6 @@ class SIRController extends AbstractController
         $manager->flush();
         }
 
-        
         return $this->render('sir/boot.html.twig'
         );
     }
@@ -351,8 +350,15 @@ class SIRController extends AbstractController
         if ($num_exp == 0) {
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
             $IDrandom = rand(1,3);
-            $epi = $repo->find($IDrandom);
-            dump($epi);
+            if ($IDrandom == 1) {
+                $epi =  $repo->findOneBy(['R' =>4]);
+            }
+            if ($IDrandom == 2) {
+                $epi =  $repo->findOneBy(['R' =>8]);
+            }
+            if ($IDrandom == 3) {
+                $epi =  $repo->findOneBy(['R' =>12]);
+            }
             $i0 = $epi->getI0()*$NN; //ERREUR PK ? 
             $etatinitial = new EtatExp;
             // randomization de si on display la valeur de accélration de pintus 
