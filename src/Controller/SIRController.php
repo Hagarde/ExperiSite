@@ -35,13 +35,6 @@ class SIRController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/boot", name="demarrage")
-     */
-    public function boot() 
-    {
-        return $this->render('sir/boot.html.twig');
-    }
 
     /**
      * @Route("/exp", name="exp_presentation")
@@ -74,6 +67,50 @@ class SIRController extends AbstractController
 
     public function test() {
         return $this->render('sir/new-exp-page.html.twig'
+        );
+    }
+
+    /**
+     * @Route("/boot", name="boot")
+     */ 
+
+    public function boot(EntityManagerInterface $manager) {
+
+        $test = $this->getDoctrine()
+            ->getRepository(Epidemie::class)
+            ->findOneBy(['R'=>4]);
+        if (!$test) {
+
+        $epidemie1 = new Epidemie();
+        $epidemie2 = new Epidemie();
+        $epidemie3 = new Epidemie();
+
+        $epidemie1->setR(4)
+            ->setPi(1)
+            ->setMu(1/28)
+            ->setI0(0.001)
+            ->setEpsilon(0.005);
+
+        $epidemie2->setR(8)
+            ->setPi(1)
+            ->setMu(1/14)
+            ->setI0(0.001)
+            ->setEpsilon(0.005);
+
+        $epidemie3->setR(12)
+            ->setPi(1)
+            ->setMu(0.1)
+            ->setI0(0.001)
+            ->setEpsilon(0.005);
+
+        $manager->persist($epidemie1);
+        $manager->persist($epidemie2);
+        $manager->persist($epidemie3);
+        $manager->flush();
+        }
+
+        
+        return $this->render('sir/boot.html.twig'
         );
     }
 
