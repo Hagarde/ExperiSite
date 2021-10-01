@@ -22,7 +22,7 @@ final class Version20211001123445 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE etat_exp CHANGE test11 test11 DOUBLE PRECISION NOT NULL, CHANGE test12 test12 DOUBLE PRECISION NOT NULL, CHANGE test21 test21 DOUBLE PRECISION NOT NULL, CHANGE test22 test22 DOUBLE PRECISION NOT NULL');
+        $this->addSql('ALTER TABLE `etat_exp` CHANGE `test11` `test11` DOUBLE NULL, CHANGE `test12` `test12` DOUBLE NULL, CHANGE `test21` `test21` DOUBLE NULL, CHANGE `test22` `test22` DOUBLE NULL;');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20211001123445 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE `etat_exp` CHANGE `test11` `test11` DOUBLE NULL, CHANGE `test12` `test12` DOUBLE NULL, CHANGE `test21` `test21` DOUBLE NULL, CHANGE `test22` `test22` DOUBLE NULL;');
+        $this->addSql('ALTER TABLE etat_exp CHANGE test11 test11 DOUBLE PRECISION DEFAULT NULL, CHANGE test12 test12 DOUBLE PRECISION DEFAULT NULL, CHANGE test21 test21 DOUBLE PRECISION DEFAULT NULL, CHANGE test22 test22 DOUBLE PRECISION DEFAULT NULL');
     }
 }

@@ -359,7 +359,6 @@ class SIRController extends AbstractController
             if ($IDrandom == 3) {
                 $epi =  $repo->findOneBy(['R' =>12]);
             }
-            dump($epi);
             $i0 = $epi->getI0()*$NN; //ERREUR PK ? 
             $etatinitial = new EtatExp;
             // randomization de si on display la valeur de accélration de pintus 
