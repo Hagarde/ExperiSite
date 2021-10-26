@@ -337,6 +337,8 @@ class SIRController extends AbstractController
             'chart_3' => $chart3,
             'chart_4' => $chart4
         ]);
+
+        // prbl avec chart 
     }
 
     /**
