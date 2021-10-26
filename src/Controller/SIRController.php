@@ -143,6 +143,7 @@ class SIRController extends AbstractController
 
         foreach($alldata as $data){
             $labels[] = $data->getT();
+            
             $datasetP1[] = $data->getP1();
             $datasetP2[] = $data->getP2();
             $datasetP3[] = $data->getP3();
@@ -172,6 +173,7 @@ class SIRController extends AbstractController
         $T_max = strval(count($alldata)-1);
         // Ici je voudrais générer les graphiques que nous allons montrer au monde entier 
         $chart1 = $chartBuilder->createChart(Chart::TYPE_LINE);
+        
         $chart1->setData([
             'labels' => $labels,
             'datasets' => [
@@ -208,8 +210,6 @@ class SIRController extends AbstractController
                 
             ],
         ]);
-
-
 
         $chart2 = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart2->setData([

@@ -1,5 +1,6 @@
    Voici la TO-DO list du projet ExpériSite
    
-    - [ ] Passer les calculs des accélérations en ext
-    - [ ] Réfléchir à comment rendre le site plus ergonomique 
-    - [ ] 
+    - [ ] Figma des vues Tel et Ordinateur 
+    - [ ] implémenter vue ordi 
+    - [ ] rendre responsive le projet 
+    - [ ] Ajuster les valuers des épidémies pour avoir chiffre significtaif 
