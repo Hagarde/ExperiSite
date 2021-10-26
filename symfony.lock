@@ -3,16 +3,16 @@
         "version": "v1.3.0"
     },
     "api-platform/core": {
-        "version": "2.5",
+        "version": "2.6",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "2.5",
-            "ref": "a93061567140e386f107be75340ac2aee3f86cbf"
+            "ref": "05b57782a78c21a664a42055dc11cf1954ca36bb"
         },
         "files": [
-            "config/packages/api_platform.yaml",
             "config/routes/api_platform.yaml",
+            "config/packages/api_platform.yaml",
             "src/Entity/.gitignore"
         ]
     },
@@ -58,23 +58,23 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "2.3",
-            "ref": "9777bf185961283a450b6237281132935025fe04"
+            "ref": "4f5eb542f01475cc2eb49624e2f1a3ea458e73bf"
         },
         "files": [
             "config/packages/doctrine.yaml",
-            "config/packages/prod/doctrine.yaml",
             "config/packages/test/doctrine.yaml",
-            "src/Entity/.gitignore",
-            "src/Repository/.gitignore"
+            "config/packages/prod/doctrine.yaml",
+            "src/Repository/.gitignore",
+            "src/Entity/.gitignore"
         ]
     },
     "doctrine/doctrine-fixtures-bundle": {
-        "version": "3.0",
+        "version": "3.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.0",
-            "ref": "e5b542d4ef47d8a003c91beb35650c76907f7e53"
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
         },
         "files": [
             "src/DataFixtures/AppFixtures.php"
@@ -163,29 +163,29 @@
         "version": "v4.10.4"
     },
     "overblog/graphiql-bundle": {
-        "version": "0.1",
+        "version": "0.2",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
             "version": "0.1",
-            "ref": "fe8d172f2480efc598f5a8be0e732656d3594cec"
+            "ref": "96d185c63491cd15c1570f6243ec1808f4462970"
         },
         "files": [
             "config/routes/dev/graphiql.yaml"
         ]
     },
     "overblog/graphql-bundle": {
-        "version": "0.12",
+        "version": "0.13",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
             "version": "0.12",
-            "ref": "c01dcfb85a6e93f1a43ef36151fcff11cf17f791"
+            "ref": "b122f3bfcfc0706c617a74afa8510af4799810f6"
         },
         "files": [
-            "config/graphql/types/.gitignore",
+            "config/routes/graphql.yaml",
             "config/packages/graphql.yaml",
-            "config/routes/graphql.yaml"
+            "config/graphql/types/.gitignore"
         ]
     },
     "phpdocumentor/reflection-common": {
@@ -546,7 +546,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "4.4",
-            "ref": "15a41bbd66a1323d09824a189b485c126bbefa51"
+            "ref": "73baff3f7b3cea12a73812a7cfd2c0924a9e250f"
         },
         "files": [
             "config/packages/test/twig.yaml",
