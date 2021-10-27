@@ -88,19 +88,19 @@ class SIRController extends AbstractController
         $epidemie1->setR(4)
             ->setPi(1)
             ->setMu(1/28)
-            ->setI0(0.001)
+            ->setI0(0.005)
             ->setEpsilon(0.005);
 
         $epidemie2->setR(8)
             ->setPi(1)
             ->setMu(1/14)
-            ->setI0(0.001)
+            ->setI0(0.005)
             ->setEpsilon(0.005);
 
         $epidemie3->setR(12)
             ->setPi(1)
             ->setMu(0.1)
-            ->setI0(0.001)
+            ->setI0(0.005)
             ->setEpsilon(0.005);
 
         $manager->persist($epidemie1);
