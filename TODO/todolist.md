@@ -6,5 +6,5 @@
     - [ ] rendre responsive le projet 
       - [ ] index 
       - [ ] boot 
-      - [ ] exp
-    - [ ] Ajuster les valuers des épidémies pour avoir chiffre significtaif 
+      - [ ] exp ( 1/3 haut 2/3 bas )
+    - [ ] Ajuster les valeurs des épidémies pour avoir chiffre significatif 
