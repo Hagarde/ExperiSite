@@ -3,19 +3,25 @@
 {% block title %}Acceuil Expérisite{% endblock %}
 
 {% block stylesheets %} 
+{#
 <link rel="stylesheet" media="(min-width: 800px)" href="{{ asset('css/style_index.scss') }}">
 <link rel="stylesheet" media="(max-width: 800px) and handheld" href="{{ asset('css/style_index_tel.scss') }}">
+#}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block body %}
 
-<div id='tout' >
-  <div id='text-content'>
+<div id='tout' style='display:flex
+align-items:center;
+'>
+  <div id='text-content' class='col-md-12 col-lg-6'>
     <h1 style='padding-bottom: 25px;'> Venez participer à des expériences trop cools ! </h1>
     <a id='bouton-commencer' href="/exp/exp_form/0" class="btn btn-primary">Commencer </a>
   </div>
 
-  <div class="incruste">
+  <div class="col-md-12 col-lg-6">
     <iframe src='https://my.spline.design/3dvirus-e9ad881d5a65ff75c28c1c7fd7f35ea2/' frameborder='0' width='100%' height='100%'></iframe>
   </div>
 </div>
