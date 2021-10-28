@@ -2,22 +2,14 @@
 .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 
 .incruste{
-    border : 10px solid red;
-    @include breakpoint(sm){
-        width: 100%;
-        height: 50%;
-    }
-    
-    @include breakpoint(lg){
+
+        border: 10px solid blue;
         height: 100%;
         width: 100%;
         grid-row : 2/3;
-    }
 }
 #text-content {
-    
 
-    @media (min-width: 768px){
         border: 10px solid blue ;
         display :flex ;
         align-items: center;
@@ -25,45 +17,21 @@
         grid-row : 1/2;
         margin-left: auto;
         margin-right: auto;
-    }
-
-    @media (max-width: 768px){
-        border: 10px solid red;
-    }
     
 };
 
 #bouton-commencer{
-    margin: 10px;
-    padding: 10px;
-
-    @media (max-width: 768px) {
-        display: none;
-    }
-
-    @media (min-width: 768px) {
-        display: block
-    }
+        margin: 210px;
+    padding: 25px;
+        display: block;
+    
 }
 
 #tout {
     border : 10px solid violet;
-    
-    padding : 10% ; 
-
-     // RESPONSIVE TEST 
-     @media (max-width: 768px){
-        flex-direction: column;
-    }
-
-    // RESPONSIVE TEST 
-
-    @media (min-width: 768px){
-        align-items: center;
-        justify-content: center;
-        display :grid;
-        grid-template-columns: repeat(4,1fr);
-        grid-template-rows: repeat(2,1fr);
-    }
-    
+    align-items: center;
+    justify-content: center;
+    display :grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(2,1fr);
 }
