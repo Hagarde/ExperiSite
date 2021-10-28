@@ -1,8 +1,5 @@
 .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
 .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
- 
-body { background-color: aqua;}
-
 
 .incruste{
     border : 10px solid red;
@@ -17,10 +14,11 @@ body { background-color: aqua;}
         grid-row : 2/3;
     }
 }
-.text-content {
-    border : 10px solid blue;
+#text-content {
+    
 
-    @include breakpoint(lg) {
+    @media (min-width: 768px){
+        border: 10px solid blue ;
         display :flex ;
         align-items: center;
         justify-content: center;
@@ -29,8 +27,8 @@ body { background-color: aqua;}
         margin-right: auto;
     }
 
-    @include breakpoint(sm){
-
+    @media (max-width: 768px){
+        border: 10px solid red;
     }
     
 };
@@ -38,86 +36,34 @@ body { background-color: aqua;}
 #bouton-commencer{
     margin: 10px;
     padding: 10px;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        display: block
+    }
 }
 
 #tout {
     border : 10px solid violet;
-    align-items: center;
-    justify-content: center;
+    
     padding : 10% ; 
 
      // RESPONSIVE TEST 
-     @include breakpoint(sm){
+     @media (max-width: 768px){
         flex-direction: column;
     }
 
     // RESPONSIVE TEST 
 
-    @include breakpoint(lg){
+    @media (min-width: 768px){
+        align-items: center;
+        justify-content: center;
         display :grid;
         grid-template-columns: repeat(4,1fr);
         grid-template-rows: repeat(2,1fr);
     }
     
-}
-
-$breakpoints: (
-    sm: (
-        min: 576px,
-        max: 575.98px,
-    ),
-    md: (
-        min: 768px,
-        max: 767.98px
-    ),
-    lg: (
-        min: 992px,
-        max: 991.98px
-    ),
-    xl: (
-        min: 1200px,
-        max: 1199.98px
-    ),
-    xxl: (
-      min: 1400px,
-      max: 1399.98px,
-    )
-);
-
-@mixin breakpoint($breakpoint, $direction: min) {
-    
-    //check if the supplied breakpoint exists in our breakpoits map
-    @if map-has-key($breakpoints, $breakpoint) { 
-        $breakpoint-values: map-get($breakpoints, $breakpoint);
-        $breakpoint-min: map-get($breakpoint-values, min);
-        $breakpoint-max: map-get($breakpoint-values, max);
-
-        //check if we are writing styles for larger or smaller screens
-        @if $direction == min {
-            @media (min-width: $breakpoint-min) {
-                @content;
-            }
-        }
-
-        @else {
-            @media (max-width: $breakpoint-max) {
-                @content;
-            }
-        }
-    
-    // use the custom value if the breakpoint is not part of the pre-defined list
-    } @else {
-        
-        @if $direction == min {
-            @media (min-width: $breakpoint) {
-                @content;
-            }
-        }
-
-        @else {
-            @media (max-width: $breakpoint) {
-                @content;
-            }
-        }
-    }
 }
