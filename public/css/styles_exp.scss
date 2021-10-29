@@ -22,7 +22,14 @@ body {
     // background-color: #FFDFBA;
 }
 
-
+.opacity {
+    opacity: 0.5;
+}
+.text-tuto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
 
 #display{
     grid-row : 1/6;

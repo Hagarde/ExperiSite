@@ -37,13 +37,13 @@ class SIRController extends AbstractController
 
 
     /**
-     * @Route("/exp", name="exp_presentation")
+     * @Route("/tuto", name="tutoriel")
      */
 
 
     public function exp() 
     {
-        return $this->render('sir/exp.html.twig');
+        return $this->render('sir/tuto.html.twig');
     }
     
     /**
