@@ -22,14 +22,31 @@ body {
     // background-color: #FFDFBA;
 }
 
-.opacity {
-    opacity: 0.5;
-}
-.text-tuto {
+#text-tuto1 {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 40%;
+    
+    font-size: 40px;
+    
 }
+
+#text-tuto2 {
+    position: absolute;
+    top: 50%;
+    right: 40%;
+    font-size: 40px;
+    display: None;
+    
+}
+
+#div-continuer {
+    position: absolute;
+    top: 80%;
+    right: 50%;
+    z-index: 2;
+}
+
 
 #display{
     grid-row : 1/6;
