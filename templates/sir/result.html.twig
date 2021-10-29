@@ -20,19 +20,21 @@
 
 <div class="d-flex flex-wrap align-content-around">
     {% for exp in resume %}
-        <div class="card" style="width: 18rem;border: 6px ;">
-            <div class="card-body">
-                <h5 class="card-title">Expérience n°{{exp.id}}</h5>
-                <p class="card-text">Caractéristiques globales de l'épidémie : </p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">&Beta; = {{exp.r0}} </li>
-                <li class="list-group-item">&Pi; = {{exp.pi}}</li>
-                <li class="list-group-item">&Mu; = {{exp.mu}}</li>
-                <li class="list-group-item"> Proportion d'infecté initiale : {{exp.i0}}</li>
-            </ul>
-            <div class="card-body">
-                <a href='/result/{{exp.id}}' class="card-link"> Plus de détails ...</a>
+        <div class="col-sm-6 col-md-4" style='justify-content : space-evenly; align-item:center;'>
+            <div class="card" style="width: 18rem;border: 6px ;">
+                <div class="card-body">
+                    <h5 class="card-title">Expérience n°{{exp.id}}</h5>
+                    <p class="card-text">Caractéristiques globales de l'épidémie : </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">&Beta; = {{exp.r0}} </li>
+                    <li class="list-group-item">&Pi; = {{exp.pi}}</li>
+                    <li class="list-group-item">&Mu; = {{exp.mu}}</li>
+                    <li class="list-group-item"> Proportion d'infecté initiale : {{exp.i0}}</li>
+                </ul>
+                <div class="card-body">
+                    <a href='/result/{{exp.id}}' class="card-link"> Plus de détails ...</a>
+                </div>
             </div>
         </div>
     {% endfor %}
