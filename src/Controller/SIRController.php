@@ -653,10 +653,10 @@ class SIRController extends AbstractController
             'resume' => $resume ,
             'temps' => $T ,
             'etat_avant' => $etatavant,
-            'cas_cumule1'  => round($cas_cumule1,2),
-            'cas_cumule2'  => round($cas_cumule2,2),
-            'cas_cumule3'  => round($cas_cumule3,2),
-            'cas_cumule4'  => round($cas_cumule4,2),
+            'cas_cumule1'  => round((int)$cas_cumule1,2),
+            'cas_cumule2'  => round((int)$cas_cumule2,2),
+            'cas_cumule3'  => round((int)$cas_cumule3,2),
+            'cas_cumule4'  => round((int)$cas_cumule4,2),
             'positivite1' => $positivite1,
             'positivite2' => $positivite2,
             'positivite3' => $positivite3,
@@ -666,14 +666,14 @@ class SIRController extends AbstractController
             'acc2' => $acc2,
             'acc3' => $acc3,
             'acc4' => $acc4,
-            'newP1' => round($new_P1,2),
-            'newP2' => round($new_P2,2),
-            'newP3' => round($new_P3,2),
-            'newP4' => round($new_P4,2),
-            'testhier1' => round($test_avant1,2),
-            'testhier2' => round($test_avant2,2), //C'est pour arrondir au supérieur pq c'est plus cohérent pour le sujet 
-            'testhier3' => round($test_avant3,2),
-            'testhier4' => round($test_avant4,2),
+            'newP1' => round((int)$new_P1,2),
+            'newP2' => round((int)$new_P2,2),
+            'newP3' => round((int)$new_P3,2),
+            'newP4' => round((int)$new_P4,2),
+            'testhier1' => round((int)$test_avant1,2),
+            'testhier2' => round((int)$test_avant2,2), //C'est pour arrondir au supérieur pq c'est plus cohérent pour le sujet 
+            'testhier3' => round((int)$test_avant3,2),
+            'testhier4' => round((int)$test_avant4,2),
         ]
     );
     }   
