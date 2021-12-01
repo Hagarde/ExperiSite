@@ -1,0 +1,198 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Expérience en cours  {% endblock %}
+{% block stylesheet %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/helpers.esm.min.js" integrity="sha512-6bJ9T7vca48dxyvajHG+YUYP1Bn7map/S+9aC338LmI3Cw6B6uUZjvQxZaCNdZ07wBtQ0UjO+WxIk/l4oT76ew==" crossorigin="anonymous"></script>
+
+{% endblock %}
+{% block body %}
+<div class="row justify-content-around">
+    <div id='control-panel'  class="col-sm-12 col-md-4" >
+        <h2> Panneau de contrôle pour répartir les tests </h2>
+        <div id='arbre-haut' style='padding: 25px;'>
+                    {{form_start(formExp)}}
+                    <div id='barre1' class='row justify-content-around'>
+                        <h6> Région A </h6>
+                        {{form_widget(formExp.Test11)}}
+                        <h6> Région B  </h6>
+                    </div>
+                </div>
+                <div id='arbre-bas' style='padding: 30px;' class='row'>
+                    <div id='bar2' class='col-6' style='border-right: 1px solid grey; padding-right 5px;align-items: center;'>
+                        <p > Région B </p>
+                        <div class='row justify-content-around'>
+                            <h6> Jeune </h6>
+                            {{form_widget(formExp.Test12)}}
+                            <h6> Vieux  </h6>
+                        </div>
+                    </div>
+                    <div id='bar3' class='col-6' style="align-items: center;" >
+                        <p > Région A </p>
+                        <div class='row justify-content-around'>
+                            <h6> Jeune </h6>
+                            {{form_widget(formExp.Test21)}}
+                            <h> Vieux </h>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id='button-submit' class="row justify-content-center">
+                    <button type='submit' class="btn btn-primary" > Soumettre</button>
+                </div>
+                {{form_end(formExp)}}
+        <div id='rectangles' class='row justify-content-center' style='padding: 25px;'>
+            <div id='area1' style='flex-direction: column;' class='col-3'>
+                <p id='percent1'> 25 % </p>
+                <svg width="25%" height="100%" style='padding: 5px;' >
+                    <rect width="100%" height="100%"  id='rect1' style="fill:#e6e696" />
+                </svg>
+                <h5> Région A Jeune </h5>
+            </div>
+            <div id='area2' style='flex-direction: column;' class='col-3'>
+                <p id='percent2'> 25 % </p>
+                <svg width="25%" height="100%" style='padding: 5px;'>
+                    <rect width="100%" height="25%"  id='rect1' style="fill:#e6e696" />
+                </svg>
+                <h5> Région A Vieux </h5>
+            </div>
+            <div id='area3' style='flex-direction: column;' class='col-3'>
+                <p id='percent3'> 25 % </p>
+                <svg width="25%" height="100%" style='padding: 5px;'>
+                    <rect width="100%" height="25%"  id='rect1' style="fill:#d5ab9c" />
+                </svg>
+                <h5> Région B Jeune </h5>
+            </div>
+            <div id='area4' style='flex-direction: column;' class='col-3'>
+                <p id='percent4'> 25 % </p>
+                <svg width="25%" height="100%" style='padding: 5px;'>
+                    <rect width="100%" height="25%"  id='rect1' style="fill:#d5ab9c" />
+                </svg>
+                <h5> Région B Vieux </h5>
+            </div>
+        </div>
+    </div>
+
+    <div id='col1-display' class="col-sm-12 col-md-4 ">
+        <div class="card" style='padding: 25px;'>
+            <div class="card-header" style="background-color: #e6e696">
+                Région A Jeune 
+            </div>
+            <ul class="list-group list-group-flush" >
+                      <li class="list-group-item"> Taux de positivité : {{positivite1}} </li>
+                      <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule1}}</li>
+                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP1}} </li>
+                      <li class="list-group-item"> Nombre de test la veille : {{ testhier1 }}</li>
+                            {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
+
+                      {% if acc %}
+                      <li class="list-group-item"> Indice d'accélération : {{acc1}}</li>
+                      {% endif %}
+            </ul>
+        </div>
+        <div class="card" style='padding: 25px;'>
+            <div class="card-header" style="background-color: #e6e696">
+                Région A Vieux 
+            </div>
+            <ul class="list-group list-group-flush" >
+                      <li class="list-group-item"> Taux de positivité : {{positivite2}} </li>
+                      <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule2}}</li>
+                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP2}} </li>
+                      <li class="list-group-item"> Nombre de test la veille : {{ testhier2 }}</li>
+                            {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
+
+                      {% if acc %}
+                      <li class="list-group-item"> Indice d'accélération : {{acc2}}</li>
+                      {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div id='col2-display' class="col-sm-12 col-md-4" >
+        <div class="card" style='padding: 25px;'>
+            <div class="card-header" style="background-color: #d5ab9c">
+                Région B Jeune 
+            </div>
+            <ul class="list-group list-group-flush" >
+                      <li class="list-group-item"> Taux de positivité : {{positivite3}} </li>
+                      <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule3}}</li>
+                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP3}} </li>
+                      <li class="list-group-item"> Nombre de test la veille : {{ testhier3 }}</li>
+                            {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
+
+                      {% if acc %}
+                      <li class="list-group-item"> Indice d'accélération : {{acc3}}</li>
+                      {% endif %}
+            </ul>
+        </div>
+        <div class="card" style='padding: 25px;'>
+        <div class="card-header" style="background-color: #d5ab9c">
+            Région B Vieux 
+        </div>
+        <ul class="list-group list-group-flush" >
+                      <li class="list-group-item"> Taux de positivité : {{positivite4}} </li>
+                      <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule4}}</li>
+                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP4}} </li>
+                      <li class="list-group-item"> Nombre de test la veille : {{ testhier4 }}</li>
+                            {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
+
+                      {% if acc %}
+                      <li class="list-group-item"> Indice d'accélération : {{acc4}}</li>
+                      {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div id='instruction_bouton' style='position: absolute;top: 2%;right: 5%; '> {#  ajuster en haut à droite  #}
+        <button type="button" class="btn btn-primary" href="#">Instruction </button>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %} 
+<script>
+
+  // On initialise les sélection des élèments car ceux ci seront permanents 
+  rect1 = document.getElementById('rect1');
+  rect2 = document.getElementById('rect2');
+  rect3 = document.getElementById('rect3');
+  rect4 = document.getElementById('rect4');
+
+
+  sliderregions = document.getElementById('form_Test11');
+  sliderregion1 = document.getElementById('form_Test12');
+  sliderregion2 = document.getElementById('form_Test21');
+
+  
+  function actualisationvalue (event){
+      sliderregions = document.getElementById('form_Test11');
+
+      // on récupère la valeur de chaque slider 
+      valueregions = sliderregions.value ;
+      valueregion1 = sliderregion1.value;
+      valueregion2 = sliderregion2.value;
+
+
+      // On calcule ce que ce la représente pour les rectangles 
+      region11 = (100- valueregions) * (100-valueregion1) / 10000;
+      region12 = (100- valueregions) *valueregion1/ 10000;
+      region21 = valueregions * (100-valueregion2 )/ 10000;
+      region22 = valueregions * valueregion2 / 10000;
+
+      region11 = (region11 * 100).toString();
+      region12 = (region12 * 100).toString();
+      region21 = (region21 * 100).toString();
+      region22 = (region22 * 100).toString();
+
+      rect1.style.height = region11*2 + '%' ; 
+      rect2.style.height = region12*2 + '%' ; 
+      rect3.style.height = region21*2 + '%' ; 
+      rect4.style.height = region22*2 + '%' ; 
+  }
+  sliderregions.onchange = actualisationvalue ;
+  sliderregion1.onchange = actualisationvalue ; 
+  sliderregion2.onchange = actualisationvalue ; 
+</script>
+
+{% endblock %}

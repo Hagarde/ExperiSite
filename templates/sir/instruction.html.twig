@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} J'ai tout redémarrer et c'est cassé ! {% endblock %}
+
+{% block body %}
+
+<div id="good-new">
+Normalement les épidémies ont été ajoutées ! 
+
+</div>
+<li style="">
+
+    <ul>Il faut mettre en route l'API en se connectant en ssh à ginfo.xyz et lancer node.js </ul>
+    <ul>Si cela ne fonxtionne pas il faut aussi aller faire : </ul>
+        <div id="instruction">
+        heroku run bash 
+        php bin/console doctrine:migrations:migrate --no-interaction
+        </div>
+</li>
+{% endblock %}

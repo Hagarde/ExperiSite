@@ -66,7 +66,7 @@ class SIRController extends AbstractController
      */ 
 
     public function test() {
-        return $this->render('sir/new-exp-page.html.twig'
+        return $this->render('sir/exp______.html.twig'
         );
     }
 
@@ -648,7 +648,7 @@ class SIRController extends AbstractController
             ]);
         }                        
 
-        return $this->render('sir/exp_python.html.twig',[
+        return $this->render('sir/exp______.html.twig',[
             'formExp' => $form->createView(),
             'resume' => $resume ,
             'temps' => $T ,
