@@ -27,7 +27,7 @@
                             <h6> Vieux  </h6>
                         </div>
                     </div>
-                    <div id='bar3' class='col-6' style="align-items: center;" >
+                    <div id='bar3' class='col-6' style="align-items: center; " >
                         <p > Région A </p>
                         <div class='row justify-content-around'>
                             <h6> Jeune </h6>
@@ -45,30 +45,30 @@
             <div id='area1' style='flex-direction: column;' class='col-3'>
                 <p id='percent1'> 25 % </p>
                 <svg width="25%" height="100%" style='padding: 5px;' >
-                    <rect width="100%" height="100%"  id='rect1' style="fill:#e6e696" />
+                    <rect width="100%" height="25%"  id='rect1' style="fill:#e6e696" />
                 </svg>
-                <h5> Région A Jeune </h5>
+                <h5> Région A - Jeune </h5>
             </div>
             <div id='area2' style='flex-direction: column;' class='col-3'>
                 <p id='percent2'> 25 % </p>
                 <svg width="25%" height="100%" style='padding: 5px;'>
-                    <rect width="100%" height="25%"  id='rect1' style="fill:#e6e696" />
+                    <rect width="100%" height="25%"  id='rect2' style="fill:#e6e696" />
                 </svg>
-                <h5> Région A Vieux </h5>
+                <h5> Région A - Vieux </h5>
             </div>
             <div id='area3' style='flex-direction: column;' class='col-3'>
                 <p id='percent3'> 25 % </p>
                 <svg width="25%" height="100%" style='padding: 5px;'>
-                    <rect width="100%" height="25%"  id='rect1' style="fill:#d5ab9c" />
+                    <rect width="100%" height="25%"  id='rect3' style="fill:#d5ab9c" />
                 </svg>
-                <h5> Région B Jeune </h5>
+                <h5> Région B - Jeune </h5>
             </div>
             <div id='area4' style='flex-direction: column;' class='col-3'>
                 <p id='percent4'> 25 % </p>
                 <svg width="25%" height="100%" style='padding: 5px;'>
-                    <rect width="100%" height="25%"  id='rect1' style="fill:#d5ab9c" />
+                    <rect width="100%" height="25%"  id='rect4' style="fill:#d5ab9c" />
                 </svg>
-                <h5> Région B Vieux </h5>
+                <h5> Région B - Vieux </h5>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
     <div id='col1-display' class="col-sm-12 col-md-4 ">
         <div class="card" style='padding: 25px;'>
             <div class="card-header" style="background-color: #e6e696">
-                Région A Jeune 
+                Région A - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
                       <li class="list-group-item"> Taux de positivité : {{positivite1}} </li>
@@ -92,7 +92,7 @@
         </div>
         <div class="card" style='padding: 25px;'>
             <div class="card-header" style="background-color: #e6e696">
-                Région A Vieux 
+                Région A - Vieux 
             </div>
             <ul class="list-group list-group-flush" >
                       <li class="list-group-item"> Taux de positivité : {{positivite2}} </li>
@@ -110,7 +110,7 @@
     <div id='col2-display' class="col-sm-12 col-md-4" >
         <div class="card" style='padding: 25px;'>
             <div class="card-header" style="background-color: #d5ab9c">
-                Région B Jeune 
+                Région B - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
                       <li class="list-group-item"> Taux de positivité : {{positivite3}} </li>
@@ -125,21 +125,21 @@
             </ul>
         </div>
         <div class="card" style='padding: 25px;'>
-        <div class="card-header" style="background-color: #d5ab9c">
-            Région B Vieux 
-        </div>
-        <ul class="list-group list-group-flush" >
-                      <li class="list-group-item"> Taux de positivité : {{positivite4}} </li>
-                      <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule4}}</li>
-                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP4}} </li>
-                      <li class="list-group-item"> Nombre de test la veille : {{ testhier4 }}</li>
-                            {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
+            <div class="card-header" style="background-color: #d5ab9c">
+                Région B - Vieux 
+            </div>
+            <ul class="list-group list-group-flush" >
+                        <li class="list-group-item"> Taux de positivité : {{positivite4}} </li>
+                        <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule4}}</li>
+                        <li class="list-group-item"> Nouveau cas détecté(s) : {{newP4}} </li>
+                        <li class="list-group-item"> Nombre de test la veille : {{ testhier4 }}</li>
+                                {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
-                      {% if acc %}
-                      <li class="list-group-item"> Indice d'accélération : {{acc4}}</li>
-                      {% endif %}
-            </ul>
-        </div>
+                        {% if acc %}
+                        <li class="list-group-item"> Indice d'accélération : {{acc4}}</li>
+                        {% endif %}
+                </ul>
+            </div>
     </div>
     <div id='instruction_bouton' style='position: absolute;top: 2%;right: 5%; '> {#  ajuster en haut à droite  #}
         <button type="button" class="btn btn-primary" href="#">Instruction </button>
@@ -158,6 +158,11 @@
   rect2 = document.getElementById('rect2');
   rect3 = document.getElementById('rect3');
   rect4 = document.getElementById('rect4');
+  console.log(rect1, rect2, rect3, rect4);
+  pourcent1 = document.getElementById('percent1');
+  pourcent2 = document.getElementById('percent2');
+  pourcent3 = document.getElementById('percent3');
+  pourcent4 = document.getElementById('percent4');
 
 
   sliderregions = document.getElementById('form_Test11');
@@ -180,16 +185,27 @@
       region21 = valueregions * (100-valueregion2 )/ 10000;
       region22 = valueregions * valueregion2 / 10000;
 
-      region11 = (region11 * 100).toString();
-      region12 = (region12 * 100).toString();
-      region21 = (region21 * 100).toString();
-      region22 = (region22 * 100).toString();
+      region11 = (Math.round(region11*100) ).toString();
+      region12 = (Math.round(region12*100) ).toString();
+      region21 = (Math.round(region21*100) ).toString();
+      region22 = (Math.round(region22*100) ).toString();
 
-      rect1.style.height = region11*2 + '%' ; 
-      rect2.style.height = region12*2 + '%' ; 
-      rect3.style.height = region21*2 + '%' ; 
-      rect4.style.height = region22*2 + '%' ; 
+      console.log(region11);
+      console.log(region12);
+      console.log(region21);
+      console.log(region22);
+
+      rect1.style.height = region11 + '%' ; 
+      rect2.style.height = region12 + '%' ; 
+      rect3.style.height = region21 + '%' ; 
+      rect4.style.height = region22 + '%' ; 
+
+      pourcent1.innerHTML = region11 + '%' ;
+      pourcent2.innerHTML = region12 + '%' ;
+      pourcent3.innerHTML = region21 + '%' ;
+      pourcent4.innerHTML = region22 + '%' ;
   }
+
   sliderregions.onchange = actualisationvalue ;
   sliderregion1.onchange = actualisationvalue ; 
   sliderregion2.onchange = actualisationvalue ; 
