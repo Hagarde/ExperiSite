@@ -79,10 +79,10 @@
                 Région A - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
-                      <li class="list-group-item"> Taux de positivité : {{positivite1}} </li>
+                      <li class="list-group-item"> Taux de positivité : {{positivite1}} {% if evo_pos1 %} ⬈ {% elseif evo_pos1 == false %} ⬊ {% endif %}</li>
                       <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule1}}</li>
-                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP1}} </li>
-                      <li class="list-group-item"> Nombre de test la veille : {{ testhier1 }}</li>
+                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP1}} {% if evo_positif1 %} ⬈ {% elseif evo_positif1 == false %} ⬊ {% endif %}</li>
+                      <li class="list-group-item"> Nombre de test la veille : {{ testhier1 }} {% if evo_test1 %} ⬈ {% elseif evo_test1 == false %} ⬊ {% endif %}</li>
                             {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                       {% if acc %}
@@ -95,10 +95,10 @@
                 Région A - Vieux 
             </div>
             <ul class="list-group list-group-flush" >
-                      <li class="list-group-item"> Taux de positivité : {{positivite2}} </li>
+                      <li class="list-group-item"> Taux de positivité : {{positivite2}} {% if evo_pos2 %} ⬈ {% elseif evo_pos2 == false %} ⬊ {% endif %}</li>
                       <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule2}}</li>
-                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP2}} </li>
-                      <li class="list-group-item"> Nombre de test la veille : {{ testhier2 }}</li>
+                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP2}} {% if evo_positif2 %} ⬈ {% elseif evo_positif2 == false %} ⬊ {% endif %}</li>
+                      <li class="list-group-item"> Nombre de test la veille : {{ testhier2 }} {% if evo_test2 %} ⬈ {% elseif evo_test2 == false %} ⬊ {% endif %}</li>
                             {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                       {% if acc %}
@@ -113,10 +113,10 @@
                 Région B - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
-                      <li class="list-group-item"> Taux de positivité : {{positivite3}} </li>
+                      <li class="list-group-item"> Taux de positivité : {{positivite3}} {% if evo_pos3 %} ⬈ {% elseif evo_pos3 == false %} ⬊ {% endif %}</li>
                       <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule3}}</li>
-                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP3}} </li>
-                      <li class="list-group-item"> Nombre de test la veille : {{ testhier3 }}</li>
+                      <li class="list-group-item"> Nouveau cas détecté(s) : {{newP3}} {% if evo_positif3 %} ⬈ {% elseif evo_positif3 == false %} ⬊ {% endif %}</li>
+                      <li class="list-group-item"> Nombre de test la veille : {{ testhier3 }} {% if evo_test3 %} ⬈ {% elseif evo_test3 == false %} ⬊ {% endif %}</li>
                             {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                       {% if acc %}
@@ -129,10 +129,10 @@
                 Région B - Vieux 
             </div>
             <ul class="list-group list-group-flush" >
-                        <li class="list-group-item"> Taux de positivité : {{positivite4}} </li>
+                        <li class="list-group-item"> Taux de positivité : {{positivite4}} {% if evo_pos4 %} ⬈ {% elseif evo_pos4 == false %} ⬊ {% endif %}</li>
                         <li class="list-group-item"> Nombre de cas cumulé(s) : {{cas_cumule4}}</li>
-                        <li class="list-group-item"> Nouveau cas détecté(s) : {{newP4}} </li>
-                        <li class="list-group-item"> Nombre de test la veille : {{ testhier4 }}</li>
+                        <li class="list-group-item"> Nouveau cas détecté(s) : {{newP4}} {% if evo_positif4 %} ⬈ {% elseif evo_positif4 == false %} ⬊ {% endif %}</li>
+                        <li class="list-group-item"> Nombre de test la veille : {{ testhier4 }} {% if evo_test4 %} ⬈ {% elseif evo_test4 == false %} ⬊ {% endif %}</li>
                                 {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                         {% if acc %}
