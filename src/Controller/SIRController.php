@@ -348,7 +348,7 @@ class SIRController extends AbstractController
     public function exp_form(int $num_exp, int $temps = null, Request $request, EntityManagerInterface $manager) 
     {
         $resultexp = new EtatExp();
-        $NN = 10000;
+        $NN = 1000000;
         if ($num_exp == 0) {
             $repo = $this->getDoctrine()->getRepository(Epidemie::class);
             $IDrandom = rand(1,3);
