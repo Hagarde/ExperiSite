@@ -707,7 +707,7 @@ class SIRController extends AbstractController
             $response = json_decode($response, true);
             // dump($response);
         // On update et on crée la nouvelle valeur ! 
-
+            dump($response);
             $etatcalcule = new EtatExp() ;
             $new_T = ($etatavant->getT())+1;
             $etatcalcule-> setS1($response['s1'])
