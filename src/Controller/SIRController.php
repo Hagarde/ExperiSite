@@ -467,19 +467,19 @@ class SIRController extends AbstractController
         $cas_cumule2 = $etatavant->getP2() + $etatavant->getRp2();
         $cas_cumule3 = $etatavant->getP3() + $etatavant->getRp3();
         $cas_cumule4 = $etatavant->getP4() + $etatavant->getRp4();
-        $positivite1 = 'Pas encore disponible';
-        $positivite2 = 'Pas encore disponible';
-        $positivite3 = 'Pas encore disponible';
-        $positivite4 = 'Pas encore disponible';
-        $new_P1 = 'Pas encore disponible';
-        $new_P2 = 'Pas encore disponible';
-        $new_P3 = 'Pas encore disponible';
-        $new_P4 = 'Pas encore disponible';
+        $positivite1 = '∅';
+        $positivite2 = '∅';
+        $positivite3 = '∅';
+        $positivite4 = '∅';
+        $new_P1 = '∅';
+        $new_P2 = '∅';
+        $new_P3 = '∅';
+        $new_P4 = '∅';
         
-        $acc1 = 'Pas encore disponible' ;
-        $acc2 = 'Pas encore disponible' ;
-        $acc3 = 'Pas encore disponible' ;
-        $acc4 = 'Pas encore disponible' ;
+        $acc1 = '∅' ;
+        $acc2 = '∅' ;
+        $acc3 = '∅' ;
+        $acc4 = '∅' ;
 
         $evo_test1 = NULL;
         $evo_test2 = NULL;
