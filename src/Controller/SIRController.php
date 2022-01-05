@@ -345,7 +345,7 @@ class SIRController extends AbstractController
      * @Route("/exp/exp_form/{num_exp}", name="exp_form_suite")
      */
 
-    public function exp_form(int $num_exp, int $temps = null, Request $request, EntityManagerInterface $manager) 
+    public function exp_form(int $num_exp, Request $request, EntityManagerInterface $manager) 
     {
         $resultexp = new EtatExp();
         $NN = 1000000;
@@ -444,7 +444,7 @@ class SIRController extends AbstractController
                             'autocomplete' => 'on',
                             'min' => 0,
                             'max' => 100,
-                            'style' => 'background-color: red;']
+                            'style' => 'background-color: red; width:100%;']
                         ])
                     -> add('Test12', RangeType::class , ['attr' => [
                         'autocomplete' => 'on',
@@ -453,7 +453,7 @@ class SIRController extends AbstractController
                     -> add('Test21', RangeType::class, ['attr' => [
                         'autocomplete' => 'on',
                         'style' => 'align-items: center;
-                        background-color: green;',
+                        background-color: green;width:100%;',
                     ]])
                         
                         ->getForm();
@@ -467,39 +467,57 @@ class SIRController extends AbstractController
         $cas_cumule2 = $etatavant->getP2() + $etatavant->getRp2();
         $cas_cumule3 = $etatavant->getP3() + $etatavant->getRp3();
         $cas_cumule4 = $etatavant->getP4() + $etatavant->getRp4();
-        $positivite1 = '∅';
-        $positivite2 = '∅';
-        $positivite3 = '∅';
-        $positivite4 = '∅';
-        $new_P1 = '∅';
-        $new_P2 = '∅';
-        $new_P3 = '∅';
-        $new_P4 = '∅';
-        
-        $acc1 = '∅' ;
-        $acc2 = '∅' ;
-        $acc3 = '∅' ;
-        $acc4 = '∅' ;
 
-        $evo_test1 = NULL;
-        $evo_test2 = NULL;
-        $evo_test3 = NULL;
-        $evo_test4 = NULL;
+        $positivite1 = 0;
+        $positivite2 = 0;
+        $positivite3 = 0;
+        $positivite4 = 0;
+
+        $new_P1 = 0;
+        $new_P2 = 0;
+        $new_P3 = 0;
+        $new_P4 = 0;
+        
+        $acc1 = 0 ;
+        $acc2 = 0 ;
+        $acc3 = 0 ;
+        $acc4 = 0 ;
+
+        $evo_test1 = 0;
+        $evo_test2 = 0;
+        $evo_test3 = 0;
+        $evo_test4 = 0;
     
-        $evo_pos1 = null;
-        $evo_pos2 = null;
-        $evo_pos3 = null;
-        $evo_pos4 = null;
+        $evo_pos1 = 0;
+        $evo_pos2 = 0;
+        $evo_pos3 = 0;
+        $evo_pos4 = 0;
 
         $test_cumule1 = 0;
         $test_cumule2 = 0;
         $test_cumule3 = 0;
         $test_cumule4 = 0;
 
-        $evo_positif1 = null;
-        $evo_positif2 = null;
-        $evo_positif3 = null;
-        $evo_positif4 = null;
+        $repo2= $this->getDoctrine()->getRepository(EtatExp::class);
+        $etatlie = $repo2->findBy(array('experience'=> $resume));
+        for ($i = 0; $i < count($etatlie) ; $i++) {
+            $test_cumule1  += $etatlie[$i]->getTest11();
+        }
+        for ($i = 0; $i < count($etatlie) ; $i++) {
+            $test_cumule2  += $etatlie[$i]->getTest12();
+        }
+        for ($i = 0; $i < count($etatlie) ; $i++) {
+            $test_cumule3  += $etatlie[$i]->getTest21();
+        }
+        for ($i = 0; $i < count($etatlie) ; $i++) {
+            $test_cumule4  += $etatlie[$i]->getTest22();}
+
+        $evo_positif1 = 0;
+        $evo_positif2 = 0;
+        $evo_positif3 = 0;
+        $evo_positif4 = 0;
+
+
 
         if (!empty($T)) {
             $etatavantavant = $etatlie[$avantdernier - 1] ;
@@ -524,23 +542,24 @@ class SIRController extends AbstractController
             }
             // on va évaluer l'évolution de la positivité 
 
-            
+            $evo_test1 =($etatavant->getTest11() > $etatavantavant->getTest11()) ; 
+            $evo_test2 =($etatavant->getTest12() > $etatavantavant->getTest12()) ; 
+            $evo_test3 =($etatavant->getTest21() > $etatavantavant->getTest21()) ; 
+            $evo_test4 =($etatavant->getTest22() > $etatavantavant->getTest22()) ; 
 
             if ($T > 1.5) {
                 $etatavantavantavant = $etatlie[$avantdernier - 2] ;
                 // Evolution du nombre de tests 
 
-                $evo_positif1 = ($new_P1 > $etatavantavant->getP1()) ;
-                $evo_positif2 = ($new_P2 > $etatavantavant->getP2()) ;
-                $evo_positif3 = ($new_P3 > $etatavantavant->getP3()) ;
-                $evo_positif4 = ($new_P4 > $etatavantavant->getP4()) ;
+                $contamination_avantavant1 =($etatavantavant->getP1() - $etatavantavantavant->getP1()+($etatavantavant->getRP1() - $etatavantavantavant->getRP1()));
+                $contamination_avantavant2 =($etatavantavant->getP2() - $etatavantavantavant->getP2()+($etatavantavant->getRP2() - $etatavantavantavant->getRP2()));
+                $contamination_avantavant3 =($etatavantavant->getP3() - $etatavantavantavant->getP3()+($etatavantavant->getRP3() - $etatavantavantavant->getRP3()));
+                $contamination_avantavant4 =($etatavantavant->getP4() - $etatavantavantavant->getP4()+($etatavantavant->getRP4() - $etatavantavantavant->getRP4()));
 
-
-                $evo_test1 =($etatavant->getTest11() - $etatavantavant->getTest11() > 0 ) ; 
-                $evo_test2 =($etatavant->getTest12() - $etatavantavant->getTest12() > 0 ) ; 
-                $evo_test3 =($etatavant->getTest21() - $etatavantavant->getTest21() > 0 ) ; 
-                $evo_test4 =($etatavant->getTest22() - $etatavantavant->getTest22() > 0 ) ; 
-
+                $evo_positif1 = ($new_P1 > $contamination_avantavant1) ;
+                $evo_positif2 = ($new_P2 > $contamination_avantavant2) ;
+                $evo_positif3 = ($new_P3 > $contamination_avantavant3) ;
+                $evo_positif4 = ($new_P4 > $contamination_avantavant4) ;
                 // Evolution de la positivité et création de la positivité
                 if (empty($etatavantavant->getTest11())) {
                     $positivite1 = 0;
@@ -548,7 +567,8 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite1 = ($new_P1) / $etatavantavant->getTest11() ;
-                    $positivite1_avant = $etatavant->getP1() / $etatavantavantavant->getTest11() ; 
+                    $contamination_avantavant1 =($etatavantavant->getP1() - $etatavantavantavant->getP1()+($etatavantavant->getRP1() - $etatavantavantavant->getRP1()));
+                    $positivite1_avant = $contamination_avantavant1 / $etatavantavantavant->getTest11() ; 
                     $evo_pos1 = ($positivite1 > $positivite1_avant);
                 }
 
@@ -559,7 +579,8 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite2 = ($new_P2) / $etatavantavant->getTest12() ;
-                    $positivite2_avant = $etatavant->getP2() / $etatavantavantavant->getTest12() ; 
+                    $contamination_avantavant2 =($etatavantavant->getP2() - $etatavantavantavant->getP2()+($etatavantavant->getRP2() - $etatavantavantavant->getRP2()));
+                    $positivite2_avant = $contamination_avantavant2 / $etatavantavantavant->getTest12() ; 
                     $evo_pos2 = ($positivite2 > $positivite2_avant);
                 }
 
@@ -569,8 +590,9 @@ class SIRController extends AbstractController
                     $evo_pos3 = False;
                 }
                 else{
-                    $positivite3 = ($new_P3) / $etatavantavant->getTest21() ;
-                    $positivite3_avant = $etatavant->getP3() / $etatavantavantavant->getTest21() ; 
+                    $positivite3 = $new_P3 / $etatavantavant->getTest21() ;
+                    $contamination_avantavant3 =($etatavantavant->getP3() - $etatavantavantavant->getP3()+($etatavantavant->getRP3() - $etatavantavantavant->getRP3()));
+                    $positivite3_avant = $contamination_avantavant3 / $etatavantavantavant->getTest21() ; 
                     $evo_pos3 = ($positivite3 > $positivite3_avant);
                 }
                 if (empty($etatavantavant->getTest22())) {
@@ -579,12 +601,12 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite4 = ($new_P4) / $etatavantavant->getTest22() ;
-                    $positivite4_avant = $etatavant->getP4() / $etatavantavantavant->getTest22() ; 
+                    $contamination_avantavant4 =($etatavantavant->getP4() - $etatavantavantavant->getP4()+($etatavantavant->getRP4() - $etatavantavantavant->getRP4()));
+                    $positivite4_avant = $contamination_avantavant4 / $etatavantavantavant->getTest22() ; 
                     $evo_pos4 = ($positivite4 > $positivite4_avant);
                 }
 
             }
-
 
 
 
@@ -596,7 +618,7 @@ class SIRController extends AbstractController
                     $acc1= 0;
                 }
                 else{
-                    $test_cumule1 = 0;
+    
                     for ($i = 0; $i < count($etatlie) ; $i++) {
                         $test_cumule1  += $etatlie[$i]->getTest11() ; 
                     }
@@ -609,7 +631,6 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite2 = ($new_P2) / $etatavantavant->getTest12() ;
-                    $test_cumule2 = 0 ; 
                     for ($i = 0; $i < count($etatlie) ; $i++) {
                         $test_cumule2  += $etatlie[$i]->getTest12();
                         
@@ -624,7 +645,6 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite3 = ($new_P3) / $etatavantavant->getTest21() ;
-                    $test_cumule3 = 0 ;
                     for ($i = 0; $i < count($etatlie) ; $i++) {
                         $test_cumule3  += $etatlie[$i]->getTest21();
                          ;
@@ -639,18 +659,26 @@ class SIRController extends AbstractController
                 }
                 else{
                     $positivite4 = ($new_P4) / $etatavantavant->getTest22() ;
-                    $test_cumule4 = 0 ;
-                    for ($i = 0; $i < count($etatlie) ; $i++) {
-                        $test_cumule4  += $etatlie[$i]->getTest22();
-                        
-                        //dump($acc4);
-                    }
                     $acc4 = ($test_cumule4/$cas_cumule4) * $positivite4 ;
                 }
                 };
 
 
-            };
+        }
+        else {
+            $evo_test1 = True;
+            $evo_test2 = True;
+            $evo_test3 = True;
+            $evo_test4 = True;
+            $evo_pos1 = True;
+            $evo_pos2 = True;
+            $evo_pos3 = True;
+            $evo_pos4 = True;
+            $evo_positif1 = True;
+            $evo_positif2 = True;
+            $evo_positif3 = True;
+            $evo_positif4 = True;
+        }
         
 
         if($form->isSubmitted() && $form->isValid() ){
@@ -750,15 +778,15 @@ class SIRController extends AbstractController
             'cas_cumule2'  => round((int)$cas_cumule2,2),
             'cas_cumule3'  => round((int)$cas_cumule3,2),
             'cas_cumule4'  => round((int)$cas_cumule4,2),
-            'positivite1' => $positivite1,
-            'positivite2' => $positivite2,
-            'positivite3' => $positivite3,
-            'positivite4' => $positivite4,
+            'positivite1' => round($positivite1,4),
+            'positivite2' => round($positivite2,6),
+            'positivite3' => round($positivite3,6),
+            'positivite4' => round($positivite4,6),
             'acc'=> $resume->getAcc(),
-            'acc1' => $acc1,
-            'acc2' => $acc2,
-            'acc3' => $acc3,
-            'acc4' => $acc4,
+            'acc1' => round($acc1,4),
+            'acc2' => round($acc2,4),
+            'acc3' => round($acc3,4),
+            'acc4' => round($acc4,4),
             'newP1' => round((int)$new_P1,2),
             'newP2' => round((int)$new_P2,2),
             'newP3' => round((int)$new_P3,2),

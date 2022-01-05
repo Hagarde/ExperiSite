@@ -7,33 +7,54 @@
 <link rel="stylesheet" href="../../public/css/style_exp_test.scss" />
 {% endblock %}
 {% block body %}
-<div class="row justify-content-around">
-    <div id='control-panel'  class="col-sm-12 col-md-4" >
-        <h2> Répartition des tests</h2>
-        <div id='arbre-haut' style='padding-top: 10px; padding-left: 25px;' >
-                    {{form_start(formExp)}}
-                    <div class="card text-center">
-                        <div class="card-body">
-                            Région A {{form_widget(formExp.Test11)}} Région B 
-                        </div>
-                    </div>
-                </div>
-                <div id='arbre-bas' style=' padding-left: 25px;' class='row'>
-                    <div class="card text-center col-6" >
-                        Région A
-                        <div class="card-body" style="flex-direction: row;">
-                            J {{form_widget(formExp.Test12)}} Â
-                        </div>
-                    </div>
 
-                    <div class="card text-center col-6" >
-                            Région B
-                        <div class="card-body" style="flex-direction: row;">
-                            J {{form_widget(formExp.Test21)}} Â
-                        </div>
+
+<div class="row justify-content-around">
+    <div id='control-panel'  class="col-sm-12 col-md-4 " >
+        <h3> Répartition des tests - Jour {{ temps }} et Résultats du Jour {{ temps - 1 }}</h3>
+        <div id='arbre-haut'  class="row justify-content-center" style='padding-top: 15px;'>
+            
+                <div class='col-3'>
+                    <h4>Région A</h4>
+                </div>   
+                <div class='col-6'>
+                    {{form_start(formExp)}}
+                    {{form_widget(formExp.Test11)}} 
+                </div>  
+                <div class='col-3'>
+                    <h4>Région B</h4>
+                </div>       
+        </div>
+        <div id='arbre-bas' class='column' style="padding : 10px;">
+
+            <div class="row" id="inputs" style='background-color:#e6e696'>
+                <div class="col-6 justify-content-center" id='input1' style="padding-right:10px;">
+                    <div class="row justify-content-center">
+                        <h4>Région A</h4>
                     </div>
-                    
+                    <div class="row justify-content-center">
+                        <h6> Jeune </h6>
+                        <div style="border: solid 2px #000;">
+                            {{form_widget(formExp.Test12)}} 
+                        </div>
+                        <h6> Âgés </h6>
+                    </div>
                 </div>
+                <div class="col-6 " id="input2" style='background-color:#d5ab9c'>
+                    <div class="row justify-content-center">
+                        <h4>Région B</h4>
+                    </div>
+                    <div class="row justify-content-center">
+                        <h6> Jeune </h6>
+                        <div style="border: solid 2px #000;">
+                            {{form_widget(formExp.Test21)}} 
+                        </div>
+                        <h6> Âgés </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id='rectangles' class='row justify-content-center' style='padding-right: 25px; padding-left: 25px;'>
             <div id='area1' style='flex-direction: column;' class='col-3'>
                 <p id='percent1'> 25 % </p>
@@ -70,43 +91,43 @@
                 {{form_end(formExp)}}
     </div>
 
-    <div id='col1-display' class="col-sm-12 col-md-4 ">
-        <div class="card" style='padding: 25px; '>
+    <div id='col1-display' class="col-sm-12 col-md-4 1">
+        <div class="card" style='margin:2px;'>
             <div class="card-header" style="background-color: #e6e696">
                 Région A - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
-                                Nouveaux cas / cumulé(s) : 
+                                Test journaliers / cumulé(s):
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
-                               {{newP1}} {% if evo_positif1 %} ⬈ {% elseif evo_positif1 == false %} ⬊ {% endif %} / {{cas_cumule1}} 
-                            </p>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
-                            <p style='font-size: 0.9em'>
-                                Test la veille / cumulé(s):
-                            </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                             {{ testhier1 }} {% if evo_test1 %} ⬈ {% elseif evo_test1 == false %} ⬊ {% endif %} / {{testcumule1}}
                             </p>
                         </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
+                            <p style='font-size: 0.9em'>
+                                Cas journalier(s) / cumulé(s) : 
+                            </p>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
+                               {{newP1}} {% if evo_positif1 %} ⬈ {% elseif evo_positif1 == false %} ⬊ {% endif %} / {{cas_cumule1}} 
+                            </p>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
                             <p style='font-size: 0.9em; '> 
                                 Taux de positivité : 
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{positivite1}} {% if evo_pos1 %} ⬈ {% elseif evo_pos1 == false %} ⬊ {% endif %} 
                             </p>
                         </li>
                                 {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                         {% if acc %}
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
                                 Indice d'accélération : 
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{acc2}}
                             <p>
                         </li>
@@ -114,42 +135,42 @@
                 </ul>
             
         </div>
-        <div class="card" style='padding: 25px;'>
+        <div class="card" style='margin:2px;'>
             <div class="card-header" style="background-color: #e6e696">
                 Région A - Âgés 
             </div>
             <ul class="list-group list-group-flush" >
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
-                                Nouveaux cas / cumulé(s) : 
+                                Test journaliers / cumulé(s):
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
-                               {{newP2}} {% if evo_positif2 %} ⬈ {% elseif evo_positif2 == false %} ⬊ {% endif %} / {{cas_cumule2}} 
-                            </p>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
-                            <p style='font-size: 0.9em'>
-                                Test la veille / cumulé(s):
-                            </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                             {{ testhier2 }} {% if evo_test2 %} ⬈ {% elseif evo_test2 == false %} ⬊ {% endif %} / {{testcumule2}}
                             </p>
                         </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
+                            <p style='font-size: 0.9em'>
+                                Cas journalier(s) / cumulé(s) : 
+                            </p>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
+                               {{newP2}} {% if evo_positif2 %} ⬈ {% elseif evo_positif2 == false %} ⬊ {% endif %} / {{cas_cumule2}} 
+                            </p>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
                             <p style='font-size: 0.9em; '> 
                                 Taux de positivité : 
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{positivite2}} {% if evo_pos2 %} ⬈ {% elseif evo_pos2 == false %} ⬊ {% endif %} 
                             </p>
                         </li>
                                 {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                         {% if acc %}
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
                                 Indice d'accélération : 
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{acc2}}
                             <p>
                         </li>
@@ -157,85 +178,85 @@
                 </ul>
         </div>
     </div>
-    <div id='col2-display' class="col-sm-12 col-md-4" >
-        <div class="card" style='padding: 25px;'>
+    <div id='col2-display' class="col-sm-12 col-md-4" style="flex-direction: column;align-items: space-around;">
+        <div class="card" style='margin:2px;'>
             <div class="card-header" style="background-color: #d5ab9c">
                 Région B - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
-                                Nouveaux cas / cumulé(s) : 
+                                Test journaliers / cumulé(s):
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
-                               {{newP3}} {% if evo_positif3 %} ⬈ {% elseif evo_positif3 == false %} ⬊ {% endif %} / {{cas_cumule3}} 
-                            </p>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
-                            <p style='font-size: 0.9em'>
-                                Test la veille / cumulé(s):
-                            </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                             {{ testhier3 }} {% if evo_test3 %} ⬈ {% elseif evo_test3 == false %} ⬊ {% endif %} / {{testcumule3}}
                             </p>
                         </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
+                            <p style='font-size: 0.9em'>
+                                Cas journalier(s) / cumulé(s) : 
+                            </p>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
+                               {{newP3}} {% if evo_positif3 %} ⬈ {% elseif evo_positif3 == false %} ⬊ {% endif %} / {{cas_cumule3}} 
+                            </p>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
                             <p style='font-size: 0.9em; '> 
                                 Taux de positivité : 
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{positivite3}} {% if evo_pos3 %} ⬈ {% elseif evo_pos3 == false %} ⬊ {% endif %} 
                             </p>
                         </li>
                                 {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                         {% if acc %}
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
                                 Indice d'accélération : 
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{acc3}}
                             <p>
                         </li>
                         {% endif %}
                 </ul>
         </div>
-        <div class="card" style='padding: 25px;'>
+        <div class="card" style='margin:2px;'>
             <div class="card-header" style="background-color: #d5ab9c">
                 Région B - Âgés 
             </div>
             <ul class="list-group list-group-flush" >
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
-                                Nouveaux cas / cumulé(s) : 
+                                Test journaliers / cumulé(s):
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
-                               {{newP4}} {% if evo_positif4 %} ⬈ {% elseif evo_positif4 == false %} ⬊ {% endif %} / {{cas_cumule4}} 
-                            </p>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
-                            <p style='font-size: 0.9em'>
-                                Test la veille / cumulé(s):
-                            </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                             {{ testhier4 }} {% if evo_test4 %} ⬈ {% elseif evo_test4 == false %} ⬊ {% endif %} / {{testcumule4}}
                             </p>
                         </li>
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'> 
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
+                            <p style='font-size: 0.9em'>
+                                Cas journalier(s) / cumulé(s) : 
+                            </p>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
+                               {{newP4}} {% if evo_positif4 %} ⬈ {% elseif evo_positif4 == false %} ⬊ {% endif %} / {{cas_cumule4}} 
+                            </p>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'> 
                             <p style='font-size: 0.9em; '> 
                                 Taux de positivité : 
                             </p>
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{positivite4}} {% if evo_pos4 %} ⬈ {% elseif evo_pos4 == false %} ⬊ {% endif %} 
                             </p>
                         </li>
                                 {# Ici il faudrait indiquer l'influence du form sur le nombre de test #}
 
                         {% if acc %}
-                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.5em;'>  
+                        <li class="list-group-item d-flex align-items-center justify-content-around" style='margin-bottom: -2.6em;'>  
                             <p style='font-size: 0.9em'>
                                 Indice d'accélération : 
-                            <p style='font-size: 2.5em;font-weight: bold;'>
+                            <p style='font-size: 2.6em;font-weight: bold;'>
                                 {{acc4}}
                             <p>
                         </li>
