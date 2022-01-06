@@ -299,12 +299,10 @@
   rect2 = document.getElementById('rect2');
   rect3 = document.getElementById('rect3');
   rect4 = document.getElementById('rect4');
-  console.log(rect1, rect2, rect3, rect4);
   pourcent1 = document.getElementById('percent1');
   pourcent2 = document.getElementById('percent2');
   pourcent3 = document.getElementById('percent3');
   pourcent4 = document.getElementById('percent4');
-
 
   sliderregions = document.getElementById('form_Test11');
   sliderregion1 = document.getElementById('form_Test12');
@@ -326,25 +324,30 @@
       region21 = valueregions * (100-valueregion2 )/ 10000;
       region22 = valueregions * valueregion2 / 10000;
 
+      rect1.style.height = (Math.round(region11*100)*2.5 ).toString() + 'px' ; 
+      rect2.style.height = (Math.round(region12*100)*2.5 ).toString() + 'px' ; 
+      rect3.style.height = (Math.round(region21*100)*2.5 ).toString() + 'px' ; 
+      rect4.style.height = (Math.round(region22*100)*2.5 ).toString() + 'px' ; 
+
       region11 = (Math.round(region11*100) ).toString();
       region12 = (Math.round(region12*100) ).toString();
       region21 = (Math.round(region21*100) ).toString();
       region22 = (Math.round(region22*100) ).toString();
 
-      console.log(region11);
-      console.log(region12);
-      console.log(region21);
-      console.log(region22);
-
-      rect1.style.height = region11 + '%' ; 
-      rect2.style.height = region12 + '%' ; 
-      rect3.style.height = region21 + '%' ; 
-      rect4.style.height = region22 + '%' ; 
+      
 
       pourcent1.innerHTML = region11 + '%' ;
       pourcent2.innerHTML = region12 + '%' ;
       pourcent3.innerHTML = region21 + '%' ;
       pourcent4.innerHTML = region22 + '%' ;
+
+      porportion_visuel_region1 = valueregions.toString() ;
+      porportion_visuel_region2 = (100 - valueregions).toString() ;
+      
+      visuel = document.getElementById('autour_form');
+      styles = "linear-gradient(90deg, #d5ab9c "+porportion_visuel_region1+"%, #e6e696 "+ porportion_visuel_region2+"%);";
+      console.log(styles);
+      visuel.background = styles;
   }
 
   sliderregions.onchange = actualisationvalue ;
