@@ -19,7 +19,13 @@
                 </div>   
                 <div class='col-6'>
                     {{form_start(formExp)}}
-                    {{form_widget(formExp.Test11)}} 
+                    <div id='autour_form' style='
+                        height:20px;
+                        border-radius: 5px;
+                        background: linear-gradient(90deg, #d5ab9c 50%, #e6e696 50%);
+                        background-size: 100% 100%;'>
+                        {{form_widget(formExp.Test11)}} 
+                    </div>
                 </div>  
                 <div class='col-3'>
                     <h4>Région B</h4>
@@ -34,7 +40,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <h6> Jeune </h6>
-                        <div style="border: solid 2px #000;">
+                        <div style=";">
                             {{form_widget(formExp.Test12)}} 
                         </div>
                         <h6> Âgés </h6>
@@ -46,7 +52,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <h6> Jeune </h6>
-                        <div style="border: solid 2px #000;">
+                        <div style=";">
                             {{form_widget(formExp.Test21)}} 
                         </div>
                         <h6> Âgés </h6>
@@ -56,32 +62,36 @@
         </div>
 
         <div id='rectangles' class='row justify-content-center' style='padding-right: 25px; padding-left: 25px;'>
-            <div id='area1' style='flex-direction: column;' class='col-3'>
+            <div id='area1'  style='flex-direction: column;' class='col-3 justify-content-center'>
                 <p id='percent1'> 25 % </p>
-                <svg width="75%" height="100%" style='padding: 5px;' >
-                    <rect width="100%" height="25%"  id='rect1' style="fill:#e6e696" />
-                </svg>
-                <h5> Région A - Jeune </h5>
-            </div>
-            <div id='area2' style='flex-direction: column;' class='col-3'>
-                <p id='percent2'> 25 % </p>
-                <svg width="75%" height="100%" style='padding: 5px;'>
-                    <rect width="100%" height="25%"  id='rect2' style="fill:#e6e696" />
-                </svg>
+                <div id='rect1' style='width: 75% ; height: 100px; 
+                    background: linear-gradient(90deg, white 50%, #e6e696 50%);
+                    background-size: 10px 10px;'>
+                </div>
                 <h5> Région A - Âgés </h5>
             </div>
-            <div id='area3' style='flex-direction: column;' class='col-3'>
+            <div id='area2' style='flex-direction: column;' class='col-3 justify-content-center'>
+                <p id='percent2'> 25 % </p>
+                <div id='rect2' style='width: 75% ; height: 100px; 
+                    background: linear-gradient(0deg, white 50%, #d5ab9c 50%);
+                    background-size: 10px 10px;'>
+                </div>
+                <h5> Région A - Âgés </h5>
+            </div>
+            <div id='area3' style='flex-direction: column;' class='col-3 justify-content-center'>
                 <p id='percent3'> 25 % </p>
-                <svg width="75%" height="100%" style='padding: 5px;'>
-                    <rect width="100%" height="25%"  id='rect3' style="fill:#d5ab9c" />
-                </svg>
+                <div id='rect3' style='width: 75% ; height: 100px; 
+                    background: linear-gradient(90deg, white 50%, #d5ab9c 50%);
+                    background-size: 10px 10px;'>
+                </div>
                 <h5> Région B - Jeune </h5>
             </div>
-            <div id='area4' style='flex-direction: column;' class='col-3'>
+            <div id='area4' style='flex-direction: column;' class='col-3 justify-content-center'>
                 <p id='percent4'> 25 % </p>
-                <svg width="75%" height="100%" style='padding: 5px;'>
-                    <rect width="100%" height="25%"  id='rect4' style="fill:#d5ab9c" />
-                </svg>
+                <div id='rect4' style='width: 75% ; height: 100px; 
+                    background: linear-gradient(0deg, white 50%, #e6e696 50%);
+                    background-size: 10px 10px;'>
+                </div>
                 <h5> Région B - Âgés </h5>
             </div>
         </div>
@@ -94,11 +104,8 @@
     <div id='col1-display' class="col-sm-12 col-md-4 1">
         <div class="card" style='margin:2px;'>
             <div class="card-header" style="
-            background: linear-gradient(45deg, white 25%,
-            #fff 25%, #fff 50%, 
-            #e6e696 50%, #e6e696 75%, 
-            #fff 75%);
-            background-size: 100px 100px;">
+                background: linear-gradient(90deg, white 50%, #e6e696 50%);
+                background-size: 50px 50px;">
                 Région A - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
@@ -142,11 +149,8 @@
         </div>
         <div class="card" style='margin:2px;'>
             <div class="card-header" style="
-            background: 
-            radial-gradient(circle, white 20%, #e6e696 10%),
-            radial-gradient(circle, white 20%, #e6e696 10%) 50px 50px;
-            background-size: 25px 25px;
-            ">
+                background: linear-gradient(0deg, white 50%, #e6e696 50%);
+                background-size: 25px 25px;">
                 Région A - Âgés 
             </div>
             <ul class="list-group list-group-flush" >
@@ -191,12 +195,8 @@
     <div id='col2-display' class="col-sm-12 col-md-4" style="flex-direction: column;align-items: space-around;">
         <div class="card" style='margin:2px;'>
             <div class="card-header" style="
-            background: linear-gradient(45deg, white 25%,
-            #fff 25%, #fff 50%, 
-            #d5ab9c 50%, #d5ab9c 75%, 
-            #fff 75%);
-            background-size: 100px 100px;"
-            >
+                background: linear-gradient(90deg, white 50%, #d5ab9c 50%);
+                background-size: 50px 50px;">
                 Région B - Jeune 
             </div>
             <ul class="list-group list-group-flush" >
@@ -238,10 +238,9 @@
                 </ul>
         </div>
         <div class="card" style='margin:2px;'>
-            <div class="card-header" style="background: 
-            radial-gradient(circle, white 20%, #d5ab9c 10%),
-            radial-gradient(circle, white 20%, #d5ab9c 10%) 50px 50px;
-            background-size: 25px 25px;">
+            <div class="card-header" style="
+                    background: linear-gradient(0deg, white 50%, #d5ab9c 50%);
+                    background-size: 250px 25px;">
                 Région B - Âgés 
             </div>
             <ul class="list-group list-group-flush" >
