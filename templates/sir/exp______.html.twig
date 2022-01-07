@@ -66,10 +66,12 @@
             <div id='area1'  style='flex-direction: column;' class='col-3 justify-content-center'>
                 <p id='percent1'> 25 % </p>
                 <div id='rect1' style='width: 75% ; height: 100px; 
-                    background: linear-gradient(90deg, white 50%, #e6e696 50%);
+                    background-color: white;
+                    opacity: 0.8;
+                    background-image: radial-gradient(#e6e696 3px, white 3px);
                     background-size: 10px 10px;'>
                 </div>
-                <h5> Région A - Z </h5>
+                <h5> Région A - Y </h5>
             </div>
             <div id='area2' style='flex-direction: column;' class='col-3 justify-content-center'>
                 <p id='percent2'> 25 % </p>
@@ -82,7 +84,9 @@
             <div id='area3' style='flex-direction: column;' class='col-3 justify-content-center'>
                 <p id='percent3'> 25 % </p>
                 <div id='rect3' style='width: 75% ; height: 100px; 
-                    background: linear-gradient(90deg, white 50%, #d5ab9c 50%);
+                    background-color: white;
+                    opacity: 0.8;
+                    background-image: radial-gradient(#d5ab9c 3px, white 3px);
                     background-size: 10px 10px;'>
                 </div>
                 <h5> Région B - Y </h5>
@@ -104,12 +108,14 @@
     
     <div id='col1-display' class="col-sm-12 col-md-4 1">
         <div class='col-12 justify-content-center'>
-            <h3> Résultats du Jour {{ temps - 1 }}</h3>
+            <h3> {% if temps %}Résultats du Jour {{ temps - 1 }} {% else %} Panneau d'affichage des Résultats {% endif %}</h3>
         </div>
         <div class="card" style='margin:2px;'>
             <div class="card-header" style="
                 font-size:1.5em;
-                background: linear-gradient(90deg, white 50%, #e6e696 50%);
+                background-color: white;
+                opacity: 0.8;
+                background-image: radial-gradient(#e6e696 3px, white 3px);
                 background-size: 10px 10px;">
                 <b>Région A - Y </b>
             </div>
@@ -207,7 +213,9 @@
             <div class="card-header" style="
                 ;
                 font-size:1.5em;
-                background: linear-gradient(90deg, white 50%, #d5ab9c 50%);
+                background-color: white;
+                opacity: 0.8;
+                background-image: radial-gradient(#d5ab9c 3px, white 3px);
                 background-size: 10px 10px;">
                 <b>Région B - Y</b> 
             </div>
