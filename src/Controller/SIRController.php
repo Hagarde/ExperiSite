@@ -361,47 +361,103 @@ class SIRController extends AbstractController
             if ($IDrandom == 3) {
                 $epi =  $repo->findOneBy(['R' =>12]);
             }
-            $i0 = $epi->getI0()*$NN; //ERREUR PK ? 
+            $i0 = $epi->getI0()*$NN;
             $etatinitial = new EtatExp;
-            // randomization de si on display la valeur de accélration de pintus 
+
+            // randomization de si on display la valeur de accélration
             $acceleration = true ;
-            $niveau_liberte = 1 ;
-            if (rand(0,1) < 0.5) {
-                $niveau_liberte = 2 ;
+            $niveau_liberte = random_int(0,3);
+
+            if ($niveau_liberte == 0)  // Situation Isolement totale
+            {
+                $beta_intra = 0;
+                $beta_inter_inter = 0;
+                $beta_inter_intra = 0;
+                $beta_soi = 1;
             }
-            if (rand(0,1) < 0.5) {
-                $acceleration = false ;
-            }
-            $inter = 0;
-            if (rand(0,1) < 0.5) {
-                $inter = 1;
-            }
+
+            if ($niveau_liberte == 1)  // Echange inter génération 
+                {
+                    $beta_intra =   (2/10);
+                    $beta_inter_inter = 0;
+                    $beta_inter_intra = 0;
+                    $beta_soi =  (8/10);
+                }  
+
+            if ($niveau_liberte == 2)  // Echange inter génération 
+                {
+                    $beta_intra = 0;
+                    $beta_inter_inter = 0;
+                    $beta_inter_intra =  (2/10);
+                    $beta_soi =  (8/10);
+                }  
+
+            if ($niveau_liberte == 3)  // Région unique 
+                {
+                    $beta_intra =  (1/4);
+                    $beta_inter_inter =  (1/4);
+                    $beta_inter_intra =  (1/4);
+                    $beta_soi =  (1/4);
+                }  
+
+            
             $resume = new Resume();
             $resume->setR0($epi->getR())
                     ->setpi($epi->getPi())
                     ->setMu($epi->getMu())
                     ->setI0($epi->getI0()*$NN)
-                    ->setInfluence12($inter)
-                    ->setInfluence13($inter)
-                    ->setInfluence14($inter)
-                    ->setInfluence23($inter)
-                    ->setInfluence24($inter)
-                    ->setInfluence34($inter)
-                    ->setAcc($acceleration)
+                    ->setInfluence12($beta_intra)
+                    ->setInfluence13($beta_inter_intra)
+                    ->setInfluence14($beta_inter_inter)
+                    ->setInfluence23($beta_inter_inter)
+                    ->setInfluence24($beta_inter_intra)
+                    ->setInfluence34($beta_intra)
+                    ->setAcc(true) // On suppose que tout le monde voit l'accélération
                     ->setEpsilon($epi->getEpsilon())
                     ->setNiveauLiberte($niveau_liberte);
 
             $manager->persist($resume);
             $manager->flush();
 
-            $etatinitial-> setU1($i0)
-                -> setU2($i0)
-                -> setU3($i0)
-                -> setU4($i0)
-                -> setS1($NN-$i0)
-                -> setS2($NN-$i0)
-                -> setS3($NN-$i0)
-                -> setS4($NN-$i0)
+
+            // Randomization sur la région qui va acceuillir les premiers infectés
+            
+            $id_region = random_int(0,3);
+
+            if ( $id_region == 0 ) {
+                $i01 = $i0;
+                $i02 =0;
+                $i03 =0;
+                $i04 =0;
+            }
+            if ( $id_region == 1 ) {
+                $i01 = 0;
+                $i02 =$i0;
+                $i03 =0;
+                $i04 =0;
+            }
+            if ( $id_region == 2 ) {
+                $i01 = 0;
+                $i02 =0;
+                $i03 =$i0;
+                $i04 =0;
+            }
+            if ( $id_region == 3 ) {
+                $i01 = 0;
+                $i02 =0;
+                $i03 =0;
+                $i04 =$i0;
+            }
+
+
+            $etatinitial-> setU1($i01)
+                -> setU2($i02)
+                -> setU3($i03)
+                -> setU4($i04)
+                -> setS1($NN-$i01)
+                -> setS2($NN-$i02)
+                -> setS3($NN-$i03)
+                -> setS4($NN-$i04)
                 -> setP1(0)
                 -> setP2(0)
                 -> setP3(0)
